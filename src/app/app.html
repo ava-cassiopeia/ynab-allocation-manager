@@ -1,5 +1,9 @@
-<main class="main">
-  Hello, world!
-</main>
+@if (ynabStorage.apiKey() === null) {
+  <ya-ynab-token-form />
+} @else {
+  <main class="main">
+    Hello, world!
+  </main>
 
-<router-outlet />
+  <router-outlet />
+}
