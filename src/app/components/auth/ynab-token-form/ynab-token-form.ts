@@ -1,7 +1,7 @@
 import {Component, inject} from '@angular/core';
 import {ReactiveFormsModule, FormControl} from '@angular/forms';
 
-import {YnabClient} from '../../../../lib/ynab/ynab_client';
+import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
 
 @Component({
   selector: 'ya-ynab-token-form',
@@ -12,12 +12,12 @@ import {YnabClient} from '../../../../lib/ynab/ynab_client';
 export class YnabTokenForm {
   protected readonly tokenInput = new FormControl<string>('');
 
-  private readonly ynabClient = inject(YnabClient);
+  private readonly ynabStorage = inject(YnabStorage);
 
   protected updateToken() {
     const newToken = this.tokenInput.value?.trim() ?? '';
     if (newToken === '') return;
 
-    this.ynabClient.setApiKey(newToken);
+    this.ynabStorage.apiKey.set(newToken);
   }
 }
