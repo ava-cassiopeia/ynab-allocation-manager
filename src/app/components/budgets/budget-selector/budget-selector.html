@@ -1,6 +1,6 @@
 <p>Select a budget:</p>
 
-@for (budget of budgets(); track budget.id) {
+@for (budget of ynabStorage.budgets(); track budget.id) {
   <div>
     <button (click)="selectBudget(budget)">{{ budget.name }}</button>
   </div>

@@ -9,9 +9,7 @@ import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
   styleUrl: './budget-selector.scss'
 })
 export class BudgetSelector {
-  readonly budgets = input.required<BudgetSummary[]>();
-
-  private readonly ynabStorage = inject(YnabStorage);
+  protected readonly ynabStorage = inject(YnabStorage);
 
   protected selectBudget(budget: BudgetSummary) {
     this.ynabStorage.selectedBudget.set(budget);
