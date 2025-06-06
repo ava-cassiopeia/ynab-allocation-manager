@@ -59,7 +59,10 @@ export class AllocationSelector {
   }
 
   protected async selectAccount(account: Account) {
-    const newAllocation = new Allocation(this.category().id, account.id);
+    const budget = this.ynabStorage.selectedBudget();
+    if (budget === null) return;
+
+    const newAllocation = new Allocation(budget.id, this.category().id, account.id);
     await this.firestoreStorage.upsertAllocation(newAllocation);
     this.showDropdown.set(false);
   }

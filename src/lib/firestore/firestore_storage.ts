@@ -1,9 +1,11 @@
-import {Injectable, signal, effect} from '@angular/core';
+import {Injectable, signal, effect, inject} from '@angular/core';
 import {FirebaseApp, initializeApp} from 'firebase/app';
 import {Auth, User, getAuth, signInAnonymously, connectAuthEmulator} from 'firebase/auth';
-import {Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator, getDocs, updateDoc} from 'firebase/firestore';
+import {Unsubscribe, Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator, getDocs, updateDoc} from 'firebase/firestore';
+import {BudgetSummary} from 'ynab';
 
 import {Allocation} from '../models/allocation';
+import {YnabStorage} from '../ynab/ynab_storage';
 import {isProd} from '../../app/env';
 
 // Surprisingly, it's recommended and OK to check this information in according
@@ -27,6 +29,9 @@ export class FirestoreStorage {
   private readonly app: FirebaseApp;
   private readonly db: Firestore;
   private readonly auth: Auth;
+  private readonly ynabStorage = inject(YnabStorage);
+
+  private allocationsUnsubscribe: Unsubscribe | null = null;
 
   constructor() {
     this.app = initializeApp(firebaseConfig);
@@ -42,9 +47,11 @@ export class FirestoreStorage {
     // Subscribe to updates for the users' data once we have a user.
     effect(() => {
       const user = this.currentUser();
+      const budget = this.ynabStorage.selectedBudget();
       if (user === null) return;
+      if (budget === null) return;
 
-      this.listenForFirestoreUpdates(user);
+      this.listenForFirestoreUpdates(user, budget);
     });
   }
 
@@ -91,13 +98,18 @@ export class FirestoreStorage {
     return user;
   }
 
-  private listenForFirestoreUpdates(forUser: User) {
+  private listenForFirestoreUpdates(forUser: User, forBudget: BudgetSummary) {
+    if (this.allocationsUnsubscribe !== null) {
+      this.allocationsUnsubscribe();
+    }
+
     // Update local copy of allocations whenever the user's allocations change
     // in the database.
     const allocationsQuery = query(
       collection(this.db, 'allocations'),
-      where("userId", "==", forUser.uid));
-    onSnapshot(allocationsQuery, (querySnapshot) => {
+      where("userId", "==", forUser.uid),
+      where("budgetId", "==", forBudget.id));
+    this.allocationsUnsubscribe = onSnapshot(allocationsQuery, (querySnapshot) => {
       const allocations: Allocation[] = [];
       querySnapshot.forEach((doc) => {
         allocations.push(Allocation.fromSchema(doc.data() as any));
