@@ -1,3 +1,5 @@
+<p>Count: {{ firestoreStorage.allocations().length }}</p>
+
 @for (categoryGroup of ynabStorage.categories.value(); track categoryGroup.id) {
   @if (!categoryGroup.hidden) {
     <div>
@@ -6,7 +8,11 @@
       <ul>
         @for (category of categoryGroup.categories; track category.id) {
           @if (!category.hidden) {
-            <li>{{ category.name }} &mdash; <ya-currency [milliunits]="category.balance" /></li>
+            <li>
+              {{ category.name }} &mdash;
+              <ya-currency [milliunits]="category.balance" />
+              <button (click)="addAllocationFor(category)">Add allocation</button>
+            </li>
           }
         }
       </ul>
