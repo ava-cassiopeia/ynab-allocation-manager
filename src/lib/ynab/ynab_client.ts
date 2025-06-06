@@ -1,5 +1,5 @@
 import {Injectable, inject, effect} from "@angular/core";
-import {API, BudgetSummary} from 'ynab';
+import {API, BudgetSummary, CategoryGroupWithCategories} from 'ynab';
 
 import {YnabStorage} from "./ynab_storage";
 
@@ -21,6 +21,14 @@ export class YnabClient {
       this.api = new API(token);
       this.reloadAllData();
     });
+
+    // Load all the user's categories once they select a budget.
+    effect(async () => {
+      const budget = this.ynabStorage.selectedBudget();
+      if (budget === null) return;
+
+      this.ynabStorage.categories.set(await this.getCategories(budget.id));
+    });
   }
 
   setApiKey(key: string) {
@@ -31,6 +39,7 @@ export class YnabClient {
    * Reloads all the user's data and stores it in memory for usage.
    */
   async reloadAllData() {
+    this.ynabStorage.reset();
     const [budgets] = await Promise.all([
       this.getBudgets(),
     ]);
@@ -45,5 +54,18 @@ export class YnabClient {
     }
 
     return response.data.budgets;
+  }
+
+  async getCategories(budgetID: string): Promise<CategoryGroupWithCategories[]> {
+    const response = await this.getApi().categories.getCategories(budgetID);
+    return response.data.category_groups;
+  }
+
+  private getApi(): API {
+    if (this.api === null) {
+      throw new Error('API not initialized yet!');
+    }
+
+    return this.api;
   }
 }
