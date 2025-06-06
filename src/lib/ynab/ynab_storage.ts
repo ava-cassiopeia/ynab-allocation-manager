@@ -56,6 +56,29 @@ export class YnabStorage {
     },
   });
 
+  /**
+   * A list of all of the user's accounts for their selected budget, or an empty
+   * array if they haven't selected a budget yet.
+   */
+  readonly accounts = resource({
+    params: () => ({
+      api: this.api(),
+      budget: this.selectedBudget(),
+    }),
+
+    loader: async ({params}) => {
+      const {api, budget} = params;
+      if (api === null) return [];
+      if (budget === null) return [];
+
+      const response = await api.accounts.getAccounts(budget.id);
+      return response.data.accounts
+          // Only show active budget accounts
+          .filter((a) => !a.closed)
+          .filter((a) => a.on_budget);
+    },
+  });
+
   reset() {
     this.selectedBudget.set(null);
   }

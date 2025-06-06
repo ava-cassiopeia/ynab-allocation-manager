@@ -1,5 +1,3 @@
-<p>Count: {{ firestoreStorage.allocations().length }}</p>
-
 @for (categoryGroup of ynabStorage.categories.value(); track categoryGroup.id) {
   @if (!categoryGroup.hidden) {
     <div>
