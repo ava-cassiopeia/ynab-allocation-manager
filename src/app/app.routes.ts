@@ -1,3 +1,10 @@
 import {Routes} from '@angular/router';
 
-export const routes: Routes = [];
+import {AppPage} from './pages/app/app';
+
+export const routes: Routes = [
+  {
+    path: '',
+    component: AppPage,
+  },
+];
