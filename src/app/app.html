@@ -2,6 +2,8 @@
   <ya-ynab-token-form />
 } @else if (ynabStorage.selectedBudget() === null) {
   <ya-budget-selector [budgets]="ynabStorage.budgets()" />
+} @else {
+  <ya-category-list />
 }
 
 <router-outlet />
