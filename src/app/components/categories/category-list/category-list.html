@@ -6,7 +6,7 @@
       <ul>
         @for (category of categoryGroup.categories; track category.id) {
           @if (!category.hidden) {
-            <li>{{ category.name }} - {{ category.balance }}</li>
+            <li>{{ category.name }} &mdash; <ya-currency [milliunits]="category.balance" /></li>
           }
         }
       </ul>
