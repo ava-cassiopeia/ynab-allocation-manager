@@ -1,11 +1,15 @@
 @for (categoryGroup of ynabStorage.categories(); track categoryGroup.id) {
-  <div>
-    <p>{{ categoryGroup.name }}</p>
+  @if (!categoryGroup.hidden) {
+    <div>
+      <p>{{ categoryGroup.name }}</p>
 
-    <ul>
-      @for (category of categoryGroup.categories; track category.id) {
-        <li>{{ category.name }} - {{ category.balance }}</li>
-      }
-    </ul>
-  </div>
+      <ul>
+        @for (category of categoryGroup.categories; track category.id) {
+          @if (!category.hidden) {
+            <li>{{ category.name }} - {{ category.balance }}</li>
+          }
+        }
+      </ul>
+    </div>
+  }
 }
