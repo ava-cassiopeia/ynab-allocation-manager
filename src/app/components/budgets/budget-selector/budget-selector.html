@@ -1,0 +1,7 @@
+<p>Select a budget:</p>
+
+@for (budget of ynabStorage.budgets(); track budget.id) {
+  <div>
+    <button (click)="selectBudget(budget)">{{ budget.name }}</button>
+  </div>
+}

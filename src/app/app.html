@@ -1,5 +1,9 @@
-<main class="main">
-  Hello, world!
-</main>
+@if (ynabStorage.apiKey() === null) {
+  <ya-ynab-token-form />
+} @else if (ynabStorage.selectedBudget() === null) {
+  <ya-budget-selector />
+} @else {
+  <ya-category-list />
+}
 
 <router-outlet />
