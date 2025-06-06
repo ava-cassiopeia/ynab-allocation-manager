@@ -20,7 +20,7 @@ export class Allocation {
   }
 
   static fromSchema(schema: AllocationSchema): Allocation {
-    return new Allocation(schema.accountId, schema.categoryId);
+    return new Allocation(schema.categoryId, schema.accountId);
   }
 }
 

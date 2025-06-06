@@ -1,0 +1,17 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+.accounts-dropdown {
+  display: none;
+  position: absolute;
+  z-index: 3;
+  top: 100%;
+  left: 0;
+  background: white;
+
+  &.show {
+    display: block;
+  }
+}

@@ -12,7 +12,7 @@ import {FirestoreStorage} from '../lib/firestore/firestore_storage';
 export class App implements OnInit {
   private readonly firestoreStorage = inject(FirestoreStorage);
 
-  ngOnInit() {
-    this.firestoreStorage.signInUser();
+  async ngOnInit() {
+    await this.firestoreStorage.signInUser();
   }
 }

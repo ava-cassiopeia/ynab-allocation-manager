@@ -9,7 +9,7 @@
             <li>
               {{ category.name }} &mdash;
               <ya-currency [milliunits]="category.balance" />
-              <button (click)="addAllocationFor(category)">Add allocation</button>
+              <ya-allocation-selector [category]="category" />
             </li>
           }
         }

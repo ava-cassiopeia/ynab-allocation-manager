@@ -1,7 +1,7 @@
 import {Injectable, signal, effect} from '@angular/core';
 import {FirebaseApp, initializeApp} from 'firebase/app';
 import {Auth, User, getAuth, signInAnonymously, connectAuthEmulator} from 'firebase/auth';
-import {Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator} from 'firebase/firestore';
+import {Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator, getDocs, updateDoc} from 'firebase/firestore';
 
 import {Allocation} from '../models/allocation';
 import {isProd} from '../../app/env';
@@ -53,10 +53,33 @@ export class FirestoreStorage {
     this.currentUser.set(results.user);
   }
 
-  async addAllocation(allocation: Allocation) {
-    await addDoc(
+  /**
+   * We never really want there to be multiple allocations per category (maybe
+   * a cool future feature?), so if there is one, update it instead of adding
+   * a new allocation.
+   */
+  async upsertAllocation(allocation: Allocation) {
+    const user = this.currentUser();
+    if (user === null) return;
+
+    const allocationsQuery = query(
       collection(this.db, 'allocations'),
-      allocation.toSchema(this.assertUser().uid));
+      where("userId", "==", user.uid),
+      where("categoryId", "==", allocation.categoryId));
+    const querySnapshot = await getDocs(allocationsQuery);
+
+    const existingAllocation = querySnapshot.docs[0] ?? null;
+
+    if (existingAllocation === null) {
+      await addDoc(
+        collection(this.db, 'allocations'),
+        allocation.toSchema(this.assertUser().uid));
+    } else {
+      updateDoc(existingAllocation.ref, {
+        ...allocation.toSchema(user.uid),
+      });
+    }
+
   }
 
   private assertUser(): User {
