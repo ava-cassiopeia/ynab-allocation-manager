@@ -1,4 +1,4 @@
-import {Injectable, signal, computed, resource} from "@angular/core";
+import {Injectable, signal, computed, resource, effect} from "@angular/core";
 import {AccountType, API, BudgetSummary, CategoryGroupWithCategories} from "ynab";
 
 /**
@@ -81,6 +81,24 @@ export class YnabStorage {
           .filter((a) => a.type !== AccountType.CreditCard);
     },
   });
+
+  constructor() {
+    // Attempt to load any saved API key from session storage.
+    const storedApiKey = sessionStorage.getItem('ynab.apiKey');
+    if (storedApiKey) {
+      this.apiKey.set(storedApiKey);
+    }
+
+    // Save the provided API key to session storage.
+    effect(() => {
+      const apiKey = this.apiKey();
+      if (apiKey) {
+        sessionStorage.setItem('ynab.apiKey', apiKey);
+      } else {
+        sessionStorage.removeItem('ynab.apiKey');
+      }
+    });
+  }
 
   reset() {
     this.selectedBudget.set(null);
