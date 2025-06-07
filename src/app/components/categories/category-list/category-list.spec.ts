@@ -1,3 +1,4 @@
+import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {CategoryList} from './category-list';
@@ -8,7 +9,8 @@ describe('CategoryList', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [CategoryList]
+      imports: [CategoryList],
+      providers: [provideZonelessChangeDetection()],
     })
       .compileComponents();
 
