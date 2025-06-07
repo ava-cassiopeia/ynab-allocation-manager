@@ -1,8 +1,8 @@
 import {Injectable, signal, effect, inject} from '@angular/core';
 import {FirebaseApp, initializeApp} from 'firebase/app';
 import {Auth, User, getAuth, signInAnonymously, connectAuthEmulator} from 'firebase/auth';
-import {Unsubscribe, Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator, getDocs, updateDoc, doc, setDoc} from 'firebase/firestore';
-import {BudgetSummary} from 'ynab';
+import {Unsubscribe, Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator, getDocs, updateDoc, doc, setDoc, deleteDoc} from 'firebase/firestore';
+import {BudgetSummary, Category} from 'ynab';
 
 import {Allocation} from '../models/allocation';
 import {YnabStorage} from '../ynab/ynab_storage';
@@ -100,10 +100,14 @@ export class FirestoreStorage {
     const user = this.currentUser();
     if (user === null) return;
 
+    const budget = this.ynabStorage.selectedBudget();
+    if (budget === null) return;
+
     const allocationsQuery = query(
       collection(this.db, 'allocations'),
       where("userId", "==", user.uid),
-      where("categoryId", "==", allocation.categoryId));
+      where("categoryId", "==", allocation.categoryId),
+      where("budgetId", "==", budget.id));
     const querySnapshot = await getDocs(allocationsQuery);
 
     const existingAllocation = querySnapshot.docs[0] ?? null;
@@ -117,7 +121,27 @@ export class FirestoreStorage {
         ...allocation.toSchema(user.uid),
       });
     }
+  }
 
+  async clearAllocationForCategory(category: Category) {
+    const user = this.currentUser();
+    if (user === null) return;
+
+    const budget = this.ynabStorage.selectedBudget();
+    if (budget === null) return;
+
+    const allocationsQuery = query(
+      collection(this.db, 'allocations'),
+      where("userId", "==", user.uid),
+      where("categoryId", "==", category.id),
+      where("budgetId", "==", budget.id));
+    const querySnapshot = await getDocs(allocationsQuery);
+
+    const promises: Promise<void>[] = [];
+    querySnapshot.forEach((doc) => {
+      promises.push(deleteDoc(doc.ref));
+    });
+    await Promise.all(promises);
   }
 
   private assertUser(): User {
