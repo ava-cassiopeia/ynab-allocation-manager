@@ -39,6 +39,14 @@ export class AccountSummary {
     return sum;
   });
 
+  protected readonly delta = computed<number>(() => {
+    return this.account().cleared_balance - this.allocatedAmount();
+  });
+
+  protected readonly hasAllocations = computed<boolean>(() => {
+    return this.categories().length > 0;
+  });
+
   private readonly firestoreStorage = inject(FirestoreStorage);
   private readonly ynabStorage = inject(YnabStorage);
 }

@@ -3,15 +3,37 @@
   position: relative;
 }
 
+.current-allocation {
+  padding: 4px 20px;
+  border-radius: 100px;
+  border: 2px solid #555;
+  background: #ddd;
+}
+
 .accounts-dropdown {
   display: none;
   position: absolute;
   z-index: 3;
   top: 100%;
-  left: 0;
+  right: 0;
   background: white;
 
   &.show {
     display: block;
+  }
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.account {
+  > button {
+    border: none;
+    padding: 4px 20px;
+    white-space: nowrap;
+    width: 100%;
   }
 }

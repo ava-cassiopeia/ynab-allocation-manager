@@ -1,0 +1,42 @@
+:host {
+  display: block;
+  padding: 20px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.category-group {
+  padding: 20px;
+  border: 1px solid #eee;
+  border-radius: 12px;
+  margin: 0 0 12px;
+
+  & > .name {
+    font-size: 16px;
+    margin: 0 0 8px;
+  }
+}
+
+.categories {
+  display: grid;
+  grid-template-columns: min-content min-content 1fr;
+  width: 100%;
+  align-items: center;
+}
+
+.category {
+  display: contents;
+
+  > * {
+    padding: 4px 8px;
+    white-space: nowrap;
+  }
+
+  > .allocation {
+    text-align: right;
+  }
+}

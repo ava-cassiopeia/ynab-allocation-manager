@@ -6,20 +6,18 @@
   }
 </button>
 
-<div class="accounts-dropdown" [class.show]="showDropdown()">
-  <ul>
-    @for (account of ynabStorage.accounts.value(); track account.id) {
-      <li>
-        <button (click)="selectAccount(account)">
-          {{ account.name }}
-        </button>
-      </li>
-    }
+<ul class="accounts-dropdown"
+    [class.show]="showDropdown()"
+    (blur)="hideDropdown()">
+  <li class="account" role="option">
+    <button (click)="selectAccount(null)">Clear</button>
+  </li>
 
-    <li>
-      <button (click)="selectAccount(null)">
-        Reset
+  @for (account of ynabStorage.accounts.value(); track account.id) {
+    <li class="account" role="option">
+      <button (click)="selectAccount(account)">
+        {{ account.name }}
       </button>
     </li>
-  </ul>
-</div>
+  }
+</ul>

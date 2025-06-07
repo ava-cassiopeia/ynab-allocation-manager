@@ -1,7 +1,25 @@
 <div class="account-name">
   {{ account().name }}
 </div>
-<div>
-  <ya-currency [milliunits]="allocatedAmount()" />
-  ({{ categories().length }} categories)
+<div class="allocation">
+  @if (hasAllocations()) {
+    @if (delta() > 0) {
+      <div class="delta overage">
+        <ya-currency [milliunits]="delta()" />
+      </div>
+    } @else if (delta() < 0) {
+      <div class="delta short">
+        <ya-currency [milliunits]="delta() * -1" />
+      </div>
+    }
+  }
+
+  <div class="amount"
+      [class.overage]="hasAllocations() && delta() > 0"
+      [class.short]="hasAllocations() && delta() < 0"
+      [class.perfect]="hasAllocations() && delta() === 0">
+    <ya-currency [milliunits]="allocatedAmount()" />
+    &sol;
+    <ya-currency [milliunits]="account().cleared_balance" />
+  </div>
 </div>

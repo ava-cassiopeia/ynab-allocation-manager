@@ -1,0 +1,59 @@
+:host {
+  display: flex;
+  padding: 12px 20px;
+  gap: 8px;
+  align-items: center;
+}
+
+.account-name {
+  flex: 0;
+  font-weight: bold;
+  margin: 0 0 6px;
+  font-size: 16px;
+  white-space: nowrap;
+}
+
+.allocation {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 10px;
+}
+
+.amount,
+.delta {
+  padding: 2px 8px;
+  border: 2px solid #555;
+  background: #ddd;
+  border-radius: 100px;
+}
+
+.amount {
+  &.overage {
+    background: #4FC3F7;
+    border: 2px solid #03A9F4;
+  }
+
+  &.short {
+    background: #E57373;
+    border: 2px solid #F44336;
+  }
+
+  &.perfect {
+    background: #A5D6A7;
+    border: 2px solid #4CAF50;
+  }
+}
+
+.delta {
+  &.overage {
+    background: #B3E5FC; // Light Blue 100
+    border: 2px solid #4FC3F7; // Light Blue 300
+  }
+
+  &.short {
+    background: #FFCDD2;
+    border: 2px solid #E57373;
+  }
+}
