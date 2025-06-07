@@ -4,6 +4,7 @@
  */
 export class Allocation {
   constructor(
+    readonly budgetId: string,
     readonly categoryId: string,
     readonly accountId: string) {}
 
@@ -14,18 +15,20 @@ export class Allocation {
   toSchema(userId: string): AllocationSchema {
     return {
       userId,
+      budgetId: this.budgetId,
       categoryId: this.categoryId,
       accountId: this.accountId,
     };
   }
 
   static fromSchema(schema: AllocationSchema): Allocation {
-    return new Allocation(schema.accountId, schema.categoryId);
+    return new Allocation(schema.budgetId, schema.categoryId, schema.accountId);
   }
 }
 
 export interface AllocationSchema {
   readonly userId: string;
+  readonly budgetId: string;
   readonly categoryId: string;
   readonly accountId: string;
 }

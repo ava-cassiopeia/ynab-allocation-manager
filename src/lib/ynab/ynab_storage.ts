@@ -1,5 +1,5 @@
 import {Injectable, signal, computed, resource} from "@angular/core";
-import {API, BudgetSummary, CategoryGroupWithCategories} from "ynab";
+import {AccountType, API, BudgetSummary, CategoryGroupWithCategories} from "ynab";
 
 /**
  * Stores cached YNAB data for the application.
@@ -75,7 +75,10 @@ export class YnabStorage {
       return response.data.accounts
           // Only show active budget accounts
           .filter((a) => !a.closed)
-          .filter((a) => a.on_budget);
+          .filter((a) => a.on_budget)
+          // ...and exclude credit cards, since you can't _really_ just cache
+          // money there.
+          .filter((a) => a.type !== AccountType.CreditCard);
     },
   });
 
