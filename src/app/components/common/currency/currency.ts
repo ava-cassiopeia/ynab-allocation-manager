@@ -15,6 +15,6 @@ export class Currency {
     if (this.milliunits() === 0) return '-';
 
     const currencyAmount = Math.round(this.milliunits() / 10.0) / 100.0;
-    return `$${currencyAmount}`;
+    return `$${currencyAmount.toFixed(2)}`;
   });
 }

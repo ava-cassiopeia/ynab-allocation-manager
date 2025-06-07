@@ -1,3 +1,4 @@
+import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {BudgetSelector} from './budget-selector';
@@ -8,7 +9,8 @@ describe('BudgetSelector', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [BudgetSelector]
+      imports: [BudgetSelector],
+      providers: [provideZonelessChangeDetection()],
     })
       .compileComponents();
 
