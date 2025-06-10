@@ -8,6 +8,7 @@
   background: #ddd;
   border-radius: 100px;
   padding: 4px 12px;
+  font-size: 14px;
 
   &:hover {
     background: #aaa;
@@ -16,6 +17,22 @@
   &.open {
     background: #aaa;
     border: 2px solid #333;
+  }
+
+  // === Themes ===
+  &.overage {
+    background: #4FC3F7;
+    border: 2px solid #03A9F4;
+  }
+
+  &.warning {
+    background: #E57373;
+    border: 2px solid #F44336;
+  }
+
+  &.perfect {
+    background: #A5D6A7;
+    border: 2px solid #4CAF50;
   }
 }
 

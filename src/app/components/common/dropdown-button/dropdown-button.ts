@@ -7,6 +7,7 @@ import {Component, signal, input} from '@angular/core';
 })
 export class DropdownButton {
   readonly dropdownLabel = input.required<string>();
+  readonly theme = input<ButtonTheme>('default');
 
   protected readonly showDropdown = signal<boolean>(false);
 
@@ -18,3 +19,5 @@ export class DropdownButton {
     this.showDropdown.update((s) => !s);
   }
 }
+
+export type ButtonTheme = 'default' | 'overage' | 'warning' | 'perfect';

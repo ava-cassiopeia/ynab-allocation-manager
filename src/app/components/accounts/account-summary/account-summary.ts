@@ -1,15 +1,16 @@
 import {Component, inject, input, computed} from '@angular/core';
 import {Account, Category} from 'ynab';
 
+import {Currency} from '../../common/currency/currency';
+import {DropdownButton, ButtonTheme} from '../../common/dropdown-button/dropdown-button';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
-import {Currency} from '../../common/currency/currency';
 
 @Component({
   selector: 'ya-account-summary',
   templateUrl: './account-summary.html',
   styleUrl: './account-summary.scss',
-  imports: [Currency]
+  imports: [Currency, DropdownButton],
 })
 export class AccountSummary {
   readonly account = input.required<Account>();
@@ -45,6 +46,19 @@ export class AccountSummary {
 
   protected readonly hasAllocations = computed<boolean>(() => {
     return this.categories().length > 0;
+  });
+
+  protected readonly allocationsTheme = computed<ButtonTheme>(() => {
+    if (!this.hasAllocations()) return 'default';
+    const delta = this.delta();
+
+    if (delta > 0) {
+      return 'overage';
+    } else if (delta < 0) {
+      return 'warning';
+    } else {
+      return 'perfect';
+    }
   });
 
   private readonly firestoreStorage = inject(FirestoreStorage);

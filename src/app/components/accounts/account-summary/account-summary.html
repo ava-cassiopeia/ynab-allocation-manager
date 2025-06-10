@@ -4,22 +4,48 @@
 <div class="allocation">
   @if (hasAllocations()) {
     @if (delta() > 0) {
-      <div class="delta overage">
-        <ya-currency [milliunits]="delta()" />
-      </div>
+      <ya-dropdown-button dropdownLabel="Excess" theme="overage">
+        <ya-currency label [milliunits]="delta()" />
+
+        <p dropdown class="info-text">
+          You have <b><ya-currency label [milliunits]="delta()" /></b> excess in
+          this account compared to the required allocation.
+        </p>
+      </ya-dropdown-button>
     } @else if (delta() < 0) {
-      <div class="delta short">
-        <ya-currency [milliunits]="delta() * -1" />
-      </div>
+      <ya-dropdown-button dropdownLabel="Missing funds" theme="warning">
+        <ya-currency label [milliunits]="delta() * -1" />
+
+        <p dropdown class="info-text">
+          You don't have enough money in this account to match your allocations.
+          Transfer another <b><ya-currency [milliunits]="delta() * -1" /></b> to
+          this account to fix this.
+        </p>
+      </ya-dropdown-button>
     }
   }
 
-  <div class="amount"
-      [class.overage]="hasAllocations() && delta() > 0"
-      [class.short]="hasAllocations() && delta() < 0"
-      [class.perfect]="hasAllocations() && delta() === 0">
-    <ya-currency [milliunits]="allocatedAmount()" />
-    &sol;
-    <ya-currency [milliunits]="account().cleared_balance" />
-  </div>
+  <ya-dropdown-button dropdownLabel="Allocation" [theme]="allocationsTheme()">
+    <div label class="allocation-label">
+      <ya-currency [milliunits]="allocatedAmount()" />
+      &sol;
+      <ya-currency [milliunits]="account().cleared_balance" />
+    </div>
+
+    <div dropdown>
+      <div class="allocation-table">
+        <div>&nbsp;</div>
+        <div>Balance:</div>
+        <ya-currency [milliunits]="account().cleared_balance" />
+
+        <div class="allocated">-</div>
+        <div class="allocated">Allocated ({{ categories().length }}):</div>
+        <ya-currency class="allocated" [milliunits]="allocatedAmount()" />
+
+        <div>=</div>
+        <div>&nbsp;</div>
+        <ya-currency [milliunits]="delta()" />
+      </div>
+    </div>
+  </ya-dropdown-button>
 </div>

@@ -6,11 +6,13 @@
 }
 
 .account-name {
-  flex: 0;
+  flex: 1;
   font-weight: bold;
   margin: 0 0 6px;
   font-size: 16px;
   white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .allocation {
@@ -21,39 +23,34 @@
   gap: 10px;
 }
 
-.amount,
-.delta {
-  padding: 2px 8px;
-  border: 2px solid #555;
-  background: #ddd;
-  border-radius: 100px;
+.info-text {
+  min-width: 200px;
+  padding: 8px 12px 20px;
+  margin: 0;
 }
 
-.amount {
-  &.overage {
-    background: #4FC3F7;
-    border: 2px solid #03A9F4;
-  }
-
-  &.short {
-    background: #E57373;
-    border: 2px solid #F44336;
-  }
-
-  &.perfect {
-    background: #A5D6A7;
-    border: 2px solid #4CAF50;
-  }
+.allocation-label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
 }
 
-.delta {
-  &.overage {
-    background: #B3E5FC; // Light Blue 100
-    border: 2px solid #4FC3F7; // Light Blue 300
+.allocation-table {
+  display: grid;
+  grid-template-columns: min-content 1fr 1fr;
+  padding: 20px 12px;
+
+  > * {
+    white-space: nowrap;
+    padding: 4px 10px;
   }
 
-  &.short {
-    background: #FFCDD2;
-    border: 2px solid #E57373;
+  > .allocated {
+    border-bottom: 1px solid #555;
+  }
+
+  > ya-currency {
+    font-weight: bold;
   }
 }

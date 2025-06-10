@@ -1,4 +1,7 @@
-<button class="toggle-button" [class.open]="showDropdown()" (click)="toggleDropdown()">
+<button class="toggle-button"
+    [class]="theme()"
+    [class.open]="showDropdown()"
+    (click)="toggleDropdown()">
   <ng-content select="[label]" />
 </button>
 
