@@ -1,26 +1,5 @@
 :host {
   display: block;
-  position: relative;
-}
-
-.current-allocation {
-  padding: 4px 20px;
-  border-radius: 100px;
-  border: 2px solid #555;
-  background: #ddd;
-}
-
-.accounts-dropdown {
-  display: none;
-  position: absolute;
-  z-index: 3;
-  top: 100%;
-  right: 0;
-  background: white;
-
-  &.show {
-    display: block;
-  }
 }
 
 ul {
@@ -29,11 +8,36 @@ ul {
   margin: 0;
 }
 
-.account {
+.account > button {
+  border: none;
+  padding: 8px 20px;
+  white-space: nowrap;
+  width: 100%;
+  background: transparent;
+  text-align: left;
+
+  &:hover,
+  &:focus {
+    background: #aaa;
+  }
+}
+
+.clear {
+  margin: 8px 0;
+  display: flex;
+  justify-content: center;
+
   > button {
-    border: none;
-    padding: 4px 20px;
+    border: 1px solid #eee;
+    padding: 8px 20px;
+    border-radius: 100px;
     white-space: nowrap;
-    width: 100%;
+    background: transparent;
+    text-align: center;
+
+    &:hover,
+    &:focus {
+      background: #aaa;
+    }
   }
 }

@@ -1,19 +1,21 @@
-import {Component, inject, input, computed, signal} from '@angular/core';
+import {Component, inject, input, computed, ViewChild} from '@angular/core';
 import {Account, Category} from 'ynab';
 
 import {Allocation} from '../../../../lib/models/allocation';
+import {DropdownButton} from '../../common/dropdown-button/dropdown-button';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
 
 @Component({
   selector: 'ya-allocation-selector',
   templateUrl: './allocation-selector.html',
-  styleUrl: './allocation-selector.scss'
+  styleUrl: './allocation-selector.scss',
+  imports: [DropdownButton],
 })
 export class AllocationSelector {
   readonly category = input.required<Category>();
 
-  protected readonly showDropdown = signal<boolean>(false);
+  @ViewChild(DropdownButton) dropdownButton!: DropdownButton;
 
   /**
    * The currently selected allocation. Instead of keeping some local copy
@@ -54,26 +56,18 @@ export class AllocationSelector {
 
   private readonly firestoreStorage = inject(FirestoreStorage);
 
-  protected toggleDropdown() {
-    this.showDropdown.update((show) => !show);
-  }
-
-  protected hideDropdown() {
-    this.showDropdown.set(false);
-  }
-
   protected async selectAccount(account: Account | null) {
     const budget = this.ynabStorage.selectedBudget();
     if (budget === null) return;
 
     if (account === null) {
       await this.firestoreStorage.clearAllocationForCategory(this.category());
-      this.hideDropdown();
+      this.dropdownButton.close();
       return;
     }
 
     const newAllocation = new Allocation(budget.id, this.category().id, account.id);
     await this.firestoreStorage.upsertAllocation(newAllocation);
-    this.hideDropdown();
+    this.dropdownButton.close();
   }
 }

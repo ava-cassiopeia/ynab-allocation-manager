@@ -1,0 +1,52 @@
+:host {
+  position: relative;
+  display: inline-block;
+}
+
+.toggle-button {
+  border: 2px solid #555;
+  background: #ddd;
+  border-radius: 100px;
+  padding: 4px 12px;
+
+  &:hover {
+    background: #aaa;
+  }
+
+  &.open {
+    background: #aaa;
+    border: 2px solid #333;
+  }
+}
+
+.dropdown {
+  $elasticEasing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  z-index: 3;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background: #fff;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23);
+  transition: opacity 200ms $elasticEasing,
+              transform 200ms $elasticEasing;
+
+  &:not(.show) {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-50px) scale(0.8);
+  }
+
+  &.show {
+    opacity: 1;
+    pointer-events: all;
+  }
+
+  > .label {
+    text-align: center;
+    margin: 0;
+    padding: 12px;
+    font-weight: bold;
+  }
+}

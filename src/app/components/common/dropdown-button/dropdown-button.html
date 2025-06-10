@@ -1,0 +1,8 @@
+<button class="toggle-button" [class.open]="showDropdown()" (click)="toggleDropdown()">
+  <ng-content select="[label]" />
+</button>
+
+<div #dropdown class="dropdown" [class.show]="showDropdown()">
+  <p class="label">{{ dropdownLabel() }}</p>
+  <ng-content select="[dropdown]" />
+</div>
