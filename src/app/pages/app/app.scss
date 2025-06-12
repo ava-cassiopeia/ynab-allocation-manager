@@ -1,7 +1,22 @@
 :host {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 0;
+}
+
+.header {
+  flex: 0;
+  padding: 20px;
+}
+
+.main-content {
+  flex: 1;
   display: grid;
   grid-template-columns: 500px 1fr;
   height: 100%;
+  min-height: 0;
+  overflow: hidden;
 }
 
 .account-sidebar,

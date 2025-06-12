@@ -1,10 +1,11 @@
 import {Component, inject} from '@angular/core';
 
+import {AccountList} from '../../components/accounts/account-list/account-list';
+import {BudgetSelectorButton} from '../../components/budgets/budget-selector-button/budget-selector-button';
 import {BudgetSelector} from '../../components/budgets/budget-selector/budget-selector';
 import {CategoryList} from '../../components/categories/category-list/category-list';
-import {YnabTokenForm} from '../../components/auth/ynab-token-form/ynab-token-form';
 import {YnabStorage} from '../../../lib/ynab/ynab_storage';
-import {AccountList} from '../../components/accounts/account-list/account-list';
+import {YnabTokenForm} from '../../components/auth/ynab-token-form/ynab-token-form';
 
 @Component({
   selector: 'ya-app-page',
@@ -13,6 +14,7 @@ import {AccountList} from '../../components/accounts/account-list/account-list';
   imports: [
     AccountList,
     BudgetSelector,
+    BudgetSelectorButton,
     CategoryList,
     YnabTokenForm,
   ],

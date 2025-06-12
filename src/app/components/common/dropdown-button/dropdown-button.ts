@@ -8,6 +8,7 @@ import {Component, signal, input} from '@angular/core';
 export class DropdownButton {
   readonly dropdownLabel = input.required<string>();
   readonly theme = input<ButtonTheme>('default');
+  readonly align = input<ButtonAlignment>('default');
 
   protected readonly showDropdown = signal<boolean>(false);
 
@@ -21,3 +22,4 @@ export class DropdownButton {
 }
 
 export type ButtonTheme = 'default' | 'overage' | 'warning' | 'perfect';
+export type ButtonAlignment = 'default' | 'left';

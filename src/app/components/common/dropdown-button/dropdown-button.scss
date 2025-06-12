@@ -49,6 +49,11 @@
   transition: opacity 200ms $elasticEasing,
               transform 200ms $elasticEasing;
 
+  &.align-left {
+    left: 0;
+    right: initial;
+  }
+
   &:not(.show) {
     opacity: 0;
     pointer-events: none;

@@ -5,7 +5,10 @@
   <ng-content select="[label]" />
 </button>
 
-<div #dropdown class="dropdown" [class.show]="showDropdown()">
+<div #dropdown
+    class="dropdown"
+    [class]="'align-' + align()"
+    [class.show]="showDropdown()">
   <p class="label">{{ dropdownLabel() }}</p>
   <ng-content select="[dropdown]" />
 </div>

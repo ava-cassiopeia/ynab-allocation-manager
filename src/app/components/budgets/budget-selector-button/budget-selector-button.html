@@ -1,0 +1,13 @@
+<ya-dropdown-button dropdownLabel="Select budget:" align="left">
+  <span label>{{ ynabStorage.selectedBudget()?.name ?? '-' }}</span>
+
+  <ul dropdown>
+    @for (budget of ynabStorage.budgets.value(); track budget.id) {
+      <li class="budget">
+        <button (click)="selectBudget(budget)">
+          {{ budget.name }}
+        </button>
+      </li>
+    }
+  </ul>
+</ya-dropdown-button>
