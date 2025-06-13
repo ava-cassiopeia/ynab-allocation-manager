@@ -1,14 +1,16 @@
+import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {DropdownButton} from './dropdown-button';
 
 describe('DropdownButton', () => {
-  let component: DropdownButton;
-  let fixture: ComponentFixture<DropdownButton>;
+  let component: DropdownButton<any>;
+  let fixture: ComponentFixture<DropdownButton<any>>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [DropdownButton]
+      imports: [DropdownButton],
+      providers: [provideZonelessChangeDetection()],
     })
       .compileComponents();
 

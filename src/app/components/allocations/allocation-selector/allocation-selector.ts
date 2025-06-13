@@ -2,7 +2,7 @@ import {Component, inject, input, computed, ViewChild} from '@angular/core';
 import {Account, Category} from 'ynab';
 
 import {Allocation} from '../../../../lib/models/allocation';
-import {DropdownButton} from '../../common/dropdown-button/dropdown-button';
+import {DropdownButton, DropdownMenuItem} from '../../common/dropdown-button/dropdown-button';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
 
@@ -15,7 +15,7 @@ import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
 export class AllocationSelector {
   readonly category = input.required<Category>();
 
-  @ViewChild(DropdownButton) dropdownButton!: DropdownButton;
+  @ViewChild(DropdownButton) dropdownButton!: DropdownButton<Account>;
 
   /**
    * The currently selected allocation. Instead of keeping some local copy
@@ -50,6 +50,20 @@ export class AllocationSelector {
     }
 
     return null;
+  });
+
+  protected readonly menuItems = computed<DropdownMenuItem<Account>[]>(() => {
+    const accounts = this.ynabStorage.accounts.value();
+    if (!accounts) return [];
+
+    return accounts.map((a) => ({
+      label: a.name,
+      icon: this.allocatedAccount() === a ? 'done' : 'account_balance',
+      value: a,
+      action: (value: Account) => {
+        this.selectAccount(value);
+      },
+    }));
   });
 
   protected readonly ynabStorage = inject(YnabStorage);

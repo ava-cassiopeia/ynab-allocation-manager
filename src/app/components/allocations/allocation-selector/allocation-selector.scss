@@ -2,42 +2,22 @@
   display: block;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.dropdown {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
 }
 
-.account > button {
-  border: none;
+.clear-button {
+  border: 1px solid #eee;
   padding: 8px 20px;
+  border-radius: 100px;
   white-space: nowrap;
-  width: 100%;
   background: transparent;
-  text-align: left;
+  text-align: center;
 
   &:hover,
   &:focus {
     background: #aaa;
-  }
-}
-
-.clear {
-  margin: 8px 0;
-  display: flex;
-  justify-content: center;
-
-  > button {
-    border: 1px solid #eee;
-    padding: 8px 20px;
-    border-radius: 100px;
-    white-space: nowrap;
-    background: transparent;
-    text-align: center;
-
-    &:hover,
-    &:focus {
-      background: #aaa;
-    }
   }
 }
