@@ -1,5 +1,5 @@
 <div class="account-name">
-  {{ account().name }}
+  {{ account().account.name }}
 </div>
 <div class="allocation">
   @if (hasAllocations()) {
@@ -29,17 +29,17 @@
     <div label class="allocation-label">
       <ya-currency [milliunits]="allocatedAmount()" />
       &sol;
-      <ya-currency [milliunits]="account().cleared_balance" />
+      <ya-currency [milliunits]="account().account.cleared_balance" />
     </div>
 
     <div dropdown>
       <div class="allocation-table">
         <div>&nbsp;</div>
         <div>Balance:</div>
-        <ya-currency [milliunits]="account().cleared_balance" />
+        <ya-currency [milliunits]="account().account.cleared_balance" />
 
         <div class="allocated">-</div>
-        <div class="allocated">Allocated ({{ categories().length }}):</div>
+        <div class="allocated">Allocated ({{ account().categories.length }}):</div>
         <ya-currency class="allocated" [milliunits]="allocatedAmount()" />
 
         <div>=</div>

@@ -12,6 +12,10 @@
   border-radius: 100px;
   padding: 4px 12px;
   font-size: 14px;
+  white-space: nowrap;
+  min-width: 0px;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   &:hover {
     background: #aaa;

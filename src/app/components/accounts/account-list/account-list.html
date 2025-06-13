@@ -1,5 +1,5 @@
 <ul>
-  @for (account of ynabStorage.accounts.value(); track account.id) {
+  @for (account of sortedAccounts(); track account) {
     <li>
       <ya-account-summary [account]="account" />
     </li>

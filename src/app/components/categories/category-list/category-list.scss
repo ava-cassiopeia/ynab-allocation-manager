@@ -1,6 +1,7 @@
 :host {
-  display: block;
-  padding: 20px;
+  display: grid;
+  grid-template-columns: minmax(50px, 150px) minmax(0, min-content) 1fr;
+  align-items: center;
 }
 
 ul {
@@ -10,22 +11,28 @@ ul {
 }
 
 .category-group {
-  padding: 20px;
-  border: 1px solid #eee;
-  border-radius: 12px;
-  margin: 0 0 12px;
+  display: contents;
 
-  & > .name {
+  &:first-of-type > .name {
+    border-top: none;
+  }
+
+  > .name {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    grid-column: 1 / span 3;
     font-size: 16px;
-    margin: 0 0 8px;
+    font-weight: bold;
+    background: #eee;
+    border-top: 1px solid #aaa;
+    border-bottom: 1px solid #aaa;
+    padding: 4px 24px;
   }
 }
 
 .categories {
-  display: grid;
-  grid-template-columns: min-content min-content 1fr;
-  width: 100%;
-  align-items: center;
+  display: contents;
 }
 
 .category {
@@ -34,6 +41,13 @@ ul {
   > * {
     padding: 4px 8px;
     white-space: nowrap;
+  }
+
+  > .name,
+  > .balance {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    min-width: 0;
   }
 
   > .allocation {
