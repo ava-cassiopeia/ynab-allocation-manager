@@ -12,6 +12,7 @@ export class DropdownButton<MenuItemType> {
   readonly dropdownLabel = input.required<string>();
   readonly menuItems = input<DropdownMenuItem<MenuItemType>[]>([]);
   readonly theme = input<ButtonTheme>('default');
+  readonly icon = input<string | null>(null);
 
   protected readonly dropdownShowing = signal<boolean>(false);
 

@@ -7,7 +7,28 @@
 
 .header {
   flex: 0;
-  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  padding: 0 20px;
+  color: var(--theme-primary-complement-color);
+  background: var(--theme-primary-color);
+
+  .site-title {
+    font-size: 20px;
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white; // fixed contrast with the logo color
+    border-radius: 1000px;
+
+    > img {
+      height: 42px;
+    }
+  }
 }
 
 .main-content {
@@ -22,4 +43,9 @@
 .account-sidebar,
 .categories {
   overflow-y: auto;
+}
+
+.account-sidebar {
+  background: color-mix(in srgb, var(--theme-primary-color) 35%, white);
+  border-right: 1px solid var(--theme-primary-color);
 }

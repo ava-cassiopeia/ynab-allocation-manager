@@ -4,6 +4,9 @@
     [cdkMenuTriggerFor]="context_menu"
     (cdkMenuClosed)="dropdownShowing.set(false)"
     (cdkMenuOpened)="dropdownShowing.set(true)">
+  @if (icon() !== null) {
+    <mat-icon inline aria-hidden="true">{{ icon() }}</mat-icon>
+  }
   <ng-content select="[label]" />
 </button>
 
