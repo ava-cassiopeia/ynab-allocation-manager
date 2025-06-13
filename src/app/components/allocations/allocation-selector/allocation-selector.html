@@ -1,19 +1,16 @@
-<button class="current-allocation" (click)="toggleDropdown()">
-  @if (allocatedAccount() === null) {
-    -
-  } @else {
-    {{ allocatedAccount()!.name }}
-  }
-</button>
-
-<div class="accounts-dropdown" [class.show]="showDropdown()">
-  <ul>
-    @for (account of ynabStorage.accounts.value(); track account.id) {
-      <li>
-        <button (click)="selectAccount(account)">
-          {{ account.name }}
-        </button>
-      </li>
+<ya-dropdown-button dropdownLabel="Allocate to:" [menuItems]="menuItems()">
+  <span label>
+    @if (allocatedAccount() === null) {
+      -
+    } @else {
+      {{ allocatedAccount()!.name }}
     }
-  </ul>
-</div>
+  </span>
+
+  @if (allocatedAccount() !== null) {
+    <div dropdown class="dropdown">
+        <button class="clear-button" (click)="selectAccount(null)">Clear</button>
+    </div>
+  }
+</ya-dropdown-button>
+

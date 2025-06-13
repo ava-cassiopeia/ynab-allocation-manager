@@ -1,8 +1,8 @@
 import {Injectable, signal, effect, inject} from '@angular/core';
 import {FirebaseApp, initializeApp} from 'firebase/app';
 import {Auth, User, getAuth, signInAnonymously, connectAuthEmulator} from 'firebase/auth';
-import {Unsubscribe, Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator, getDocs, updateDoc} from 'firebase/firestore';
-import {BudgetSummary} from 'ynab';
+import {Unsubscribe, Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator, getDocs, updateDoc, doc, setDoc, deleteDoc} from 'firebase/firestore';
+import {BudgetSummary, Category} from 'ynab';
 
 import {Allocation} from '../models/allocation';
 import {YnabStorage} from '../ynab/ynab_storage';
@@ -26,12 +26,17 @@ export class FirestoreStorage {
 
   readonly allocations = signal<Allocation[]>([]);
 
+  readonly settings = signal<UserSettings>({
+    selectedBudgetId: null,
+  });
+
   private readonly app: FirebaseApp;
   private readonly db: Firestore;
   private readonly auth: Auth;
   private readonly ynabStorage = inject(YnabStorage);
 
   private allocationsUnsubscribe: Unsubscribe | null = null;
+  private settingsUnsubscribe: Unsubscribe | null = null;
 
   constructor() {
     this.app = initializeApp(firebaseConfig);
@@ -48,10 +53,36 @@ export class FirestoreStorage {
     effect(() => {
       const user = this.currentUser();
       const budget = this.ynabStorage.selectedBudget();
+
       if (user === null) return;
+      this.listenForSettingsUpdates(user);
+
       if (budget === null) return;
 
-      this.listenForFirestoreUpdates(user, budget);
+      setDoc(doc(this.db, 'settings', user.uid), {
+        selectedBudgetId: budget.id,
+      });
+      this.listenForAllocationsUpdates(user, budget);
+    });
+
+    effect(() => {
+      const settingsBudgetId = this.settings().selectedBudgetId;
+      if (settingsBudgetId === null) return;
+
+      const budgets = this.ynabStorage.budgets.value();
+      if (!budgets) return;
+
+      let foundBudget = null;
+      for (const budget of budgets) {
+        if (budget.id === settingsBudgetId) {
+          foundBudget = budget;
+          break;
+        }
+      }
+
+      if (!foundBudget) return;
+
+      this.ynabStorage.selectedBudget.set(foundBudget);
     });
   }
 
@@ -69,10 +100,14 @@ export class FirestoreStorage {
     const user = this.currentUser();
     if (user === null) return;
 
+    const budget = this.ynabStorage.selectedBudget();
+    if (budget === null) return;
+
     const allocationsQuery = query(
       collection(this.db, 'allocations'),
       where("userId", "==", user.uid),
-      where("categoryId", "==", allocation.categoryId));
+      where("categoryId", "==", allocation.categoryId),
+      where("budgetId", "==", budget.id));
     const querySnapshot = await getDocs(allocationsQuery);
 
     const existingAllocation = querySnapshot.docs[0] ?? null;
@@ -86,7 +121,27 @@ export class FirestoreStorage {
         ...allocation.toSchema(user.uid),
       });
     }
+  }
 
+  async clearAllocationForCategory(category: Category) {
+    const user = this.currentUser();
+    if (user === null) return;
+
+    const budget = this.ynabStorage.selectedBudget();
+    if (budget === null) return;
+
+    const allocationsQuery = query(
+      collection(this.db, 'allocations'),
+      where("userId", "==", user.uid),
+      where("categoryId", "==", category.id),
+      where("budgetId", "==", budget.id));
+    const querySnapshot = await getDocs(allocationsQuery);
+
+    const promises: Promise<void>[] = [];
+    querySnapshot.forEach((doc) => {
+      promises.push(deleteDoc(doc.ref));
+    });
+    await Promise.all(promises);
   }
 
   private assertUser(): User {
@@ -98,7 +153,7 @@ export class FirestoreStorage {
     return user;
   }
 
-  private listenForFirestoreUpdates(forUser: User, forBudget: BudgetSummary) {
+  private listenForAllocationsUpdates(forUser: User, forBudget: BudgetSummary) {
     if (this.allocationsUnsubscribe !== null) {
       this.allocationsUnsubscribe();
     }
@@ -117,4 +172,22 @@ export class FirestoreStorage {
       this.allocations.set(allocations);
     });
   }
+
+  private listenForSettingsUpdates(forUser: User) {
+    if (this.settingsUnsubscribe !== null) {
+      this.settingsUnsubscribe();
+    }
+
+    // Keep user settings in sync.
+    this.allocationsUnsubscribe = onSnapshot(doc(this.db, 'settings', forUser.uid), (docSnapshot) => {
+      const data = docSnapshot.data();
+      if (!data) return;
+
+      this.settings.set(data as any);
+    });
+  }
+}
+
+interface UserSettings {
+  readonly selectedBudgetId: string | null;
 }

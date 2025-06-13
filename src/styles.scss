@@ -1,1 +1,18 @@
-/* You can add global styles to this file, and also import other style files */
+html,
+body {
+  width: 100%;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  // The same font that YNAB uses in their main app, for consistency.
+  font-family: Figtree, sans-serif;
+}
+
+button {
+  font-family: inherit;
+}
+
+// Always change the user's cursor when they're hovering over a button.
+button:hover {
+  cursor: pointer;
+}

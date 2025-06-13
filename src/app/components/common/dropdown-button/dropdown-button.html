@@ -1,0 +1,32 @@
+<button class="toggle-button"
+    [class]="theme()"
+    [class.open]="dropdownShowing()"
+    [cdkMenuTriggerFor]="context_menu"
+    (cdkMenuClosed)="dropdownShowing.set(false)"
+    (cdkMenuOpened)="dropdownShowing.set(true)">
+  <ng-content select="[label]" />
+</button>
+
+<ng-template #context_menu>
+  <div #dropdown
+      cdkMenu
+      class="dropdown">
+    <p class="label">{{ dropdownLabel() }}</p>
+    <ng-content select="[dropdown]" />
+
+    @if (menuItems().length > 0) {
+      <ul class="menu-items">
+        @for (item of menuItems(); track item) {
+          <li>
+            <button cdkMenuItem (click)="item.action(item.value)">
+              @if (item.icon) {
+                <mat-icon inline aria-hidden="true">{{ item.icon }}</mat-icon>
+              }
+              {{ item.label }}
+            </button>
+          </li>
+        }
+      </ul>
+    }
+  </div>
+</ng-template>

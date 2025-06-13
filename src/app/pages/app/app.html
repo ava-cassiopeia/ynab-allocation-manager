@@ -1,12 +1,17 @@
-<div class="account-sidebar">
-  <ya-account-list />
+<div class="header">
+  <ya-budget-selector-button />
 </div>
-<div class="categories">
-  @if (ynabStorage.apiKey() === null) {
-    <ya-ynab-token-form />
-  } @else if (ynabStorage.selectedBudget() === null) {
-    <ya-budget-selector />
-  } @else {
-    <ya-category-list />
-  }
+<div class="main-content">
+  <div class="account-sidebar">
+    <ya-account-list />
+  </div>
+  <div class="categories">
+    @if (ynabStorage.apiKey() === null) {
+      <ya-ynab-token-form />
+    } @else if (ynabStorage.selectedBudget() === null) {
+      <ya-budget-selector />
+    } @else {
+      <ya-category-list />
+    }
+  </div>
 </div>

@@ -1,17 +1,23 @@
 :host {
   display: block;
-  position: relative;
 }
 
-.accounts-dropdown {
-  display: none;
-  position: absolute;
-  z-index: 3;
-  top: 100%;
-  left: 0;
-  background: white;
+.dropdown {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
 
-  &.show {
-    display: block;
+.clear-button {
+  border: 1px solid #eee;
+  padding: 8px 20px;
+  border-radius: 100px;
+  white-space: nowrap;
+  background: transparent;
+  text-align: center;
+
+  &:hover,
+  &:focus {
+    background: #aaa;
   }
 }

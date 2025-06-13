@@ -1,19 +1,17 @@
 @for (categoryGroup of ynabStorage.categories.value(); track categoryGroup.id) {
   @if (!categoryGroup.hidden) {
-    <div>
-      <p>{{ categoryGroup.name }}</p>
+    <div class="category-group">
+      <div class="name">{{ categoryGroup.name }}</div>
 
-      <ul>
+      <div class="categories">
         @for (category of categoryGroup.categories; track category.id) {
-          @if (!category.hidden) {
-            <li>
-              {{ category.name }} &mdash;
-              <ya-currency [milliunits]="category.balance" />
-              <ya-allocation-selector [category]="category" />
-            </li>
-          }
+          <div class="category">
+            <div>{{ category.name }}</div>
+            <div><ya-currency [milliunits]="category.balance" /></div>
+            <div class="allocation"><ya-allocation-selector [category]="category" /></div>
+          </div>
         }
-      </ul>
+      </div>
     </div>
   }
 }
