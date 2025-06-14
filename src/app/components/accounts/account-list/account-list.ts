@@ -55,22 +55,6 @@ export class AccountList {
       };
     });
   });
-
-  protected readonly sortedAccounts = computed<AccountAllocation[]>(() => {
-    const allocatedAccounts: AccountAllocation[] = [];
-    const unallocatedAccounts: AccountAllocation[] = [];
-
-    for (const account of this.accounts()) {
-      if (account.categories.length < 1) {
-        unallocatedAccounts.push(account);
-        continue;
-      }
-
-      allocatedAccounts.push(account);
-    }
-
-    return [...allocatedAccounts, ...unallocatedAccounts];
-  });
 }
 
 type AccountId = string;

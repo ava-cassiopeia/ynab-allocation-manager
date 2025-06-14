@@ -1,6 +1,7 @@
 <button class="ya-button"
     [class]="theme()"
     [class.open]="dropdownShowing()"
+    [class.flat]="flat()"
     [cdkMenuTriggerFor]="context_menu"
     (cdkMenuClosed)="dropdownShowing.set(false)"
     (cdkMenuOpened)="dropdownShowing.set(true)">
@@ -19,7 +20,7 @@
 
     @if (menuItems().length > 0) {
       <ul class="menu-items">
-        @for (item of menuItems(); track item) {
+        @for (item of menuItems(); track item.value) {
           <li>
             <button cdkMenuItem (click)="item.action(item.value)">
               @if (item.icon) {

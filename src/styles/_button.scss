@@ -21,6 +21,7 @@ button.ya-button {
               0 2px 0 var(--shadow-color_),
               0 3px 0 var(--shadow-color_);
   transform: translateY(0);
+  margin: 0 0 3px;
 
   &:hover {
     box-shadow: 0 1px 0 var(--shadow-color_),
@@ -59,6 +60,15 @@ button.ya-button {
     &:active {
       box-shadow: 0 1px 0 var(--shadow-color_);
       transform: translateY(2px);
+    }
+
+    &.open {
+      box-shadow: 0 1px 0 var(--shadow-color_),
+                  0 2px 0 var(--shadow-color_),
+                  0 3px 0 var(--shadow-color_),
+                  0 4px 0 var(--shadow-color_),
+                  0 5px 0 var(--shadow-color_);
+      transform: translateY(-2px);
     }
   }
 

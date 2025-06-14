@@ -25,7 +25,10 @@
     }
   }
 
-  <ya-dropdown-button dropdownLabel="Allocation" [theme]="allocationsTheme()">
+  <ya-dropdown-button
+      dropdownLabel="Allocation"
+      [theme]="allocationsTheme()"
+      [flat]="!hasAllocations()">
     <div label class="allocation-label">
       <ya-currency [milliunits]="allocatedAmount()" />
       &sol;

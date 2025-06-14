@@ -1,4 +1,7 @@
-<ya-dropdown-button dropdownLabel="Allocate to:" [menuItems]="menuItems()">
+<ya-dropdown-button
+    dropdownLabel="Allocate to:"
+    [menuItems]="menuItems()"
+    [flat]="allocatedAccount() === null">
   <span label>
     @if (allocatedAccount() === null) {
       -
