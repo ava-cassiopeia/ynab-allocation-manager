@@ -91,6 +91,16 @@ export class YnabStorage {
     },
   });
 
+  readonly status = computed<YnabStorageStatus>(() => {
+    if (this.selectedBudget() === null) return YnabStorageStatus.NO_BUDGET_SELECTED;
+
+    if (this.accounts.isLoading() || this.categories.isLoading()) {
+      return YnabStorageStatus.LOADING_BUDGET_DETAILS;
+    }
+
+    return YnabStorageStatus.READY;
+  });
+
   constructor() {
     // Attempt to load any saved API key from session storage.
     const storedApiKey = sessionStorage.getItem('ynab.apiKey');
@@ -112,4 +122,16 @@ export class YnabStorage {
   reset() {
     this.selectedBudget.set(null);
   }
+}
+
+function sleep(time: number): Promise<void> {
+  return new Promise((resolve) => {
+    setTimeout(() => resolve(), time);
+  });
+}
+
+export enum YnabStorageStatus {
+  NO_BUDGET_SELECTED = 1,
+  LOADING_BUDGET_DETAILS = 2,
+  READY = 3,
 }

@@ -1,15 +1,35 @@
 <header class="header">
-  <div class="logo">
-    <img src="/images/logo_round.png" alt="Site logo - an abstract orchard of trees" />
+  <section class="site-branding">
+    <div class="logo">
+      <img src="/images/logo_round.png" alt="Site logo - an abstract orchard of trees" />
+    </div>
+    <p class="site-title">YNAB Allocation Manager</p>
+  </section>
+
+  <div class="control-panel">
+    <div class="controls">
+      <ya-budget-selector-button />
+    </div>
   </div>
-  <p class="site-title">YNAB Allocation Manager</p>
-  <ya-budget-selector-button />
 </header>
 <main class="main-content">
-  <div class="account-sidebar">
+  <div #accountSidebar
+      class="account-sidebar"
+      [class.loading]="ynabStorage.status() === YnabStorageStatus.LOADING_BUDGET_DETAILS"
+      [style.--fixed-height]="fixedHeight()">
+    <div class="loading-overlay">
+      <p>Loading...</p>
+    </div>
+
     <ya-account-list />
   </div>
-  <div class="categories">
+
+  <div class="categories"
+      [class.loading]="ynabStorage.status() === YnabStorageStatus.LOADING_BUDGET_DETAILS">
+    <div class="loading-overlay">
+      <p>Loading...</p>
+    </div>
+
     @if (ynabStorage.apiKey() === null) {
       <ya-ynab-token-form />
     } @else if (ynabStorage.selectedBudget() === null) {
