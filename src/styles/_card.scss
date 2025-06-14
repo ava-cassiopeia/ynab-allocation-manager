@@ -1,7 +1,23 @@
 .card {
+  position: relative;
   border: 1px solid var(--theme-primary-color);
   border-radius: 24px;
   background: #fff;
   box-shadow: 0 1px 0 var(--theme-primary-color),
               0 2px 0 var(--theme-primary-color);
+
+  &.loading {
+    opacity: 0;
+    transform: translateY(2px);
+    box-shadow: none;
+    transition: transform 500ms ease-in,
+                box-shadow 500ms ease-in,
+                opacity 500ms ease-in 500ms;
+  }
+
+  &:not(.loading) {
+    transition: transform 500ms ease-in 500ms,
+                box-shadow 500ms ease-in 500ms,
+                opacity 500ms ease-in;
+  }
 }

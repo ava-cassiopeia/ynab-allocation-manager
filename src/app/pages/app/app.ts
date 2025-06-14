@@ -1,4 +1,5 @@
-import {Component, inject, ViewChild, ElementRef, effect, signal} from '@angular/core';
+import {BudgetSummary} from 'ynab';
+import {Component, inject, ElementRef, signal, effect} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 
 import {AccountList} from '../../components/accounts/account-list/account-list';
@@ -24,36 +25,30 @@ import {YnabTokenForm} from '../../components/auth/ynab-token-form/ynab-token-fo
 export class AppPage {
   protected readonly ynabStorage = inject(YnabStorage);
 
-  protected readonly fixedHeight = signal<string | null>(null);
+  protected readonly loading = signal<boolean>(false);
   protected readonly YnabStorageStatus = YnabStorageStatus;
 
-  @ViewChild('accountSidebar')
-  private readonly accountSidebar!: ElementRef<HTMLElement>;
-
-
-  constructor() {
-    // TODO: #7 - This has a 1 to 2 frame jank because there's a frame between
-    // when the Signal is updated (and this effect() is called), and the next
-    // frame where the fixedHeight() Signal updates the DOM.
-    // That should either be fixed or ripped out, whichever is easier.
+  constructor(private readonly el: ElementRef) {
     effect(() => {
-      this.ynabStorage.accounts.value();
-      const accountsLoading = this.ynabStorage.accounts.isLoading();
-
-      const rect = this.accountSidebar?.nativeElement.getBoundingClientRect() ?? null;
-      if (rect === null) return;
-
-      if (accountsLoading) {
-        requestAnimationFrame(() => {
-          this.fixedHeight.set(`${rect.height}px`);
-        });
-      } else {
+      if (this.ynabStorage.status() === YnabStorageStatus.READY) {
         setTimeout(() => {
-          requestAnimationFrame(() => {
-            this.fixedHeight.set(null);
-          });
-        }, 1000);
+          this.loading.set(false);
+        }, 300);
       }
+    });
+  }
+
+  protected async selectNewBudget(budget: BudgetSummary) {
+    this.loading.set(true);
+    await this.sleep(1000);
+    this.ynabStorage.selectedBudget.set(budget);
+  }
+
+  private sleep(ms: number): Promise<void> {
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        resolve();
+      }, ms);
     });
   }
 }

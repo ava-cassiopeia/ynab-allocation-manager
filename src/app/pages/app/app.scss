@@ -69,7 +69,6 @@ $materialBoxShadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   // --fixed-height is a bound variable from Angular
   position: relative;
   overflow-y: auto;
-  transition: height 200ms ease;
 
   > .loading-overlay {
     position: absolute;
@@ -96,13 +95,7 @@ $materialBoxShadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 }
 
 .account-sidebar {
-  &.loading {
-    height: var(--fixed-height);
-  }
-
-  &:not(.loading) {
-    height: min-content;
-  }
+  height: min-content;
 }
 
 .categories {
