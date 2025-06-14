@@ -28,7 +28,7 @@ describe('AccountSummary', () => {
     };
 
     fixture = TestBed.createComponent(AccountSummary);
-    fixture.componentRef.setInput('account', account);
+    fixture.componentRef.setInput('account', {account, categories: []});
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

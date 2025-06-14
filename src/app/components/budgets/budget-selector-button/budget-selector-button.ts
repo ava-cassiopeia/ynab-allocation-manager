@@ -1,5 +1,5 @@
 import {BudgetSummary} from 'ynab';
-import {Component, inject, ViewChild, computed} from '@angular/core';
+import {Component, inject, ViewChild, computed, Output, EventEmitter} from '@angular/core';
 
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
 import {DropdownButton, DropdownMenuItem} from '../../common/dropdown-button/dropdown-button';
@@ -11,6 +11,9 @@ import {DropdownButton, DropdownMenuItem} from '../../common/dropdown-button/dro
   imports: [DropdownButton],
 })
 export class BudgetSelectorButton {
+  @Output('newBudget')
+  readonly newBudgetEvent = new EventEmitter<BudgetSummary>();
+
   protected readonly ynabStorage = inject(YnabStorage);
 
   @ViewChild(DropdownButton)
@@ -32,7 +35,7 @@ export class BudgetSelectorButton {
   });
 
   protected selectBudget(budget: BudgetSummary) {
-    this.ynabStorage.selectedBudget.set(budget);
+    this.newBudgetEvent.emit(budget);
     this.dropdownButton.close();
   }
 }

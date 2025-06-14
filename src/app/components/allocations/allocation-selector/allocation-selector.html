@@ -1,4 +1,7 @@
-<ya-dropdown-button dropdownLabel="Allocate to:" [menuItems]="menuItems()">
+<ya-dropdown-button
+    dropdownLabel="Allocate to:"
+    [menuItems]="menuItems()"
+    [flat]="allocatedAccount() === null">
   <span label>
     @if (allocatedAccount() === null) {
       -
@@ -9,7 +12,7 @@
 
   @if (allocatedAccount() !== null) {
     <div dropdown class="dropdown">
-        <button class="clear-button" (click)="selectAccount(null)">Clear</button>
+        <button class="ya-button flat" (click)="selectAccount(null)">Clear</button>
     </div>
   }
 </ya-dropdown-button>

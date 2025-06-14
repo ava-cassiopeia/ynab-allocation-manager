@@ -1,11 +1,37 @@
-<div class="header">
-  <ya-budget-selector-button />
-</div>
-<div class="main-content">
-  <div class="account-sidebar">
+<header class="header">
+  <section class="site-branding">
+    <div class="logo">
+      <img src="/images/logo_round.png" alt="Site logo - an abstract orchard of trees" />
+    </div>
+    <p class="site-title">YNAB Allocation Manager</p>
+  </section>
+
+  <div class="control-panel">
+    <ya-budget-selector-button (newBudget)="selectNewBudget($event)" />
+
+    <button class="ya-button">
+      <mat-icon inline aria-hidden="true">close</mat-icon>
+      Clear all
+    </button>
+  </div>
+</header>
+<main class="main-content">
+  <div #accountSidebar
+      class="account-sidebar card"
+      [class.loading]="loading()">
+    <div class="loading-overlay">
+      <p>Loading...</p>
+    </div>
+
     <ya-account-list />
   </div>
-  <div class="categories">
+
+  <div class="categories card"
+      [class.loading]="loading()">
+    <div class="loading-overlay">
+      <p>Loading...</p>
+    </div>
+
     @if (ynabStorage.apiKey() === null) {
       <ya-ynab-token-form />
     } @else if (ynabStorage.selectedBudget() === null) {
@@ -14,4 +40,4 @@
       <ya-category-list />
     }
   </div>
-</div>
+</main>

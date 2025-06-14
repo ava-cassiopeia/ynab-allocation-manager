@@ -12,6 +12,8 @@ export class DropdownButton<MenuItemType> {
   readonly dropdownLabel = input.required<string>();
   readonly menuItems = input<DropdownMenuItem<MenuItemType>[]>([]);
   readonly theme = input<ButtonTheme>('default');
+  readonly icon = input<string | null>(null);
+  readonly flat = input<boolean>(false);
 
   protected readonly dropdownShowing = signal<boolean>(false);
 
@@ -34,5 +36,4 @@ export interface DropdownMenuItem<ValueType> {
   readonly value: ValueType,
 }
 
-export type ButtonTheme = 'default' | 'overage' | 'warning' | 'perfect';
-export type ButtonAlignment = 'default' | 'left';
+export type ButtonTheme = 'default' | 'overage' | 'warning' | 'perfect' | 'site-theme';

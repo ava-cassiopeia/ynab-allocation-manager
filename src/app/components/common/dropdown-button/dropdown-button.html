@@ -1,9 +1,13 @@
-<button class="toggle-button"
+<button class="ya-button"
     [class]="theme()"
     [class.open]="dropdownShowing()"
+    [class.flat]="flat()"
     [cdkMenuTriggerFor]="context_menu"
     (cdkMenuClosed)="dropdownShowing.set(false)"
     (cdkMenuOpened)="dropdownShowing.set(true)">
+  @if (icon() !== null) {
+    <mat-icon inline aria-hidden="true">{{ icon() }}</mat-icon>
+  }
   <ng-content select="[label]" />
 </button>
 
@@ -16,7 +20,7 @@
 
     @if (menuItems().length > 0) {
       <ul class="menu-items">
-        @for (item of menuItems(); track item) {
+        @for (item of menuItems(); track item.value) {
           <li>
             <button cdkMenuItem (click)="item.action(item.value)">
               @if (item.icon) {
