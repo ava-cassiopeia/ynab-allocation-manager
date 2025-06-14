@@ -12,6 +12,7 @@ $materialBoxShadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   flex: 0;
 
   .site-branding {
+    --shadow-color_: color-mix(in srgb, var(--theme-primary-color) 70%, #000);
     display: flex;
     align-items: center;
     gap: 12px;
@@ -21,7 +22,8 @@ $materialBoxShadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     border-radius: 100px;
     margin: 12px auto;
     width: min-content;
-    box-shadow: $materialBoxShadow;
+    box-shadow: 0 1px var(--shadow-color_),
+                0 2px var(--shadow-color_);
   }
 
   .site-title {
@@ -45,17 +47,7 @@ $materialBoxShadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     display: flex;
     align-items: center;
     justify-content: center;
-
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: #fff;
-      border: 1px solid var(--theme-primary-color);
-      border-radius: 100px;
-      padding: 8px;
-      box-shadow: $materialBoxShadow;
-    }
+    gap: 12px;
   }
 }
 
@@ -77,11 +69,7 @@ $materialBoxShadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
   // --fixed-height is a bound variable from Angular
   position: relative;
   overflow-y: auto;
-  border-radius: 24px;
   transition: height 200ms ease;
-  border: 2px solid var(--theme-primary-color);
-  background: #fff;
-  box-shadow: $materialBoxShadow;
 
   > .loading-overlay {
     position: absolute;

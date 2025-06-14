@@ -1,9 +1,13 @@
 button.ya-button {
+  --theme-color_: #eee;
+  --theme-complement-color_: #000;
+  --shadow-color_: color-mix(in srgb, var(--theme-color_) 70%, #000);
   display: flex;
   align-items: center;
   gap: 4px;
-  border: 2px solid #555;
-  background: #ddd;
+  border: none;
+  color: var(--theme-complement-color_);
+  background: var(--theme-color_);
   border-radius: 100px;
   padding: 4px 12px;
   font-size: 14px;
@@ -11,30 +15,69 @@ button.ya-button {
   min-width: 0px;
   text-overflow: ellipsis;
   overflow: hidden;
+  transition: box-shadow 150ms ease,
+              transform 150ms ease;
+  box-shadow: 0 1px 0 var(--shadow-color_),
+              0 2px 0 var(--shadow-color_),
+              0 3px 0 var(--shadow-color_);
+  transform: translateY(0);
 
   &:hover {
-    background: #aaa;
+    box-shadow: 0 1px 0 var(--shadow-color_),
+                0 2px 0 var(--shadow-color_),
+                0 3px 0 var(--shadow-color_),
+                0 4px 0 var(--shadow-color_),
+                0 5px 0 var(--shadow-color_);
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    box-shadow: none;
+    transform: translateY(5px);
   }
 
   &.open {
-    background: #aaa;
-    border: 2px solid #333;
+    box-shadow: 0 1px 0 var(--shadow-color_),
+                0 2px 0 var(--shadow-color_),
+                0 3px 0 var(--shadow-color_),
+                0 4px 0 var(--shadow-color_),
+                0 5px 0 var(--shadow-color_);
+    transform: translateY(-2px);
+  }
+
+  &.flat {
+    box-shadow: none;
+    transform: translateY(3px);
+
+    &:hover {
+      box-shadow: 0 1px 0 var(--shadow-color_),
+                  0 2px 0 var(--shadow-color_),
+                  0 3px 0 var(--shadow-color_);
+      transform: translateY(0);
+    }
+
+    &:active {
+      box-shadow: 0 1px 0 var(--shadow-color_);
+      transform: translateY(2px);
+    }
   }
 
   // === Themes ===
   &.overage {
-    background: #4FC3F7;
-    border: 2px solid #03A9F4;
+    --theme-color_: #4FC3F7;
   }
 
   &.warning {
-    background: #E57373;
-    border: 2px solid #F44336;
+    --theme-color_: #E57373;
   }
 
   &.perfect {
-    background: #A5D6A7;
-    border: 2px solid #4CAF50;
+    --theme-color_: #A5D6A7;
+  }
+
+  &.site-theme {
+    --theme-color_: var(--theme-primary-color);
+    --theme-complement-color_: var(--theme-primary-complement-color);
   }
 
   > mat-icon {

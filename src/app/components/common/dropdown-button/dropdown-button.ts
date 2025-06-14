@@ -35,4 +35,4 @@ export interface DropdownMenuItem<ValueType> {
   readonly value: ValueType,
 }
 
-export type ButtonTheme = 'default' | 'overage' | 'warning' | 'perfect';
+export type ButtonTheme = 'default' | 'overage' | 'warning' | 'perfect' | 'site-theme';

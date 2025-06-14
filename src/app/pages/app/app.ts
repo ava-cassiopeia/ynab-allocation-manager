@@ -1,4 +1,5 @@
 import {Component, inject, ViewChild, ElementRef, effect, signal} from '@angular/core';
+import {MatIcon} from '@angular/material/icon';
 
 import {AccountList} from '../../components/accounts/account-list/account-list';
 import {BudgetSelectorButton} from '../../components/budgets/budget-selector-button/budget-selector-button';
@@ -12,6 +13,7 @@ import {YnabTokenForm} from '../../components/auth/ynab-token-form/ynab-token-fo
   templateUrl: './app.html',
   styleUrl: './app.scss',
   imports: [
+    MatIcon,
     AccountList,
     BudgetSelector,
     BudgetSelectorButton,
