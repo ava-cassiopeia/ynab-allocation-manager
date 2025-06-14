@@ -36,4 +36,3 @@ export interface DropdownMenuItem<ValueType> {
 }
 
 export type ButtonTheme = 'default' | 'overage' | 'warning' | 'perfect';
-export type ButtonAlignment = 'default' | 'left';

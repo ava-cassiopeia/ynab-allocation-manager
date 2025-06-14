@@ -3,50 +3,6 @@
   display: inline-block;
 }
 
-.toggle-button {
-  display: flex;
-  align-items: center;
-  gap: 4px;
-  border: 2px solid #555;
-  background: #ddd;
-  border-radius: 100px;
-  padding: 4px 12px;
-  font-size: 14px;
-  white-space: nowrap;
-  min-width: 0px;
-  text-overflow: ellipsis;
-  overflow: hidden;
-
-  &:hover {
-    background: #aaa;
-  }
-
-  &.open {
-    background: #aaa;
-    border: 2px solid #333;
-  }
-
-  // === Themes ===
-  &.overage {
-    background: #4FC3F7;
-    border: 2px solid #03A9F4;
-  }
-
-  &.warning {
-    background: #E57373;
-    border: 2px solid #F44336;
-  }
-
-  &.perfect {
-    background: #A5D6A7;
-    border: 2px solid #4CAF50;
-  }
-
-  > mat-icon {
-    font-size: larger;
-  }
-}
-
 .dropdown {
   $elasticEasing: cubic-bezier(0.68, -0.55, 0.265, 1.55);
   z-index: 3;
