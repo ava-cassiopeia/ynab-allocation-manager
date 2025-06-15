@@ -15,16 +15,19 @@
   "dependencies": {
     "dotenv": "^16.5.0",
     "firebase-admin": "^12.6.0",
-    "firebase-functions": "^6.0.1"
+    "firebase-functions": "^6.0.1",
+    "ynab": "^2.9.0"
   },
   "devDependencies": {
     "@dotenvx/dotenvx": "^1.44.2",
     "@types/dotenv": "^6.1.1",
     "@types/expect": "^1.20.4",
     "@types/mocha": "^10.0.10",
+    "@types/nock": "^10.0.3",
+    "@types/sinon": "^17.0.4",
     "firebase-functions-test": "^3.4.1",
     "mocha": "^11.6.0",
-    "sinon": "^21.0.0",
+    "nock": "^14.0.5",
     "ts-mocha": "^11.1.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
