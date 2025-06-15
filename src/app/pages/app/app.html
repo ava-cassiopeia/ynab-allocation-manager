@@ -9,10 +9,7 @@
   <div class="control-panel">
     <ya-budget-selector-button (newBudget)="selectNewBudget($event)" />
 
-    <button class="ya-button">
-      <mat-icon inline aria-hidden="true">close</mat-icon>
-      Clear all
-    </button>
+    <ya-clear-allocations-button />
   </div>
 </header>
 <main class="main-content">
@@ -34,8 +31,6 @@
 
     @if (ynabStorage.apiKey() === null) {
       <ya-ynab-token-form />
-    } @else if (ynabStorage.selectedBudget() === null) {
-      <ya-budget-selector />
     } @else {
       <ya-category-list />
     }

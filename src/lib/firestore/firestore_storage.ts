@@ -1,7 +1,7 @@
 import {Injectable, signal, effect, inject} from '@angular/core';
 import {FirebaseApp, initializeApp} from 'firebase/app';
 import {Auth, User, getAuth, signInAnonymously, connectAuthEmulator} from 'firebase/auth';
-import {Unsubscribe, Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator, getDocs, updateDoc, doc, setDoc, deleteDoc} from 'firebase/firestore';
+import {Unsubscribe, Firestore, getFirestore, onSnapshot, query, collection, where, addDoc, connectFirestoreEmulator, getDocs, updateDoc, doc, setDoc, deleteDoc, writeBatch} from 'firebase/firestore';
 import {BudgetSummary, Category} from 'ynab';
 
 import {Allocation} from '../models/allocation';
@@ -142,6 +142,28 @@ export class FirestoreStorage {
       promises.push(deleteDoc(doc.ref));
     });
     await Promise.all(promises);
+  }
+
+  async clearAllocationsForBudget() {
+    const user = this.currentUser();
+    if (user === null) return;
+
+    const budget = this.ynabStorage.selectedBudget();
+    if (budget === null) return;
+
+
+    const deleteQuery = query(
+      collection(this.db, 'allocations'),
+      where("userId", "==", user.uid),
+      where("budgetId", "==", budget.id));
+    const snapshot = await getDocs(deleteQuery);
+    if (snapshot.empty) return;
+
+    const batch = writeBatch(this.db);
+    snapshot.docs.forEach((doc) => {
+      batch.delete(doc.ref);
+    });
+    await batch.commit();
   }
 
   private assertUser(): User {

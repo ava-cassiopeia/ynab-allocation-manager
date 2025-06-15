@@ -1,0 +1,19 @@
+:host {
+  display: contents;
+}
+
+.dropdown {
+  .info {
+    max-width: 300px;
+    padding: 0 20px 20px;
+    margin: 0;
+  }
+
+  .actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 0 20px 20px;
+    gap: 12px;
+  }
+}

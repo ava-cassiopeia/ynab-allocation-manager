@@ -3,5 +3,9 @@
     [menuItems]="menuItems()"
     theme="site-theme"
     icon="keyboard_arrow_down">
-  <span label>{{ ynabStorage.selectedBudget()?.name ?? '-' }}</span>
+  @if (ynabStorage.selectedBudget() !== null) {
+    <span label>{{ ynabStorage.selectedBudget()!.name }}</span>
+  } @else {
+    <i label>Select a budget</i>
+  }
 </ya-dropdown-button>
