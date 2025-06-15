@@ -1,5 +1,3 @@
-import "mocha";
-
 import nock from "nock";
 import assert from "expect";
 import {initializeApp} from "firebase-admin/app";

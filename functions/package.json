@@ -1,8 +1,7 @@
 {
   "name": "functions",
   "scripts": {
-    "build": "tsc",
-    "build:watch": "tsc --watch",
+    "build": "node esbuild.js",
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "logs": "firebase functions:log",
@@ -25,6 +24,7 @@
     "@types/mocha": "^10.0.10",
     "@types/nock": "^10.0.3",
     "@types/sinon": "^17.0.4",
+    "esbuild": "^0.25.5",
     "firebase-functions-test": "^3.4.1",
     "mocha": "^11.6.0",
     "nock": "^14.0.5",
