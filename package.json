@@ -6,7 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "firebase emulators:exec 'ng test --browsers ChromeHeadless --watch false'",
+    "test:ng": "firebase emulators:exec 'ng test --browsers ChromeHeadless --watch false'",
+    "test:fn": "firebase emulators:exec 'npm run --prefix functions test'",
+    "test": "npm run test:ng && npm run test:fn",
     "serve": "firebase serve",
     "emulate": "firebase emulators:start"
   },
