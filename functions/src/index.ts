@@ -16,18 +16,27 @@ export const oauthLogIn = onRequest(
       secrets: ["YNAB_CLIENT_ID", "YNAB_CLIENT_SECRET"],
     },
     async (req, res) => {
+  res.set('Access-Control-Allow-Origin', 'http://localhost:5002');
+  res.set('Access-Control-Allow-Methods', 'GET, POST');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.status(204).send('');
+    return;
+  }
+
   const oauthClient = new YnabOauthClient({
     clientId: clientId.value(),
     clientSecret: clientSecret.value(),
     redirectUri: redirectUri.value(),
   });
-  const code = req.params["code"] ?? null;
+  const code = req.body.data?.code ?? null;
 
   if (code === null || code.trim() === "") {
     logger.warn("Bad request to oauthLogIn(): no code was provided.");
     res.status(400).json({
       error: true,
       message: "Bad request: no code provided.",
+      body: req.body,
     });
     return;
   }
@@ -35,6 +44,51 @@ export const oauthLogIn = onRequest(
   const token = await oauthClient.signInNewUser(code);
   logger.info("Successfully signed in YNAB user.");
   res.json({
-    token,
+    data: {
+      token,
+    },
+  });
+});
+
+export const refreshYnabToken = onRequest(
+    {
+      secrets: ["YNAB_CLIENT_ID", "YNAB_CLIENT_SECRET"],
+    },
+    async (req, res) => {
+  res.set('Access-Control-Allow-Origin', 'http://localhost:5002');
+  res.set('Access-Control-Allow-Methods', 'GET, POST');
+  res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  if (req.method === 'OPTIONS') {
+    res.status(204).send('');
+    return;
+  }
+
+  const oauthClient = new YnabOauthClient({
+    clientId: clientId.value(),
+    clientSecret: clientSecret.value(),
+    redirectUri: redirectUri.value(),
+  });
+  const refreshToken = req.body.data?.refreshToken ?? null;
+
+  if (refreshToken === null || refreshToken.trim() === "") {
+    logger.warn("Bad request to refreshYnabToken(): no token was provided.");
+    res.status(400).json({
+      error: true,
+      message: "Bad request: no token provided.",
+      body: req.body,
+    });
+    return;
+  }
+
+  const success = await oauthClient.refreshAuthToken(refreshToken);
+  if (success) {
+    logger.info("Successfully refreshed user auth token.");
+  } else {
+    logger.info("Unsuccessfully refreshed user auth token.");
+  }
+  res.json({
+    data: {
+      success,
+    },
   });
 });

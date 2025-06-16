@@ -10,7 +10,7 @@
     "test:fn": "firebase emulators:exec 'npm run --prefix functions test'",
     "test": "npm run test:ng && npm run test:fn",
     "serve": "firebase serve",
-    "emulate": "dotenvx -f .env.dev run -- firebase emulators:start"
+    "emulate": "dotenvx run -f .env.dev -- firebase emulators:start"
   },
   "private": true,
   "dependencies": {

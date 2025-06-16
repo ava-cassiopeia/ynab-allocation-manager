@@ -1,8 +1,11 @@
-<p>
-  Whoa!
-</p>
-<div>
-  <button class="ya-button site-theme" (click)="auth.beginAuth()">
-    Sign in with YNAB
-  </button>
-</div>
+@if (loading()) {
+  <div class="loading-splash">
+    <i>Loading...</i>
+  </div>
+} @else {
+  <div>
+    <button class="ya-button site-theme" (click)="auth.beginAuth()">
+      Sign in with YNAB
+    </button>
+  </div>
+}

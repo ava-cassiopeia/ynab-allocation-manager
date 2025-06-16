@@ -1,5 +1,9 @@
 import {Component, inject, signal} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
+import {httpsCallable} from 'firebase/functions';
+
+import {AuthStorage} from '../../../lib/firebase/auth_storage';
+import {functions} from '../../../lib/firebase/functions';
 
 @Component({
   selector: 'ya-auth-page',
@@ -10,8 +14,10 @@ export class AuthPage {
   protected readonly hasCode = signal<boolean>(true);
 
   private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
+  private readonly authStorage = inject(AuthStorage);
 
-  ngAfterViewInit() {
+  async ngAfterViewInit() {
     // YNAB's oauth API will give us back a code we can use to obtain a token
     // to authorize as the user.
     const code = this.route.snapshot.queryParamMap.get('code');
@@ -23,6 +29,17 @@ export class AuthPage {
       return;
     }
 
-    // TODO: THE THING
+    const oauthLogIn = httpsCallable(functions, "oauthLogIn");
+
+    const res = await oauthLogIn({code});
+    const token = (res.data as any).token ?? null;
+
+    if (token === null) {
+      this.hasCode.set(false);
+      return;
+    }
+
+    await this.authStorage.signInUser(token);
+    this.router.navigate(["app"]);
   }
 }

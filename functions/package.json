@@ -28,6 +28,7 @@
     "firebase-functions-test": "^3.4.1",
     "mocha": "^11.6.0",
     "nock": "^14.0.5",
+    "sinon": "^21.0.0",
     "ts-mocha": "^11.1.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",

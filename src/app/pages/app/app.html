@@ -29,10 +29,6 @@
       <p>Loading...</p>
     </div>
 
-    @if (ynabStorage.apiKey() === null) {
-      <ya-ynab-token-form />
-    } @else {
-      <ya-category-list />
-    }
+    <ya-category-list />
   </div>
 </main>
