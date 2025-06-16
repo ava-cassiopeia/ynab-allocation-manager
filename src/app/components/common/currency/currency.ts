@@ -10,11 +10,15 @@ import {Component, input, computed} from '@angular/core';
 })
 export class Currency {
   readonly milliunits = input.required<number>();
+  readonly currency = input<string>('USD');
 
   protected readonly value = computed<string>(() => {
     if (this.milliunits() === 0) return '-';
 
-    const currencyAmount = Math.round(this.milliunits() / 10.0) / 100.0;
-    return `$${currencyAmount.toFixed(2)}`;
+    const currencyAmount = this.milliunits() / 1000.0;
+    return new Intl.NumberFormat('en-US', {
+      style: 'currency',
+      currency: this.currency(),
+    }).format(currencyAmount);
   });
 }
