@@ -1,13 +1,11 @@
 import {BudgetSummary} from 'ynab';
 import {Component, inject, ElementRef, signal, effect} from '@angular/core';
-import {MatIcon} from '@angular/material/icon';
 
 import {AccountList} from '../../components/accounts/account-list/account-list';
 import {BudgetSelectorButton} from '../../components/budgets/budget-selector-button/budget-selector-button';
 import {CategoryList} from '../../components/categories/category-list/category-list';
 import {ClearAllocationsButton} from "../../components/allocations/clear-allocations-button/clear-allocations-button";
 import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
-import {YnabTokenForm} from '../../components/auth/ynab-token-form/ynab-token-form';
 
 @Component({
   selector: 'ya-app-page',
@@ -18,7 +16,6 @@ import {YnabTokenForm} from '../../components/auth/ynab-token-form/ynab-token-fo
     BudgetSelectorButton,
     CategoryList,
     ClearAllocationsButton,
-    YnabTokenForm,
   ],
 })
 export class AppPage {

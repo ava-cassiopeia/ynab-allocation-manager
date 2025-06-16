@@ -1,11 +1,55 @@
 @if (loading()) {
-  <div class="loading-splash">
+  <main class="loading-splash">
     <i>Loading...</i>
-  </div>
+  </main>
 } @else {
-  <div>
-    <button class="ya-button site-theme" (click)="auth.beginAuth()">
-      Sign in with YNAB
-    </button>
-  </div>
+  <main class="landing-page">
+    <div class="spacer"></div>
+
+    <div class="site-branding">
+      <div class="logo-container">
+        <img src="/images/logo_round.png" alt="The site logo; a happy cartoon yam with a big smile" />
+      </div>
+      <h1 class="title">Allocation Manager for YNAB</h1>
+    </div>
+
+    <div class="card info-text">
+      <div>
+        <img src="/images/works_with_ynab.svg" alt="Works with YNAB" />
+      </div>
+
+      <p>
+        <i>Allocation Manager for YNAB</i> is an open-source web application that
+        allows you to assign <b>Categories</b> to <b>Accounts</b> and <b>compare
+        the sum of those categories against the accounts' current balances</b>
+        for the purposes of balancing cash between your budgeting accounts.
+      </p>
+
+      <div class="actions">
+        <button class="ya-button flat site-theme" (click)="auth.beginAuth()">
+          <mat-icon inline aria-hidden="true">login</mat-icon>
+          Sign in with YNAB
+        </button>
+      </div>
+    </div>
+
+    <div class="links-and-copyright">
+      <p>
+        Made with <mat-icon inline class="heart">favorite</mat-icon> by
+        <a href="https://github.com/ava-cassiopeia/ynab-allocation-manager" target="_blank">
+          &commat;ava-cassiopeia
+        </a>
+      </p>
+
+      <p class="copyright">
+        "YNAB", "Works with YNAB.", and the YNAB logo &copy; YNAB 2025
+      </p>
+
+      <div class="links">
+        <a href="https://github.com/ava-cassiopeia/ynab-allocation-manager/blob/main/PRIVACY.md" target="_blank">
+          Privacy policy
+        </a>
+      </div>
+    </div>
+  </main>
 }
