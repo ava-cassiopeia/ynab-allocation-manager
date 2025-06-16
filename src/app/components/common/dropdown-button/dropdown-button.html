@@ -3,6 +3,7 @@
     [class.open]="dropdownShowing()"
     [class.flat]="flat()"
     [cdkMenuTriggerFor]="context_menu"
+    [disabled]="disabled()"
     (cdkMenuClosed)="dropdownShowing.set(false)"
     (cdkMenuOpened)="dropdownShowing.set(true)">
   @if (icon() !== null) {

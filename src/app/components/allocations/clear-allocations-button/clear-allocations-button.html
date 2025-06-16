@@ -1,0 +1,23 @@
+<ya-dropdown-button
+    dropdownLabel="Clear all allocations?"
+    icon="close"
+    [disabled]="ynabStorage.selectedBudget() === null">
+  <span label>Clear all...</span>
+
+  <div dropdown class="dropdown">
+    <p class="info">
+      This will delete all allocations for your current budget,
+      <b>{{ ynabStorage.selectedBudget()?.name ?? '-' }}</b>. This cannot be
+      undone.
+    </p>
+
+    <div class="actions">
+      <button class="ya-button flat" (click)="cancel()">
+        Cancel
+      </button>
+      <button class="ya-button flat site-theme" (click)="clearAll()">
+        Clear all
+      </button>
+    </div>
+  </div>
+</ya-dropdown-button>

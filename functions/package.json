@@ -1,0 +1,38 @@
+{
+  "name": "functions",
+  "scripts": {
+    "build": "node esbuild.js",
+    "serve": "npm run build && firebase emulators:start --only functions",
+    "shell": "npm run build && firebase functions:shell",
+    "logs": "firebase functions:log",
+    "test": "dotenvx run -f .env.test -- ./node_modules/ts-mocha/bin/ts-mocha -p tsconfig.json src/**/*.spec.ts"
+  },
+  "engines": {
+    "node": "22"
+  },
+  "main": "lib/index.js",
+  "dependencies": {
+    "dotenv": "^16.5.0",
+    "firebase-admin": "^12.6.0",
+    "firebase-functions": "^6.0.1",
+    "ynab": "^2.9.0"
+  },
+  "devDependencies": {
+    "@dotenvx/dotenvx": "^1.44.2",
+    "@types/dotenv": "^6.1.1",
+    "@types/expect": "^1.20.4",
+    "@types/mocha": "^10.0.10",
+    "@types/nock": "^10.0.3",
+    "@types/sinon": "^17.0.4",
+    "esbuild": "^0.25.5",
+    "firebase-functions-test": "^3.4.1",
+    "mocha": "^11.6.0",
+    "nock": "^14.0.5",
+    "sinon": "^21.0.0",
+    "ts-mocha": "^11.1.0",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3"
+  },
+  "private": true
+}

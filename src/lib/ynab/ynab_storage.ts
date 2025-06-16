@@ -124,12 +124,6 @@ export class YnabStorage {
   }
 }
 
-function sleep(time: number): Promise<void> {
-  return new Promise((resolve) => {
-    setTimeout(() => resolve(), time);
-  });
-}
-
 export enum YnabStorageStatus {
   NO_BUDGET_SELECTED = 1,
   LOADING_BUDGET_DETAILS = 2,

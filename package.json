@@ -6,9 +6,11 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "firebase emulators:exec 'ng test --browsers ChromeHeadless --watch false'",
+    "test:ng": "firebase emulators:exec 'ng test --browsers ChromeHeadless --watch false'",
+    "test:fn": "firebase emulators:exec 'npm run --prefix functions test'",
+    "test": "npm run test:ng && npm run test:fn",
     "serve": "firebase serve",
-    "emulate": "firebase emulators:start"
+    "emulate": "dotenvx run -f .env.dev -- firebase emulators:start"
   },
   "private": true,
   "dependencies": {
@@ -29,6 +31,7 @@
     "@angular/build": "^20.0.1",
     "@angular/cli": "^20.0.1",
     "@angular/compiler-cli": "^20.0.0",
+    "@dotenvx/dotenvx": "^1.44.2",
     "@types/jasmine": "~5.1.0",
     "jasmine-core": "~5.7.0",
     "karma": "~6.4.0",

@@ -1,19 +1,20 @@
 import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {YnabTokenForm} from './ynab-token-form';
+import {LogoutButton} from './logout-button';
 
-describe('YnabTokenForm', () => {
-  let component: YnabTokenForm;
-  let fixture: ComponentFixture<YnabTokenForm>;
+describe('LogoutButton', () => {
+  let component: LogoutButton;
+  let fixture: ComponentFixture<LogoutButton>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [YnabTokenForm],
+      imports: [LogoutButton],
       providers: [provideZonelessChangeDetection()],
-    }).compileComponents();
+    })
+      .compileComponents();
 
-    fixture = TestBed.createComponent(YnabTokenForm);
+    fixture = TestBed.createComponent(LogoutButton);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

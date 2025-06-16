@@ -37,6 +37,18 @@ button.ya-button {
     transform: translateY(5px);
   }
 
+  &:disabled {
+    cursor: initial;
+
+    &,
+    &:hover,
+    &:active {
+      box-shadow: none;
+      transform: translateY(3px);
+      opacity: 0.75;
+    }
+  }
+
   &.open {
     box-shadow: 0 1px 0 var(--shadow-color_),
                 0 2px 0 var(--shadow-color_),
