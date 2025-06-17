@@ -13,6 +13,7 @@ $materialBoxShadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 
   .site-branding {
     --shadow-color_: color-mix(in srgb, var(--theme-primary-color) 70%, #000);
+    position: relative;
     display: flex;
     align-items: center;
     gap: 12px;
@@ -24,6 +25,17 @@ $materialBoxShadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
     width: min-content;
     box-shadow: 0 1px var(--shadow-color_),
                 0 2px var(--shadow-color_);
+
+    .beta-text {
+      position: absolute;
+      top: 50%;
+      left: calc(100% + 12px);
+      transform: translateY(-50%);
+      font-size: 28px;
+      font-family: var(--beta-font);
+      color: red;
+      font-weight: bold;
+    }
   }
 
   .site-title {

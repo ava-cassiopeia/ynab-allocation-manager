@@ -4,12 +4,15 @@
       <img src="/images/logo_round.png" alt="The site logo; a happy cartoon yam with a big smile" />
     </div>
     <p class="site-title">Allocation Manager for YNAB</p>
+    <span class="beta-text">Beta!</span>
   </section>
 
   <div class="control-panel">
     <ya-budget-selector-button (newBudget)="selectNewBudget($event)" />
 
     <ya-clear-allocations-button />
+
+    <ya-beta-info-button />
 
     <ya-logout-button />
   </div>

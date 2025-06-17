@@ -2,6 +2,7 @@ import {Component, inject, effect, computed} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {AuthStorage} from '../../../lib/firebase/auth_storage';
+import {DropdownButton} from "../../components/common/dropdown-button/dropdown-button";
 import {MatIcon} from '@angular/material/icon';
 import {YnabAuthManager} from '../../../lib/ynab/ynab_auth_manager';
 
@@ -9,7 +10,7 @@ import {YnabAuthManager} from '../../../lib/ynab/ynab_auth_manager';
   selector: 'ya-index-page',
   templateUrl: './index.html',
   styleUrl: './index.scss',
-  imports: [MatIcon],
+  imports: [MatIcon, DropdownButton],
 })
 export class IndexPage {
   protected readonly auth = inject(YnabAuthManager);

@@ -2,6 +2,7 @@ import {BudgetSummary} from 'ynab';
 import {Component, inject, ElementRef, signal, effect} from '@angular/core';
 
 import {AccountList} from '../../components/accounts/account-list/account-list';
+import {BetaInfoButton} from '../../components/common/beta-info-button/beta-info-button';
 import {BudgetSelectorButton} from '../../components/budgets/budget-selector-button/budget-selector-button';
 import {CategoryList} from '../../components/categories/category-list/category-list';
 import {ClearAllocationsButton} from "../../components/allocations/clear-allocations-button/clear-allocations-button";
@@ -14,6 +15,7 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
   styleUrl: './app.scss',
   imports: [
     AccountList,
+    BetaInfoButton,
     BudgetSelectorButton,
     CategoryList,
     ClearAllocationsButton,
