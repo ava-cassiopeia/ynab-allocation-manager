@@ -5,7 +5,8 @@
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "logs": "firebase functions:log",
-    "test": "dotenvx run -f .env.test -- ./node_modules/ts-mocha/bin/ts-mocha -p tsconfig.json src/**/*.spec.ts"
+    "internal_test": "ts-mocha -p tsconfig.json src/**/*.spec.ts",
+    "test": "dotenvx run -f .env.test -- npm run internal_test"
   },
   "engines": {
     "node": "22"

@@ -16,6 +16,8 @@ describe('CurrencyCopyButton', () => {
 
     fixture = TestBed.createComponent(CurrencyCopyButton);
     component = fixture.componentInstance;
+    fixture.componentRef.setInput('milliunits', 10000);
+    fixture.detectChanges();
     fixture.detectChanges();
   });
 
