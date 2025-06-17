@@ -1,0 +1,8 @@
+<button class="ya-button flat" (click)="copyValue()">
+  <ya-currency [milliunits]="milliunits()" />
+
+  <div class="icons" [class.active]="copied()">
+    <mat-icon class="resting" inline aria-label="Copy value">content_copy</mat-icon>
+    <mat-icon class="active" inline aria-label="Copy value">done</mat-icon>
+  </div>
+</button>

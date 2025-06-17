@@ -1,0 +1,38 @@
+:host {
+  display: contents;
+}
+
+.icons {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .resting,
+  .active {
+    transition: opacity 250ms ease,
+                transform 250ms ease;
+  }
+
+  .active {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    pointer-events: none;
+    transform: rotate(180deg);
+  }
+
+  &.active {
+    .resting {
+      opacity: 0;
+      pointer-events: none;
+      transform: rotate(180deg);
+    }
+
+    .active {
+      opacity: 1;
+      transform: rotate(360deg);
+    }
+  }
+}
