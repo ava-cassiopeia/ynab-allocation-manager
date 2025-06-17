@@ -10,13 +10,20 @@ initializeApp();
 const clientId = defineSecret("YNAB_CLIENT_ID");
 const clientSecret = defineSecret("YNAB_CLIENT_SECRET");
 const redirectUri = defineString("YNAB_CALLBACK_URL");
+const ALLOWED_ORIGINS = [
+  "https://yam.ynab.rocks",
+  "http://localhost:5002",
+];
 
 export const oauthLogIn = onRequest(
     {
       secrets: ["YNAB_CLIENT_ID", "YNAB_CLIENT_SECRET"],
     },
     async (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http://localhost:5002');
+  const origin = req.headers.origin ?? '';
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.set('Access-Control-Allow-Origin', origin);
+  }
   res.set('Access-Control-Allow-Methods', 'GET, POST');
   res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') {
@@ -55,7 +62,10 @@ export const refreshYnabToken = onRequest(
       secrets: ["YNAB_CLIENT_ID", "YNAB_CLIENT_SECRET"],
     },
     async (req, res) => {
-  res.set('Access-Control-Allow-Origin', 'http://localhost:5002');
+  const origin = req.headers.origin ?? '';
+  if (ALLOWED_ORIGINS.includes(origin)) {
+    res.set('Access-Control-Allow-Origin', origin);
+  }
   res.set('Access-Control-Allow-Methods', 'GET, POST');
   res.set('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   if (req.method === 'OPTIONS') {
