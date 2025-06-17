@@ -81,7 +81,7 @@ describe('Currency', () => {
     // Extremely thin fake just for these tests
     ynabStorage.selectedBudget.set({
       currency_format: {
-        currency_symbol: currency,
+        iso_code: currency,
       }
     } as BudgetSummary);
     const fixture = TestBed.createComponent(Currency);

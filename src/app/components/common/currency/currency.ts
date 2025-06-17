@@ -15,7 +15,7 @@ export class Currency {
 
   protected readonly value = computed<string>(() => {
     if (this.milliunits() === 0) return '-';
-    const currency = this.ynabStorage.selectedBudget()?.currency_format?.currency_symbol ?? 'USD';
+    const currency = this.ynabStorage.selectedBudget()?.currency_format?.iso_code ?? 'USD';
 
     const currencyAmount = this.milliunits() / 1000.0;
     return new Intl.NumberFormat('en-US', {
