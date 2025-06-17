@@ -1,0 +1,16 @@
+:host {
+  display: contents;
+}
+
+.beta-info {
+  padding: 4px 20px 20px;
+  margin: 0;
+  max-width: 300px;
+
+  .special {
+    font-family: var(--beta-font);
+    color: red;
+    font-weight: bold;
+    font-size: larger;
+  }
+}

@@ -1,6 +1,7 @@
 import {Component, input, computed} from '@angular/core';
 import {Account, Category} from 'ynab';
 
+import {CurrencyCopyButton} from '../../common/currency-copy-button/currency-copy-button';
 import {Currency} from '../../common/currency/currency';
 import {DropdownButton, ButtonTheme} from '../../common/dropdown-button/dropdown-button';
 
@@ -8,7 +9,11 @@ import {DropdownButton, ButtonTheme} from '../../common/dropdown-button/dropdown
   selector: 'ya-account-summary',
   templateUrl: './account-summary.html',
   styleUrl: './account-summary.scss',
-  imports: [Currency, DropdownButton],
+  imports: [
+    Currency,
+    CurrencyCopyButton,
+    DropdownButton,
+  ],
 })
 export class AccountSummary {
   readonly account = input.required<AccountAllocation>();
