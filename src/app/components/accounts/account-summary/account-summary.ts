@@ -21,7 +21,10 @@ export class AccountSummary {
   protected readonly allocatedAmount = computed<number>(() => {
     let sum = 0.0;
     for (const category of this.account().categories) {
-      sum += category.balance;
+      // Ironically, we want to count negative balances *towards* the allocated
+      // amount, because the user has to cover for that number somewhere,
+      // somehow.
+      sum += Math.abs(category.balance);
     }
     return sum;
   });
