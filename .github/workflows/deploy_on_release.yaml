@@ -18,12 +18,12 @@ jobs:
           node-version: '22'
 
       - name: Install dependencies
-        run: npm ci && npm --prefix functions ci
+        run: npm ci && npm --prefix functions ci && npm i -g firebase-tools
 
       - name: Build project
         run: npm run build && npm --prefix functions run build
 
       - name: Deploy to Firebase
-        run: npx firebase deploy --token "$FIREBASE_TOKEN"
+        run: firebase deploy --token "$FIREBASE_TOKEN"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
