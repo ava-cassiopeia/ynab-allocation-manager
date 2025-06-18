@@ -83,7 +83,7 @@ export class YnabStorage {
       const response = await api.accounts.getAccounts(budget.id);
       return response.data.accounts
           // Only show active budget accounts
-          .filter((a) => !a.closed)
+          .filter((a) => !a.closed && !a.deleted)
           .filter((a) => a.on_budget)
           // ...and exclude credit cards, since you can't _really_ just cache
           // money there.
