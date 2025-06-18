@@ -5,11 +5,13 @@
 
       <div class="categories">
         @for (category of categoryGroup.categories; track category.id) {
-          <div class="category">
-            <div class="name" [title]="category.name">{{ category.name }}</div>
-            <div class="balance"><ya-currency [milliunits]="category.balance" /></div>
-            <div class="allocation"><ya-allocation-selector [category]="category" /></div>
-          </div>
+          @if (!category.hidden && !category.deleted) {
+            <div class="category">
+              <div class="name" [title]="category.name">{{ category.name }}</div>
+              <div class="balance"><ya-currency [milliunits]="category.balance" /></div>
+              <div class="allocation"><ya-allocation-selector [category]="category" /></div>
+            </div>
+          }
         }
       </div>
     </section>
