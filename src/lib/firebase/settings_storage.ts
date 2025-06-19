@@ -1,9 +1,9 @@
 import {computed, Injectable, resource, inject} from "@angular/core";
 import {doc, getDoc, setDoc} from "firebase/firestore";
+import {BudgetSummary} from "ynab";
 
 import {db} from "./app";
 import {AuthStorage} from "./auth_storage";
-import {BudgetSummary} from "ynab";
 
 @Injectable({providedIn: 'root'})
 export class SettingsStorage {
@@ -37,16 +37,6 @@ export class SettingsStorage {
 
   private readonly authStorage = inject(AuthStorage);
 
-  async updateSettings(fn: (oldSettings: UserSettings) => void) {
-    const user = this.authStorage.currentUser();
-    if (user === null) return;
-
-    const oldSettings = this.settings();
-    fn(oldSettings);
-
-    await setDoc(doc(db, "settings", user.uid), oldSettings);
-  }
-
   async setSelectedBudget(budget: BudgetSummary) {
     await this.updateSettings((settings) => {
       settings.selectedBudgetId = budget.id;
@@ -61,6 +51,16 @@ export class SettingsStorage {
 
   reload() {
     this.settingsResource.reload();
+  }
+
+  private async updateSettings(fn: (oldSettings: UserSettings) => void) {
+    const user = this.authStorage.currentUser();
+    if (user === null) return;
+
+    const oldSettings = this.settings();
+    fn(oldSettings);
+
+    await setDoc(doc(db, "settings", user.uid), oldSettings);
   }
 }
 
