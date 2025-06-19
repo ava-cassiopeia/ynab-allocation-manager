@@ -1,5 +1,5 @@
 <ul>
-  @for (account of accounts(); track account.account.id) {
+  @for (account of accountData.accounts(); track account.account.id) {
     <li>
       <ya-account-summary [account]="account" />
     </li>
