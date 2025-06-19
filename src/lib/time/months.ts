@@ -38,9 +38,14 @@ export function parseMonth(monthStr: string): Date {
     throw new Error(`Can't parse month: ${monthStr} is not a  correctly formatted month.`);
   }
   const year = parseInt(parts[0], 10);
-  const month = parseInt(parts[1], 10);
+  const month = parseInt(parts[1], 10) - 1; // only months are 0-indexed (ugh)
   const day = parseInt(parts[2], 10);
   return new Date(year, month, day);
+}
+
+export function monthToApiMonth(month: Date): string {
+  const adjustedMonth = new Date(month.getFullYear(), month.getMonth(), 1);
+  return adjustedMonth.toISOString().split('T')[0];
 }
 
 /**
