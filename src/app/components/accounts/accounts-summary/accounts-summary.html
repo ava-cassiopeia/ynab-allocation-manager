@@ -1,0 +1,30 @@
+<div class="number-section">
+  <ya-dropdown-button dropdownLabel="Available" [flat]="true">
+    <span label>
+      <ya-currency [milliunits]="accountData.availableCash()" />
+    </span>
+
+    <p dropdown class="info">
+      You have <b><ya-currency [milliunits]="accountData.availableCash()" /></b>
+      available after all allocations, across all of your budgeting accounts.
+    </p>
+  </ya-dropdown-button>
+
+  <p class="label">Available</p>
+</div>
+
+<div class="number-section">
+  <ya-dropdown-button dropdownLabel="Total balance" [flat]="true">
+    <span label>
+      <ya-currency [milliunits]="accountData.totalAvailable()" />
+    </span>
+
+    <p dropdown class="info">
+      Your accounts have a total of
+      <b><ya-currency [milliunits]="accountData.totalAvailable()" /></b>
+      in them <i>before</i> any allocations are subtracted.
+    </p>
+  </ya-dropdown-button>
+
+  <p class="label">Balance</p>
+</div>
