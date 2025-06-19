@@ -42,7 +42,7 @@
       [theme]="allocationsTheme()"
       [flat]="!hasAllocations()">
     <div label class="allocation-label">
-      <ya-currency [milliunits]="allocatedAmount()" />
+      <ya-currency [milliunits]="allocatedAmount.value()" />
       &sol;
       <ya-currency [milliunits]="account().account.cleared_balance" />
     </div>
@@ -55,7 +55,7 @@
 
         <div class="allocated">-</div>
         <div class="allocated">Allocated ({{ account().categories.length }}):</div>
-        <ya-currency class="allocated" [milliunits]="allocatedAmount()" />
+        <ya-currency class="allocated" [milliunits]="allocatedAmount.value()" />
 
         <div>=</div>
         <div>&nbsp;</div>

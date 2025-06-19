@@ -7,7 +7,9 @@ import {BudgetSelectorButton} from '../../components/budgets/budget-selector-but
 import {CategoryList} from '../../components/categories/category-list/category-list';
 import {ClearAllocationsButton} from "../../components/allocations/clear-allocations-button/clear-allocations-button";
 import {LogoutButton} from '../../components/auth/logout-button/logout-button';
+import {MonthSelector} from "../../components/common/month-selector/month-selector";
 import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
+import {SettingsStorage} from '../../../lib/firebase/settings_storage';
 
 @Component({
   selector: 'ya-app-page',
@@ -20,10 +22,12 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
     CategoryList,
     ClearAllocationsButton,
     LogoutButton,
+    MonthSelector,
   ],
 })
 export class AppPage {
   protected readonly ynabStorage = inject(YnabStorage);
+  protected readonly settingsStorage = inject(SettingsStorage);
 
   protected readonly loading = signal<boolean>(false);
   protected readonly YnabStorageStatus = YnabStorageStatus;
@@ -41,7 +45,7 @@ export class AppPage {
   protected async selectNewBudget(budget: BudgetSummary) {
     this.loading.set(true);
     await this.sleep(1000);
-    this.ynabStorage.selectedBudget.set(budget);
+    this.settingsStorage.setSelectedBudget(budget);
   }
 
   private sleep(ms: number): Promise<void> {

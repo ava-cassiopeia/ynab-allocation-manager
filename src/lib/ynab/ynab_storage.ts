@@ -1,5 +1,7 @@
-import {Injectable, signal, computed, resource, effect} from "@angular/core";
+import {Injectable, signal, computed, resource, effect, inject} from "@angular/core";
 import {AccountType, API, BudgetSummary} from "ynab";
+
+import {SettingsStorage} from "../firebase/settings_storage";
 
 /**
  * Stores cached YNAB data for the application.
@@ -34,7 +36,23 @@ export class YnabStorage {
    * The budget the user has selected to work on. Null if the user hasn't
    * selected a budget yet.
    */
-  readonly selectedBudget = signal<BudgetSummary | null>(null);
+  readonly selectedBudget = computed<BudgetSummary | null>(() => {
+    const settingsBudgetId = this.settingsStorage.settings().selectedBudgetId;
+    if (settingsBudgetId === null) return null;
+
+    const budgets = this.budgets.value();
+    if (!budgets) return null;
+
+    let foundBudget = null;
+    for (const budget of budgets) {
+      if (budget.id === settingsBudgetId) {
+        foundBudget = budget;
+        break;
+      }
+    }
+
+    return foundBudget;
+  });
 
   /**
    * A resource which supplies all of the categories for the user's selected
@@ -101,6 +119,8 @@ export class YnabStorage {
     return YnabStorageStatus.READY;
   });
 
+  private readonly settingsStorage = inject(SettingsStorage);
+
   constructor() {
     // Attempt to load any saved API key from session storage.
     const storedApiKey = sessionStorage.getItem('ynab.apiKey');
@@ -117,10 +137,6 @@ export class YnabStorage {
         sessionStorage.removeItem('ynab.apiKey');
       }
     });
-  }
-
-  reset() {
-    this.selectedBudget.set(null);
   }
 }
 

@@ -1,0 +1,14 @@
+@let monthsWord = months() === 1 ? 'month' : 'months';
+<ya-dropdown-button [dropdownLabel]="months() + ' ' + monthsWord + ' of allocations'"
+    [flat]="true"
+    [menuItems]="menuItems()"
+    icon="calendar_month">
+  <span label>
+    {{ monthsLabel() }}
+  </span>
+
+  <p class="month-info" dropdown>
+    Allocations for your accounts are the sum of the next
+    <b>{{ months() }} {{ monthsWord }}</b> of funds in the allocated categories.
+  </p>
+</ya-dropdown-button>

@@ -77,15 +77,9 @@ describe('Currency', () => {
   });
 
   function createComponent(milliunits: number, currency = 'USD') {
-    const ynabStorage = TestBed.inject(YnabStorage);
-    // Extremely thin fake just for these tests
-    ynabStorage.selectedBudget.set({
-      currency_format: {
-        iso_code: currency,
-      }
-    } as BudgetSummary);
     const fixture = TestBed.createComponent(Currency);
     fixture.componentRef.setInput('milliunits', milliunits);
+    fixture.componentRef.setInput('currencyOverride', currency);
     fixture.detectChanges();
     return {
       fixture,
