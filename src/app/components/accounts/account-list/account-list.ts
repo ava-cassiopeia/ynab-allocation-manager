@@ -32,7 +32,7 @@ export class AccountList {
       allocationsMap.get(allocation.accountId)!.push(allocation);
     }
 
-    const groups = this.ynabStorage.categories.value() ?? [];
+    const groups = this.ynabStorage.latestCategories.value() ?? [];
     const categories = groups.flatMap((v) => v.categories);
     const categoriesMap = new Map<CategoryId, Category>();
     for (const category of categories) {
