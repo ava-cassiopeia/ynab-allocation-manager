@@ -1,6 +1,6 @@
-import {Injectable, signal, effect, inject} from '@angular/core';
+import {Injectable, signal, effect, inject, resource, computed} from '@angular/core';
 import {User} from 'firebase/auth';
-import {Unsubscribe, onSnapshot, query, collection, where, addDoc, getDocs, updateDoc, doc, setDoc, deleteDoc, writeBatch} from 'firebase/firestore';
+import {Unsubscribe, onSnapshot, query, collection, where, addDoc, getDocs, updateDoc, doc, setDoc, deleteDoc, writeBatch, getDoc} from 'firebase/firestore';
 import {BudgetSummary, Category} from 'ynab';
 
 import {Allocation} from '../models/allocation';
@@ -8,19 +8,16 @@ import {AuthStorage} from '../firebase/auth_storage';
 import {UserMetadata} from '../models/user_metadata';
 import {YnabStorage} from '../ynab/ynab_storage';
 import {db} from "../firebase/app";
+import {SettingsStorage} from '../firebase/settings_storage';
 
 @Injectable({providedIn: 'root'})
 export class FirestoreStorage {
   readonly allocations = signal<Allocation[]>([]);
-
-  readonly settings = signal<UserSettings>({
-    selectedBudgetId: null,
-    timeRange: 2, // months
-  });
   readonly userMetadata = signal<UserMetadata | null>(null);
 
   private readonly ynabStorage = inject(YnabStorage);
   private readonly authStorage = inject(AuthStorage);
+  private readonly settingsStorage = inject(SettingsStorage);
 
   private allocationsUnsubscribe: Unsubscribe | null = null;
   private settingsUnsubscribe: Unsubscribe | null = null;
@@ -36,9 +33,6 @@ export class FirestoreStorage {
       this.listenForSettingsUpdates(user);
 
       if (budget === null) return;
-      updateDoc(doc(db, "settings", user.uid), {
-        selectedBudgetId: budget.id,
-      });
       this.listenForAllocationsUpdates(user, budget);
     });
 
@@ -61,37 +55,8 @@ export class FirestoreStorage {
       }
     });
 
-    // Update the currently selected budget based on the updated selected budget
-    // from the user's settings.
-    effect(() => {
-      const settingsBudgetId = this.settings().selectedBudgetId;
-      if (settingsBudgetId === null) return;
-
-      const budgets = this.ynabStorage.budgets.value();
-      if (!budgets) return;
-
-      let foundBudget = null;
-      for (const budget of budgets) {
-        if (budget.id === settingsBudgetId) {
-          foundBudget = budget;
-          break;
-        }
-      }
-
-      if (!foundBudget) return;
-
-      this.ynabStorage.selectedBudget.set(foundBudget);
-    });
   }
 
-  async updateTimeRange(newRange: number) {
-    const user = this.authStorage.currentUser();
-    if (!user) return;
-
-    await updateDoc(doc(db, "settings", user.uid), {
-      timeRange: newRange,
-    });
-  }
 
   /**
    * We never really want there to be multiple allocations per category (maybe
@@ -207,7 +172,7 @@ export class FirestoreStorage {
       const data = docSnapshot.data();
       if (!data) return;
 
-      this.settings.set(data as any);
+      this.settingsStorage.reload();
     });
   }
 
@@ -224,9 +189,4 @@ export class FirestoreStorage {
       this.userMetadata.set(data as UserMetadata);
     });
   }
-}
-
-interface UserSettings {
-  readonly selectedBudgetId: string | null;
-  readonly timeRange: number;
 }
