@@ -1,3 +1,8 @@
+<div class="headings">
+  <div>Category</div>
+  <div>Balance ({{ monthsLabel() }})</div>
+  <div>Allocation</div>
+</div>
 @for (categoryGroup of ynabStorage.latestCategories.value(); track categoryGroup.id) {
   <section class="category-group">
     <div class="name">{{ categoryGroup.name }}</div>
