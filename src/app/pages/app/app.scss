@@ -104,6 +104,21 @@ $materialBoxShadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
       pointer-events: all;
     }
   }
+
+  .header {
+    display: flex;
+    align-items: center;
+    background: var(--theme-primary-color);
+    color: var(--theme-primary-complement-color);
+    padding: 12px 20px;
+
+    > .label {
+      flex: 1;
+      font-size: 18px;
+      margin: 0;
+      padding: 0;
+    }
+  }
 }
 
 .account-sidebar {

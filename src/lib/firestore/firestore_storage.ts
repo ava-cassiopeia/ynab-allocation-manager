@@ -15,6 +15,7 @@ export class FirestoreStorage {
 
   readonly settings = signal<UserSettings>({
     selectedBudgetId: null,
+    timeRange: 2, // months
   });
   readonly userMetadata = signal<UserMetadata | null>(null);
 
@@ -27,7 +28,7 @@ export class FirestoreStorage {
 
   constructor() {
     // Subscribe to updates for the user's data once we have a user.
-    effect(() => {
+    effect(async () => {
       const user = this.authStorage.currentUser();
       const budget = this.ynabStorage.selectedBudget();
 
@@ -35,8 +36,7 @@ export class FirestoreStorage {
       this.listenForSettingsUpdates(user);
 
       if (budget === null) return;
-
-      setDoc(doc(db, 'settings', user.uid), {
+      updateDoc(doc(db, "settings", user.uid), {
         selectedBudgetId: budget.id,
       });
       this.listenForAllocationsUpdates(user, budget);
@@ -81,6 +81,15 @@ export class FirestoreStorage {
       if (!foundBudget) return;
 
       this.ynabStorage.selectedBudget.set(foundBudget);
+    });
+  }
+
+  async updateTimeRange(newRange: number) {
+    const user = this.authStorage.currentUser();
+    if (!user) return;
+
+    await updateDoc(doc(db, "settings", user.uid), {
+      timeRange: newRange,
     });
   }
 
@@ -219,4 +228,5 @@ export class FirestoreStorage {
 
 interface UserSettings {
   readonly selectedBudgetId: string | null;
+  readonly timeRange: number;
 }

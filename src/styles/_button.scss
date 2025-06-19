@@ -37,7 +37,8 @@ button.ya-button {
     transform: translateY(5px);
   }
 
-  &:disabled {
+  &:disabled,
+  &.flat:disabled {
     cursor: initial;
 
     &,

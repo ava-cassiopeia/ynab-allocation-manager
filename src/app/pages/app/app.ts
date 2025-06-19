@@ -7,6 +7,7 @@ import {BudgetSelectorButton} from '../../components/budgets/budget-selector-but
 import {CategoryList} from '../../components/categories/category-list/category-list';
 import {ClearAllocationsButton} from "../../components/allocations/clear-allocations-button/clear-allocations-button";
 import {LogoutButton} from '../../components/auth/logout-button/logout-button';
+import {MonthSelector} from "../../components/common/month-selector/month-selector";
 import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
 
 @Component({
@@ -20,6 +21,7 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
     CategoryList,
     ClearAllocationsButton,
     LogoutButton,
+    MonthSelector,
   ],
 })
 export class AppPage {
