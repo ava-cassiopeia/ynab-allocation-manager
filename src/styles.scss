@@ -2,6 +2,8 @@
   --theme-primary-color: #2E7D32; // Green 800
   --theme-primary-complement-color: white;
   --beta-font: Caveat, cursive;
+  // The same font that YNAB uses in their main app, for consistency.
+  --body-font: Figtree, sans-serif;
 }
 
 * {
@@ -14,8 +16,7 @@ body {
   height: 100%;
   padding: 0;
   margin: 0;
-  // The same font that YNAB uses in their main app, for consistency.
-  font-family: Figtree, sans-serif;
+  font-family: var(--body-font);
 }
 
 a {

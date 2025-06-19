@@ -1,9 +1,9 @@
 import {computed, Injectable, resource, inject} from "@angular/core";
 import {doc, getDoc, setDoc} from "firebase/firestore";
+import {BudgetSummary} from "ynab";
 
 import {db} from "./app";
 import {AuthStorage} from "./auth_storage";
-import {BudgetSummary} from "ynab";
 
 @Injectable({providedIn: 'root'})
 export class SettingsStorage {
@@ -37,16 +37,6 @@ export class SettingsStorage {
 
   private readonly authStorage = inject(AuthStorage);
 
-  async updateSettings(fn: (oldSettings: UserSettings) => void) {
-    const user = this.authStorage.currentUser();
-    if (user === null) return;
-
-    const oldSettings = this.settings();
-    fn(oldSettings);
-
-    await setDoc(doc(db, "settings", user.uid), oldSettings);
-  }
-
   async setSelectedBudget(budget: BudgetSummary) {
     await this.updateSettings((settings) => {
       settings.selectedBudgetId = budget.id;
@@ -59,12 +49,47 @@ export class SettingsStorage {
     });
   }
 
+  async setCurrencyFormat(currencyFormat?: CurrencyFormat) {
+    await this.updateSettings((settings) => {
+      if (!currencyFormat) {
+        delete settings.currencyFormat;
+        return;
+      }
+
+      settings.currencyFormat = currencyFormat;
+    });
+  }
+
   reload() {
     this.settingsResource.reload();
   }
+
+  private async updateSettings(fn: (oldSettings: UserSettings) => void) {
+    const user = this.authStorage.currentUser();
+    if (user === null) return;
+
+    const oldSettings = this.settings();
+    fn(oldSettings);
+
+    await setDoc(doc(db, "settings", user.uid), oldSettings);
+  }
+}
+
+export enum CurrencyFormat {
+  // Standard format:
+  // positive number: $123.45
+  // negative number: -$123.45
+  // zero:            $0
+  STANDARD = 1,
+  // Finance format (similar to MS Excel)
+  // positive number: $123.45
+  // negative number: ($123.45)
+  // zero:            -
+  FINANCE = 2,
 }
 
 interface UserSettings {
   selectedBudgetId: string | null;
   timeRange: number;
+  currencyFormat?: CurrencyFormat;
 }

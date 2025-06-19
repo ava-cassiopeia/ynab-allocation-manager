@@ -8,8 +8,9 @@ import {CategoryList} from '../../components/categories/category-list/category-l
 import {ClearAllocationsButton} from "../../components/allocations/clear-allocations-button/clear-allocations-button";
 import {LogoutButton} from '../../components/auth/logout-button/logout-button';
 import {MonthSelector} from "../../components/common/month-selector/month-selector";
-import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
+import {SettingsButton} from '../../components/settings/settings-button/settings-button';
 import {SettingsStorage} from '../../../lib/firebase/settings_storage';
+import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
 
 @Component({
   selector: 'ya-app-page',
@@ -23,6 +24,7 @@ import {SettingsStorage} from '../../../lib/firebase/settings_storage';
     ClearAllocationsButton,
     LogoutButton,
     MonthSelector,
+    SettingsButton,
   ],
 })
 export class AppPage {

@@ -46,7 +46,7 @@ export class AuthStorage {
     // on the auth state that's looking out for that.
   }
 
-  private async updateUser(user: User | null) {
+  protected async updateUser(user: User | null) {
     if (!user) {
       this.currentUser.set(null);
       return;

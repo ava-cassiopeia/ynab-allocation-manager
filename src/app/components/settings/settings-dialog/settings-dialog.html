@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Settings</h2>
+
+<mat-dialog-content>
+  <div class="container">
+    <div class="setting">
+      <mat-slide-toggle [checked]="isFinanceFormat()" (change)="updateCurrencyFormat($event)">
+        <span class="label">Finance currency formatting</span>
+      </mat-slide-toggle>
+
+      <p class="info">
+        If enabled, formats currency using a style popular with financiers and
+        accountants, similar to some popular spreadsheet software.
+        <br><br>
+        Negative numbers are represented with surrounding (), and 0 is a dash
+        (-).
+        <br><br>
+        Current formatting:
+        <ya-currency [milliunits]="12345" /> / <ya-currency [milliunits]="-12345" /> / <ya-currency [milliunits]="0" />
+      </p>
+    </div>
+  </div>
+</mat-dialog-content>
