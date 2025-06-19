@@ -1,6 +1,6 @@
 :host {
   display: grid;
-  grid-template-columns: minmax(50px, 150px) minmax(0, min-content) 1fr;
+  grid-template-columns: minmax(50px, 150px) min-content 1fr;
   align-items: center;
 }
 
@@ -8,6 +8,22 @@ ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+.headings {
+  display: contents;
+
+  > * {
+    white-space: nowrap;
+    padding: 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+    font-weight: bold;
+
+    &:last-of-type {
+      text-align: right;
+    }
+  }
 }
 
 .category-group {
