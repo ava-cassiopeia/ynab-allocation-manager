@@ -35,9 +35,10 @@ export class AccountSummary {
       if (categories.length < 1) return 0;
 
       const today = new Date();
-      const promises = [];
+      const promises: Array<Promise<number>> = [];
       for (const category of categories) {
-        promises.push(this.walkCategory(category.id, today, months));
+        // disable this for now because it'll get me banned from YNAB
+        // promises.push(this.walkCategory(category.id, today, months));
       }
 
       const values = await Promise.all(promises);

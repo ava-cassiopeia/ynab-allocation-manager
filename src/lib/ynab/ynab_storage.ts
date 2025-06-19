@@ -2,6 +2,7 @@ import {Injectable, signal, computed, resource, effect, inject} from "@angular/c
 import {AccountType, API, BudgetSummary} from "ynab";
 
 import {SettingsStorage} from "../firebase/settings_storage";
+import {parseMonth} from "../time/months";
 
 /**
  * Stores cached YNAB data for the application.
@@ -52,6 +53,27 @@ export class YnabStorage {
     }
 
     return foundBudget;
+  });
+
+  /**
+   * All of the available months for a users' budget.
+   */
+  readonly months = resource({
+    params: () => ({
+      api: this.api(),
+      selectedBudget: this.selectedBudget(),
+    }),
+
+    loader: async ({params}) => {
+      const {api, selectedBudget} = params;
+      if (!api) return [];
+      if (!selectedBudget) return [];
+
+      const monthsResponse = await api.months.getBudgetMonths(selectedBudget.id);
+      return monthsResponse.data.months.map((m) => parseMonth(m.month));
+    },
+
+    defaultValue: [],
   });
 
   /**
