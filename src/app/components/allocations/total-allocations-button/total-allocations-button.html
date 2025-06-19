@@ -1,0 +1,10 @@
+<ya-dropdown-button dropdownLabel="Total allocated" [flat]="true" icon="functions">
+  <span label>
+    <ya-currency [milliunits]="accountData.totalAllocated()" />
+  </span>
+
+  <p dropdown class="info">
+    You have <b><ya-currency [milliunits]="accountData.totalAllocated()" /></b>
+    allocated across all of your categories.
+  </p>
+</ya-dropdown-button>
