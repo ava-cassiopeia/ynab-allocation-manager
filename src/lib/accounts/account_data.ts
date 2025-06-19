@@ -10,6 +10,10 @@ import {Allocation} from "../models/allocation";
  */
 @Injectable({providedIn: "root"})
 export class AccountData {
+  /**
+   * All of the user's active accounts, with summary information for their
+   * allocations.
+   */
   readonly accounts = computed<AccountAllocation[]>(() => {
     const accounts = this.ynabStorage.accounts.value() ?? [];
     if (accounts.length < 1) return [];
@@ -51,6 +55,35 @@ export class AccountData {
         total: sum,
       };
     });
+  });
+
+  /**
+   * The total amount of allocated money across all accounts.
+   */
+  readonly totalAllocated = computed<number>(() => {
+    let sum = 0;
+    for (const account of this.accounts()) {
+      sum += account.total;
+    }
+    return sum;
+  });
+
+  /**
+   * The total available money (cleared) across all accounts.
+   */
+  readonly totalAvailable = computed<number>(() => {
+    let sum = 0;
+    for (const account of this.accounts()) {
+      sum += account.account.cleared_balance;
+    }
+    return sum;
+  });
+
+  /**
+   * The total remaining available cash after all allocations.
+   */
+  readonly availableCash = computed<number>(() => {
+    return this.totalAvailable() - this.totalAllocated();
   });
 
   private readonly ynabStorage = inject(YnabStorage);
