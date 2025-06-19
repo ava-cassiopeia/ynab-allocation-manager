@@ -49,6 +49,12 @@ export class SettingsStorage {
     });
   }
 
+  async setCurrencyFormat(currencyFormat: CurrencyFormat) {
+    await this.updateSettings((settings) => {
+      settings.currencyFormat = currencyFormat;
+    });
+  }
+
   reload() {
     this.settingsResource.reload();
   }
@@ -64,7 +70,21 @@ export class SettingsStorage {
   }
 }
 
+export enum CurrencyFormat {
+  // Standard format:
+  // positive number: $123.45
+  // negative number: -$123.45
+  // zero:            $0
+  STANDARD = 1,
+  // Finance format (similar to MS Excel)
+  // positive number: $123.45
+  // negative number: ($123.45)
+  // zero:            -
+  FINANCE = 2,
+}
+
 interface UserSettings {
   selectedBudgetId: string | null;
   timeRange: number;
+  currencyFormat?: CurrencyFormat;
 }

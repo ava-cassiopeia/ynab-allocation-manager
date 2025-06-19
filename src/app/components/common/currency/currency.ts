@@ -1,6 +1,8 @@
 import {Component, input, computed, inject} from '@angular/core';
 
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
+import {SettingsStorage, CurrencyFormat} from '../../../../lib/firebase/settings_storage';
+import {formatCurrency} from '../../../../lib/currency';
 
 /**
  * Renders milliunit currency values as USD values.
@@ -15,7 +17,7 @@ export class Currency {
   readonly currencyOverride = input<string | null>(null);
 
   protected readonly value = computed<string>(() => {
-    if (this.milliunits() === 0) return '-';
+    const settingsFormat = this.settingsStorage.settings().currencyFormat ?? CurrencyFormat.STANDARD;
     let currency: string;
     if (this.currencyOverride() !== null) {
       currency = this.currencyOverride()!;
@@ -23,12 +25,9 @@ export class Currency {
       currency = this.ynabStorage.selectedBudget()?.currency_format?.iso_code ?? 'USD';
     }
 
-    const currencyAmount = this.milliunits() / 1000.0;
-    return new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency,
-    }).format(currencyAmount);
+    return formatCurrency(this.milliunits(), currency, settingsFormat);
   });
 
   private readonly ynabStorage = inject(YnabStorage);
+  private readonly settingsStorage = inject(SettingsStorage);
 }

@@ -1,4 +1,4 @@
-import {Injectable, signal} from "@angular/core";
+import {Injectable, Provider, signal} from "@angular/core";
 import {signInAnonymously, User} from "firebase/auth";
 
 import {auth} from "../firebase/app";
@@ -23,3 +23,11 @@ export class FakeAuthStorage extends AuthStorage {
     // no op
   }
 }
+
+export const fakeAuthStorageProvider: Provider = {
+  provide: AuthStorage,
+  useFactory(fakeAuthStorage: FakeAuthStorage) {
+    return fakeAuthStorage;
+  },
+  deps: [FakeAuthStorage],
+};

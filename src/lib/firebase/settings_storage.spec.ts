@@ -4,10 +4,10 @@ import {deleteDoc, doc, getDoc, setDoc} from 'firebase/firestore';
 import {BudgetSummary} from 'ynab';
 
 import {db} from './app';
-import {SettingsStorage} from './settings_storage';
+import {SettingsStorage, CurrencyFormat} from './settings_storage';
 import {sleep} from '../tests/sleep';
 import {AuthStorage} from './auth_storage';
-import {FakeAuthStorage} from '../tests/fake_auth_storage';
+import {FakeAuthStorage, fakeAuthStorageProvider} from '../tests/fake_auth_storage';
 
 describe('SettingsStorage', () => {
   beforeEach(() => {
@@ -15,13 +15,7 @@ describe('SettingsStorage', () => {
       providers: [
         SettingsStorage,
         provideZonelessChangeDetection(),
-        {
-          provide: AuthStorage,
-          useFactory(fakeAuthStorage: FakeAuthStorage) {
-            return fakeAuthStorage;
-          },
-          deps: [FakeAuthStorage],
-        },
+        fakeAuthStorageProvider,
       ],
     });
   });
@@ -46,6 +40,7 @@ describe('SettingsStorage', () => {
 
     expect(settings.selectedBudgetId).toBeNull();
     expect(settings.timeRange).toEqual(2);
+    expect(settings.currencyFormat).toBeUndefined();
   });
 
   it('should update when the firestore settings are updated', async () => {
@@ -93,6 +88,22 @@ describe('SettingsStorage', () => {
 
       expect(settingsStorage.settings().timeRange).toEqual(4);
       expect(dbValue).toEqual(4);
+    });
+  });
+
+  describe(".setCurrencyFormat()", () => {
+    it("updates the time range in settings and in the db", async () => {
+      const settingsStorage = TestBed.inject(SettingsStorage);
+      const fakeAuthStorage = TestBed.inject(FakeAuthStorage);
+      const uid = await fakeAuthStorage.createFakeUser();
+
+      await settingsStorage.setCurrencyFormat(CurrencyFormat.FINANCE);
+      await sleep(10); // wait for Firestore to update
+      const snapshot = await getDoc(doc(db, "settings", uid));
+      const dbValue = !!snapshot.data() ? snapshot.data()!['currencyFormat'] : null;
+
+      expect(settingsStorage.settings().currencyFormat).toEqual(CurrencyFormat.FINANCE);
+      expect(dbValue).toEqual(CurrencyFormat.FINANCE);
     });
   });
 });

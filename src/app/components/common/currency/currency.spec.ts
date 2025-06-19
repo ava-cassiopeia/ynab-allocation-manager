@@ -1,16 +1,20 @@
-import {BudgetSummary} from 'ynab';
 import {provideZonelessChangeDetection} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 
 import {Currency} from './currency';
-import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
+import {CurrencyFormat, SettingsStorage} from '../../../../lib/firebase/settings_storage';
+import {sleep} from '../../../../lib/tests/sleep';
+import {FakeAuthStorage, fakeAuthStorageProvider} from '../../../../lib/tests/fake_auth_storage';
 
 describe('Currency', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Currency],
-      providers: [provideZonelessChangeDetection()],
+      providers: [
+        provideZonelessChangeDetection(),
+        fakeAuthStorageProvider,
+      ],
     })
       .compileComponents();
   });
@@ -54,6 +58,19 @@ describe('Currency', () => {
     const {fixture} = createComponent(123450000);
     const renderedText = fixture.nativeElement.textContent.trim() as string;
     expect(renderedText).toEqual('$123,450.00');
+  });
+
+  it("respects the user's currency format settings", async () => {
+    const settingsStorage = TestBed.inject(SettingsStorage);
+    const fakeAuthStorage = TestBed.inject(FakeAuthStorage);
+    await fakeAuthStorage.createFakeUser();
+    await settingsStorage.setCurrencyFormat(CurrencyFormat.FINANCE);
+    await sleep(10); // wait for Firestore to update
+    const {fixture} = createComponent(-123450000);
+
+    const renderedText = fixture.nativeElement.textContent.trim() as string;
+
+    expect(renderedText).toEqual('($123,450.00)');
   });
 
   // Spot check some non-USD currencies to make sure they render well.
