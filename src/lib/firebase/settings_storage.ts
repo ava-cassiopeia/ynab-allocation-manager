@@ -49,8 +49,13 @@ export class SettingsStorage {
     });
   }
 
-  async setCurrencyFormat(currencyFormat: CurrencyFormat) {
+  async setCurrencyFormat(currencyFormat?: CurrencyFormat) {
     await this.updateSettings((settings) => {
+      if (!currencyFormat) {
+        delete settings.currencyFormat;
+        return;
+      }
+
       settings.currencyFormat = currencyFormat;
     });
   }

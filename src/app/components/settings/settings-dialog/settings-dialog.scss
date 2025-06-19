@@ -1,0 +1,24 @@
+:host {
+  display: block;
+}
+
+// Override the default material styles for fonts
+h2[mat-dialog-title],
+.container,
+.label {
+  font-family: var(--body-font);
+}
+
+.setting {
+  .label {
+    display: inline-block;
+    padding: 0 0 0 8px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  .info {
+    margin: 12px 0 0;
+    padding: 0 0 0 64px;
+  }
+}
