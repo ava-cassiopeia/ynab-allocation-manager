@@ -57,34 +57,34 @@ export class AccountData {
     });
   });
 
-  /**
-   * The total amount of allocated money across all accounts.
-   */
-  readonly totalAllocated = computed<number>(() => {
-    let sum = 0;
-    for (const account of this.accounts()) {
-      sum += account.total;
-    }
-    return sum;
-  });
+ /**
+  * The total amount of allocated money across all accounts.
+  */
+ readonly totalAllocated = computed<number>(() => {
+   let sum = 0;
+   for (const account of this.accounts()) {
+     sum += account.total;
+   }
+   return sum;
+ });
 
-  /**
-   * The total available money (cleared) across all accounts.
-   */
-  readonly totalAvailable = computed<number>(() => {
-    let sum = 0;
-    for (const account of this.accounts()) {
-      sum += account.account.cleared_balance;
-    }
-    return sum;
-  });
+ /**
+  * The total available money (cleared) across all accounts.
+  */
+ readonly totalAvailable = computed<number>(() => {
+   let sum = 0;
+   for (const account of this.accounts()) {
+     sum += account.account.cleared_balance;
+   }
+   return sum;
+ });
 
-  /**
-   * The total remaining available cash after all allocations.
-   */
-  readonly availableCash = computed<number>(() => {
-    return this.totalAvailable() - this.totalAllocated();
-  });
+ /**
+  * The total remaining available cash after all allocations.
+  */
+ readonly availableCash = computed<number>(() => {
+   return this.totalAvailable() - this.totalAllocated();
+ });
 
   private readonly ynabStorage = inject(YnabStorage);
   private readonly firestoreStorage = inject(FirestoreStorage);

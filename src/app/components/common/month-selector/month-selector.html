@@ -7,8 +7,18 @@
     {{ monthsLabel() }}
   </span>
 
-  <p class="month-info" dropdown>
-    Allocations for your accounts are the sum of the next
-    <b>{{ months() }} {{ monthsWord }}</b> of funds in the allocated categories.
-  </p>
+  <div dropdown>
+    <p class="month-info">
+      Allocations for your accounts are the sum of the next
+      <b>{{ months() }} {{ monthsWord }}</b> of funds in the allocated categories.
+    </p>
+
+    <form class="months-form" (submit)="updateMonthsFromForm($event)">
+      <input type="text" class="ya-input" [formControl]="monthsInputControl" />
+
+      <button class="ya-button flat site-theme">
+        Update
+      </button>
+    </form>
+  </div>
 </ya-dropdown-button>
