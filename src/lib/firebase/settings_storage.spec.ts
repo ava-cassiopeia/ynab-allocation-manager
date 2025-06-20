@@ -52,7 +52,7 @@ describe('SettingsStorage', () => {
       selectedBudgetId: "fake_budget_id",
       timeRange: 4,
     });
-    await sleep(10); // wait for Firestore to update
+    await sleep(100); // wait for Firestore to update
     const settings = settingsStorage.settings();
 
     expect(settings.selectedBudgetId).toEqual("fake_budget_id");
