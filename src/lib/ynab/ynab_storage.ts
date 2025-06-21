@@ -2,7 +2,7 @@ import {Injectable, signal, computed, resource, effect, inject, ResourceRef} fro
 import {AccountType, API, BudgetSummary, Category} from "ynab";
 
 import {SettingsStorage} from "../firebase/settings_storage";
-import {latestMonth, monthToApiMonth, parseMonth} from "../time/months";
+import {getMonthsLabel, latestMonth, monthDistance, monthToApiMonth, parseMonth} from "../time/months";
 
 /**
  * Stores cached YNAB data for the application.
@@ -63,11 +63,10 @@ export class YnabStorage {
     params: () => ({
       api: this.api(),
       selectedBudget: this.selectedBudget(),
-      monthsCount: this.settingsStorage.settings().timeRange,
     }),
 
     loader: async ({params}) => {
-      const {api, selectedBudget, monthsCount} = params;
+      const {api, selectedBudget} = params;
       if (!api) return new Date();
       if (!selectedBudget) return new Date();
 
@@ -75,12 +74,26 @@ export class YnabStorage {
       const allMonths = monthsResponse.data.months
           .filter((m) => !m.deleted)
           .map((m) => parseMonth(m.month));
-      return latestMonth(new Date(), allMonths, monthsCount - 1);
+      return latestMonth(new Date(), allMonths);
     },
 
     defaultValue: new Date(),
   });
 
+  /**
+   * The distance between the current month and the latest month.
+   */
+  readonly latestMonthDistance = computed<number>(() => {
+    return monthDistance(new Date(), this.latestMonth.value());
+  });
+
+  /**
+   * A label like "Jan - Mar" or "Mar - Jun 2026" for the distance between now
+   * and the latest month in the user's budget.
+   */
+  readonly latestMonthLabel = computed<string>(() => {
+    return getMonthsLabel(this.latestMonthDistance());
+  });
 
   /**
    * A list of all of the user's accounts for their selected budget, or an empty

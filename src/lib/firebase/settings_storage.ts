@@ -12,7 +12,6 @@ export class SettingsStorage {
     if (!dbSettings) {
       return {
         selectedBudgetId: null,
-        timeRange: 2, // months
       };
     }
 
@@ -40,12 +39,6 @@ export class SettingsStorage {
   async setSelectedBudget(budget: BudgetSummary) {
     await this.updateSettings((settings) => {
       settings.selectedBudgetId = budget.id;
-    });
-  }
-
-  async setTimeRange(months: number) {
-    await this.updateSettings((settings) => {
-      settings.timeRange = months;
     });
   }
 
@@ -90,6 +83,6 @@ export enum CurrencyFormat {
 
 interface UserSettings {
   selectedBudgetId: string | null;
-  timeRange: number;
+  // timeRange: DEPRECATED VALUE
   currencyFormat?: CurrencyFormat;
 }

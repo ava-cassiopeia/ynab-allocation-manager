@@ -54,15 +54,15 @@ export function monthToApiMonth(month: Date): string {
  *
  * Runs in linear time. `months` can be unordered.
  */
-export function latestMonth(month: Date, months: Date[], maxDistance: number): Date {
+export function latestMonth(month: Date, months: Date[], maxDistance?: number): Date {
   if (months.length < 1) return month;
-  if (maxDistance < 1) return month;
+  if (maxDistance !== undefined && maxDistance < 1) return month;
 
   let bestMonth = month;
   for (const candidateMonth of months) {
     const distance = monthDistance(month, candidateMonth);
     if (distance <= 0) continue;
-    if (distance > maxDistance) continue;
+    if (maxDistance !== undefined && distance > maxDistance) continue;
 
     const bestDistance = monthDistance(bestMonth, candidateMonth);
     if (bestDistance > 0) {

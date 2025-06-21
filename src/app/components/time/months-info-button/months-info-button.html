@@ -1,0 +1,23 @@
+<ya-dropdown-button dropdownLabel="Allocation range" [flat]="true" icon="calendar_month">
+  <span label>{{ ynabStorage.latestMonthLabel() }}</span>
+
+  <p dropdown class="info">
+    @if (ynabStorage.latestMonthDistance() < 2) {
+      This tool is displaying available values from your budget for
+      <b>this month</b> because you have only allocated funds up to this month.
+      <br><br>
+      If you choose to allocate funds in future months, this tool will include
+      them as well.
+    } @else {
+      @let futureMonths = ynabStorage.latestMonthDistance() - 1;
+      This tool is displaying available values from your budget for <b>this
+      month</b> and
+      <b>{{ futureMonths < 2 ? 'next month' : `the next ${futureMonths} months` }}</b>
+      because you have allocated funds in the
+      {{ futureMonths < 2 ? 'next month' : 'next months' }}.
+      <br><br>
+      As you allocate funds in later months, this tool will include them as
+      well.
+    }
+  </p>
+</ya-dropdown-button>
