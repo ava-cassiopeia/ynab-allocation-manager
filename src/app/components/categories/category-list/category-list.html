@@ -1,6 +1,8 @@
 <div class="headings">
-  <div>Category</div>
-  <div>Available ({{ ynabStorage.latestMonthLabel() }})</div>
+  <div class="collapsable">
+    <div>Category</div>
+    <div>Available ({{ ynabStorage.latestMonthLabel() }})</div>
+  </div>
   <div>Allocation</div>
 </div>
 @for (categoryGroup of ynabStorage.latestCategories.value(); track categoryGroup.id) {
@@ -10,8 +12,10 @@
     <div class="categories">
       @for (category of categoryGroup.categories; track category.id) {
         <div class="category">
-          <div class="name" [title]="category.name">{{ category.name }}</div>
-          <div class="balance"><ya-currency [milliunits]="category.balance" /></div>
+          <div class="collapsable">
+            <div class="name" [title]="category.name">{{ category.name }}</div>
+            <div class="balance"><ya-currency [milliunits]="category.balance" /></div>
+          </div>
           <div class="allocation"><ya-allocation-selector [category]="category" /></div>
         </div>
       }

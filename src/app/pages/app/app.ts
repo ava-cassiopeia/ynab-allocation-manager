@@ -38,6 +38,8 @@ export class AppPage {
   protected readonly accountData = inject(AccountData);
 
   protected readonly loading = signal<boolean>(false);
+  // Only relevant on mobile screens
+  protected readonly showAccounts = signal<boolean>(false);
   protected readonly YnabStorageStatus = YnabStorageStatus;
 
   constructor(private readonly el: ElementRef) {

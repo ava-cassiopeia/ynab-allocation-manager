@@ -19,37 +19,51 @@
     <ya-logout-button />
   </div>
 </header>
-<main class="main-content">
-  <div #accountSidebar
-      class="account-sidebar card"
-      [class.loading]="loading()">
-    <div class="loading-overlay">
-      <p>Loading...</p>
+
+<div class="content-wrapper">
+  <main class="main-content" [class.show-accounts]="showAccounts()">
+    <div #accountSidebar
+        class="account-sidebar card"
+        [class.loading]="loading()">
+      <div class="loading-overlay">
+        <p>Loading...</p>
+      </div>
+
+      <div class="header">
+        <h2 class="label">Accounts</h2>
+
+        <ya-months-info-button />
+      </div>
+
+      <ya-accounts-summary />
+
+      <ya-account-list />
     </div>
 
-    <div class="header">
-      <h2 class="label">Accounts</h2>
+    <div class="categories card"
+        [class.loading]="loading()">
+      <div class="loading-overlay">
+        <p>Loading...</p>
+      </div>
 
-      <ya-months-info-button />
+      <div class="header">
+        <h2 class="label">Categories</h2>
+
+        <ya-total-allocations-button />
+      </div>
+
+      <ya-category-list />
     </div>
+  </main>
+</div>
 
-    <ya-accounts-summary />
-
-    <ya-account-list />
+<nav class="section-navigation" aria-label="Section navigation">
+  <div class="button-rail">
+    <button [class.current]="showAccounts()" (click)="showAccounts.set(true)">
+      Accounts
+    </button>
+    <button [class.current]="!showAccounts()" (click)="showAccounts.set(false)">
+      Categories
+    </button>
   </div>
-
-  <div class="categories card"
-      [class.loading]="loading()">
-    <div class="loading-overlay">
-      <p>Loading...</p>
-    </div>
-
-    <div class="header">
-      <h2 class="label">Categories</h2>
-
-      <ya-total-allocations-button />
-    </div>
-
-    <ya-category-list />
-  </div>
-</main>
+</nav>
