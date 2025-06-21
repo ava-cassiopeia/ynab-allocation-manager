@@ -115,9 +115,9 @@ export class YnabStorage {
           // Only show active budget accounts
           .filter((a) => !a.closed && !a.deleted)
           .filter((a) => a.on_budget)
-          // ...and exclude credit cards, since you can't _really_ just cache
+          // ...and exclude credit lines, since you can't _really_ just cache
           // money there.
-          .filter((a) => a.type !== AccountType.CreditCard);
+          .filter((a) => a.type !== AccountType.CreditCard && a.type !== AccountType.LineOfCredit);
     },
   });
 
