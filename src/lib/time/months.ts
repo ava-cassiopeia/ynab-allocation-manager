@@ -59,15 +59,14 @@ export function latestMonth(month: Date, months: Date[], maxDistance: number): D
   if (maxDistance < 1) return month;
 
   let bestMonth = month;
-  for (let i = 0; i < months.length; i++) {
-    const currentMonth = months[i];
-    const distance = monthDistance(month, currentMonth);
+  for (const candidateMonth of months) {
+    const distance = monthDistance(month, candidateMonth);
     if (distance <= 0) continue;
     if (distance > maxDistance) continue;
 
-    const bestDistance = monthDistance(bestMonth, currentMonth);
+    const bestDistance = monthDistance(bestMonth, candidateMonth);
     if (bestDistance > 0) {
-      bestMonth = currentMonth;
+      bestMonth = candidateMonth;
     }
   }
   return bestMonth;
