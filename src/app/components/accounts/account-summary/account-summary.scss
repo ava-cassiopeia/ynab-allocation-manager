@@ -3,6 +3,20 @@
   padding: 4px 20px;
   gap: 8px;
   align-items: center;
+  margin: 0 0 16px;
+
+  @media screen and (max-width: 1150px) {
+    flex-direction: column;
+    align-items: flex-start;
+
+    .account-name {
+      margin: 0;
+    }
+
+    .allocation-button {
+      order: -1;
+    }
+  }
 }
 
 .account-name {
