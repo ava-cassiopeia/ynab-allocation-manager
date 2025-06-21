@@ -39,7 +39,6 @@ describe('SettingsStorage', () => {
     const settings = settingsStorage.settings();
 
     expect(settings.selectedBudgetId).toBeNull();
-    expect(settings.timeRange).toEqual(2);
     expect(settings.currencyFormat).toBeUndefined();
   });
 
@@ -50,13 +49,11 @@ describe('SettingsStorage', () => {
 
     await setDoc(doc(db, "settings", uid), {
       selectedBudgetId: "fake_budget_id",
-      timeRange: 4,
     });
     await sleep(100); // wait for Firestore to update
     const settings = settingsStorage.settings();
 
     expect(settings.selectedBudgetId).toEqual("fake_budget_id");
-    expect(settings.timeRange).toEqual(4);
   });
 
   describe(".setSelectedBudget()", () => {
@@ -72,22 +69,6 @@ describe('SettingsStorage', () => {
 
       expect(settingsStorage.settings().selectedBudgetId).toEqual("fake_budget_id");
       expect(dbValue).toEqual("fake_budget_id");
-    });
-  });
-
-  describe(".setTimeRange()", () => {
-    it("updates the time range in settings and in the db", async () => {
-      const settingsStorage = TestBed.inject(SettingsStorage);
-      const fakeAuthStorage = TestBed.inject(FakeAuthStorage);
-      const uid = await fakeAuthStorage.createFakeUser();
-
-      await settingsStorage.setTimeRange(4);
-      await sleep(10); // wait for Firestore to update
-      const snapshot = await getDoc(doc(db, "settings", uid));
-      const dbValue = !!snapshot.data() ? snapshot.data()!['timeRange'] : null;
-
-      expect(settingsStorage.settings().timeRange).toEqual(4);
-      expect(dbValue).toEqual(4);
     });
   });
 

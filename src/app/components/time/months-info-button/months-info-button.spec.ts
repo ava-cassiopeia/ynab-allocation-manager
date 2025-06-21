@@ -1,20 +1,20 @@
 import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {MonthSelector} from './month-selector';
+import {MonthsInfoButton} from './months-info-button';
 
-describe('MonthSelector', () => {
-  let component: MonthSelector;
-  let fixture: ComponentFixture<MonthSelector>;
+describe('MonthsInfoButton', () => {
+  let component: MonthsInfoButton;
+  let fixture: ComponentFixture<MonthsInfoButton>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [MonthSelector],
+      imports: [MonthsInfoButton],
       providers: [provideZonelessChangeDetection()],
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(MonthSelector);
+    fixture = TestBed.createComponent(MonthsInfoButton);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

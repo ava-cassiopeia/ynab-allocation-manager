@@ -14,13 +14,6 @@ import {getMonthsLabel} from '../../../../lib/time/months';
   imports: [Currency, AllocationSelector],
 })
 export class CategoryList {
-  protected readonly monthsLabel = computed<string>(() => {
-    const monthsCount = this.settingsStorage.settings().timeRange;
-    return getMonthsLabel(monthsCount);
-  });
-
   protected readonly ynabStorage = inject(YnabStorage);
   protected readonly firestoreStorage = inject(FirestoreStorage);
-
-  private readonly settingsStorage = inject(SettingsStorage);
 }

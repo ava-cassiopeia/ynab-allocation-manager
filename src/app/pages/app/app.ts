@@ -9,7 +9,7 @@ import {BudgetSelectorButton} from '../../components/budgets/budget-selector-but
 import {CategoryList} from '../../components/categories/category-list/category-list';
 import {ClearAllocationsButton} from "../../components/allocations/clear-allocations-button/clear-allocations-button";
 import {LogoutButton} from '../../components/auth/logout-button/logout-button';
-import {MonthSelector} from "../../components/common/month-selector/month-selector";
+import {MonthsInfoButton} from '../../components/time/months-info-button/months-info-button';
 import {SettingsButton} from '../../components/settings/settings-button/settings-button';
 import {SettingsStorage} from '../../../lib/firebase/settings_storage';
 import {TotalAllocationsButton} from "../../components/allocations/total-allocations-button/total-allocations-button";
@@ -27,7 +27,7 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
     CategoryList,
     ClearAllocationsButton,
     LogoutButton,
-    MonthSelector,
+    MonthsInfoButton,
     SettingsButton,
     TotalAllocationsButton,
   ],
