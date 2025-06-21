@@ -1,13 +1,27 @@
+$collapseWidth: 1150px;
+
 :host {
   display: grid;
   grid-template-columns: minmax(50px, 150px) min-content 1fr;
   align-items: center;
+
+  @media screen and (max-width: $collapseWidth) {
+    grid-template-columns: 1fr 1fr;
+  }
 }
 
 ul {
   list-style-type: none;
   padding: 0;
   margin: 0;
+}
+
+.collapsable {
+  display: contents;
+
+  @media screen and (max-width: $collapseWidth) {
+    display: block;
+  }
 }
 
 .headings {
@@ -44,6 +58,10 @@ ul {
     border-top: 1px solid #aaa;
     border-bottom: 1px solid #aaa;
     padding: 4px 24px;
+
+    @media screen and (max-width: $collapseWidth) {
+      grid-column: 1 / span 2;
+    }
   }
 }
 
