@@ -1,7 +1,7 @@
 import {Component, inject, input, computed, ViewChild} from '@angular/core';
 import {Account, Category} from 'ynab';
 
-import {Allocation} from '../../../../lib/models/allocation';
+import {AbsoluteSplitAllocation, Allocation, SingleAllocation} from '../../../../lib/models/allocation';
 import {DropdownButton, DropdownMenuItem} from '../../common/dropdown-button/dropdown-button';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
@@ -39,6 +39,10 @@ export class AllocationSelector {
   protected readonly allocatedAccount = computed<Account | null>(() => {
     const allocation = this.allocation();
     if (allocation === null) return null;
+
+    // TODO: Render something more interesting here
+    if (allocation instanceof AbsoluteSplitAllocation) return null;
+    if (!(allocation instanceof SingleAllocation)) return null;
 
     const accounts = this.ynabStorage.accounts.value();
     if (!accounts) return null;
@@ -80,7 +84,7 @@ export class AllocationSelector {
       return;
     }
 
-    const newAllocation = new Allocation(budget.id, this.category().id, account.id);
+    const newAllocation = new SingleAllocation(budget.id, this.category().id, account.id);
     await this.firestoreStorage.upsertAllocation(newAllocation);
     this.dropdownButton.close();
   }
