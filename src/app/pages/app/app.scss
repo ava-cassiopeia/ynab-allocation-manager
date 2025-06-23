@@ -109,9 +109,10 @@ $sideBySideWidth: 850px;
 
 .account-sidebar,
 .categories {
-  // --fixed-height is a bound variable from Angular
   position: relative;
-  overflow-y: auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 
   > .loading-overlay {
     position: absolute;
@@ -137,6 +138,7 @@ $sideBySideWidth: 850px;
   }
 
   .header {
+    flex: 0;
     display: flex;
     align-items: center;
     background: var(--theme-primary-color);
@@ -150,10 +152,17 @@ $sideBySideWidth: 850px;
       padding: 0;
     }
   }
+
+  .content {
+    flex: 1;
+    overflow-y: auto;
+  }
 }
 
 .categories {
-  padding: 0 0 24px;
+  ya-category-list {
+    flex: 1;
+  }
 }
 
 .section-navigation {

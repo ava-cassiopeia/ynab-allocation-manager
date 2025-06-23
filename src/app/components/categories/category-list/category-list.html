@@ -5,20 +5,22 @@
   </div>
   <div>Allocation</div>
 </div>
-@for (categoryGroup of ynabStorage.latestCategories.value(); track categoryGroup.id) {
-  <section class="category-group">
-    <div class="name">{{ categoryGroup.name }}</div>
+<div class="scroll-area">
+  @for (categoryGroup of ynabStorage.latestCategories.value(); track categoryGroup.id) {
+    <section class="category-group">
+      <div class="name">{{ categoryGroup.name }}</div>
 
-    <div class="categories">
-      @for (category of categoryGroup.categories; track category.id) {
-        <div class="category">
-          <div class="collapsable">
-            <div class="name" [title]="category.name">{{ category.name }}</div>
-            <div class="balance"><ya-currency [milliunits]="category.balance" /></div>
+      <div class="categories">
+        @for (category of categoryGroup.categories; track category.id) {
+          <div class="category">
+            <div class="collapsable">
+              <div class="name" [title]="category.name">{{ category.name }}</div>
+              <div class="balance"><ya-currency [milliunits]="category.balance" /></div>
+            </div>
+            <div class="allocation"><ya-allocation-selector [category]="category" /></div>
           </div>
-          <div class="allocation"><ya-allocation-selector [category]="category" /></div>
-        </div>
-      }
-    </div>
-  </section>
-}
+        }
+      </div>
+    </section>
+  }
+</div>
