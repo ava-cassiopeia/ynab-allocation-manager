@@ -86,12 +86,13 @@ button.ya-button {
   }
 
   // === Themes ===
-  &.overage {
+  &.overfunded {
     --theme-color_: #4FC3F7;
   }
 
   &.warning {
-    --theme-color_: #E57373;
+    --theme-color_: #D32F2F;
+    --theme-complement-color_: #fff;
   }
 
   &.perfect {
