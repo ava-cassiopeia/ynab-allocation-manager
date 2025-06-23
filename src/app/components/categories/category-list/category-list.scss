@@ -76,19 +76,19 @@ ul {
 .category {
   display: contents;
 
-  > * {
-    padding: 4px 8px;
+  *:not(.collapsable) {
+    padding: 2px 8px;
     white-space: nowrap;
   }
 
-  > .name,
-  > .balance {
+  .name,
+  .balance {
     text-overflow: ellipsis;
     overflow: hidden;
     min-width: 0;
   }
 
-  > .allocation {
+  .allocation {
     text-align: right;
   }
 }
