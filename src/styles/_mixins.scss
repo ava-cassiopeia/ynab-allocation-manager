@@ -1,0 +1,4 @@
+@mixin define-theme($name, $primary, $complement) {
+  --ya-#{$name}-color: #{$primary};
+  --ya-#{$name}-complement-color: #{$complement};
+}

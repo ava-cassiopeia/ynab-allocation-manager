@@ -86,16 +86,19 @@ button.ya-button {
   }
 
   // === Themes ===
-  &.overage {
-    --theme-color_: #4FC3F7;
+  &.overfunded {
+    --theme-color_: var(--ya-overfunded-color);
+    --theme-complement-color_: var(--ya-overfunded-complement-color);
   }
 
   &.warning {
-    --theme-color_: #E57373;
+    --theme-color_: var(--ya-warning-color);
+    --theme-complement-color_: var(--ya-warning-complement-color);
   }
 
   &.perfect {
-    --theme-color_: #A5D6A7;
+    --theme-color_: var(--ya-perfect-color);
+    --theme-complement-color_: var(--ya-perfect-complement-color);
   }
 
   &.site-theme {

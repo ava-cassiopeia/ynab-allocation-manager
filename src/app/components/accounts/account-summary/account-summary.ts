@@ -32,7 +32,7 @@ export class AccountSummary {
     const delta = this.delta();
 
     if (delta > 0) {
-      return 'overage';
+      return 'overfunded';
     } else if (delta < 0) {
       return 'warning';
     } else {

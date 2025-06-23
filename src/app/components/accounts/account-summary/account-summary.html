@@ -4,7 +4,7 @@
 <div class="allocation">
   @if (hasAllocations()) {
     @if (delta() > 0) {
-      <ya-dropdown-button dropdownLabel="Overfunded" theme="overage">
+      <ya-dropdown-button dropdownLabel="Overfunded" theme="overfunded">
         <ya-currency label [milliunits]="delta()" />
 
         <div dropdown class="allocation-info">
