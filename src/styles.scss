@@ -1,9 +1,16 @@
+@use "styles/mixins" as ya;
+
 :root {
   --theme-primary-color: #2E7D32; // Green 800
   --theme-primary-complement-color: white;
   --beta-font: Caveat, cursive;
   // The same font that YNAB uses in their main app, for consistency.
   --body-font: Figtree, sans-serif;
+
+  // Themes for buttons and elements
+  @include ya.define-theme("overfunded", #4FC3F7, #000);
+  @include ya.define-theme("warning", #D32F2F, #fff);
+  @include ya.define-theme("perfect", #A5D6A7, #000);
 }
 
 * {
