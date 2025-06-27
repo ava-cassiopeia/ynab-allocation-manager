@@ -1,4 +1,4 @@
-import {Component, signal, input, ViewChild} from '@angular/core';
+import {Component, signal, input, ViewChild, booleanAttribute} from '@angular/core';
 import {CdkMenuTrigger, CdkMenu, CdkMenuItem} from '@angular/cdk/menu';
 import {MatIcon} from '@angular/material/icon';
 
@@ -15,6 +15,7 @@ export class DropdownButton<MenuItemType> {
   readonly icon = input<string | null>(null);
   readonly flat = input<boolean>(false);
   readonly disabled = input<boolean>(false);
+  readonly noClose = input(false, {transform: booleanAttribute});
 
   protected readonly dropdownShowing = signal<boolean>(false);
 

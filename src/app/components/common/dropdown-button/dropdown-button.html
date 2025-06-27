@@ -23,12 +23,21 @@
       <ul class="menu-items">
         @for (item of menuItems(); track item.value) {
           <li>
-            <button cdkMenuItem (click)="item.action(item.value)">
-              @if (item.icon) {
-                <mat-icon inline aria-hidden="true">{{ item.icon }}</mat-icon>
-              }
-              {{ item.label }}
-            </button>
+            @if (noClose()) {
+              <button (click)="item.action(item.value)">
+                @if (item.icon) {
+                  <mat-icon inline aria-hidden="true">{{ item.icon }}</mat-icon>
+                }
+                {{ item.label }}
+              </button>
+            } @else {
+              <button cdkMenuItem (click)="item.action(item.value)">
+                @if (item.icon) {
+                  <mat-icon inline aria-hidden="true">{{ item.icon }}</mat-icon>
+                }
+                {{ item.label }}
+              </button>
+            }
           </li>
         }
       </ul>

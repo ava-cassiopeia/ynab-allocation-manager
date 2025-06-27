@@ -1,0 +1,20 @@
+@for (split of splits(); track split) {
+  <div class="split">
+    <select [formControl]="split.account">
+      <option [ngValue]="null">Select account:</option>
+      @for (account of ynabStorage.accounts.value(); track account.id) {
+        <option [ngValue]="account">{{ account.name }}</option>
+      }
+    </select>
+
+    <input type="text" [formControl]="split.amount" />
+
+    <button class="ya-button flat">
+      X
+    </button>
+  </div>
+}
+
+<button class="ya-button flat add-button">
+  +
+</button>

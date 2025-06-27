@@ -3,7 +3,23 @@
 }
 
 .dropdown {
-  display: flex;
-  justify-content: center;
-  padding: 20px;
+  padding: 8px 20px 20px;
+
+  &.split-mode {
+    padding: 8px 20px 0;
+  }
+
+  .actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+}
+
+.default-header {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+  padding: 4px 0;
 }

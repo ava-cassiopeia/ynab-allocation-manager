@@ -119,6 +119,8 @@ export class YnabStorage {
           // money there.
           .filter((a) => a.type !== AccountType.CreditCard && a.type !== AccountType.LineOfCredit);
     },
+
+    defaultValue: [],
   });
 
   /**

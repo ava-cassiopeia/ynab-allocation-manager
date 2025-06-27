@@ -1,21 +1,24 @@
-import {Component, inject, input, computed, ViewChild} from '@angular/core';
+import {Component, inject, input, computed, ViewChild, signal} from '@angular/core';
+import {MatIcon} from '@angular/material/icon';
 import {Account, Category} from 'ynab';
 
 import {AbsoluteSplitAllocation, Allocation, SingleAllocation} from '../../../../lib/models/allocation';
 import {DropdownButton, DropdownMenuItem} from '../../common/dropdown-button/dropdown-button';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
+import {SplitSelector} from '../split-selector/split-selector';
 
 @Component({
   selector: 'ya-allocation-selector',
   templateUrl: './allocation-selector.html',
   styleUrl: './allocation-selector.scss',
-  imports: [DropdownButton],
+  imports: [DropdownButton, MatIcon, SplitSelector],
 })
 export class AllocationSelector {
   readonly category = input.required<Category>();
 
   @ViewChild(DropdownButton) dropdownButton!: DropdownButton<Account>;
+  @ViewChild(SplitSelector) splitSelector!: SplitSelector;
 
   /**
    * The currently selected allocation. Instead of keeping some local copy
@@ -60,9 +63,11 @@ export class AllocationSelector {
     const accounts = this.ynabStorage.accounts.value();
     if (!accounts) return [];
 
+    const selectedAccount = this.splitMode() ? this.splitState.defaultAccount() : this.allocatedAccount();
+
     return accounts.map((a) => ({
       label: a.name,
-      icon: this.allocatedAccount() === a ? 'done' : 'account_balance',
+      icon: selectedAccount === a ? 'done' : 'account_balance',
       value: a,
       action: (value: Account) => {
         this.selectAccount(value);
@@ -70,11 +75,20 @@ export class AllocationSelector {
     }));
   });
 
+  protected readonly splitMode = signal<boolean>(false);
+  protected readonly splitState = {
+    defaultAccount: signal<Account | null>(null),
+  };
   protected readonly ynabStorage = inject(YnabStorage);
 
   private readonly firestoreStorage = inject(FirestoreStorage);
 
   protected async selectAccount(account: Account | null) {
+    if (this.splitMode()) {
+      this.splitState.defaultAccount.set(account);
+      return;
+    }
+
     const budget = this.ynabStorage.selectedBudget();
     if (budget === null) return;
 
@@ -87,5 +101,14 @@ export class AllocationSelector {
     const newAllocation = new SingleAllocation(budget.id, this.category().id, account.id);
     await this.firestoreStorage.upsertAllocation(newAllocation);
     this.dropdownButton.close();
+  }
+
+  protected toggleSplitMode() {
+    this.splitMode.update((s) => !s);
+  }
+
+  protected applySplit() {
+    const splits = this.splitSelector.getSplits();
+    console.log(splits);
   }
 }
