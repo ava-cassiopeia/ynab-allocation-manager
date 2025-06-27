@@ -28,7 +28,10 @@ export class AccountExecutionBuilder {
           runningBalance -= splitAmount;
           this.add(split.accountId, category, splitAmount);
         }
-        // TODO: Add fallback account logic here
+
+        if (runningBalance <= 0) continue;
+
+        this.add(allocation.defaultAccountId, category, runningBalance);
       } else {
         throw new Error("Unsupported allocation type.");
       }

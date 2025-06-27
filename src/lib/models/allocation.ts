@@ -50,6 +50,7 @@ export class AbsoluteSplitAllocation extends Allocation {
   constructor(
       budgetId: string,
       categoryId: string,
+      readonly defaultAccountId: string,
       readonly splits: AbsoluteSplitEntry[]) {
     super(budgetId, categoryId);
   }
