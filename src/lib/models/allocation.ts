@@ -14,8 +14,12 @@ export abstract class Allocation {
       case undefined:
       case AllocationType.SINGLE:
         return new SingleAllocation(schema.budgetId, schema.categoryId, schema.accountId);
-      default:
-        return new UnknownAllocation(schema.budgetId, schema.categoryId);
+      case AllocationType.ABSOLUTE_SPLIT:
+        return new AbsoluteSplitAllocation(
+            schema.budgetId,
+            schema.categoryId,
+            schema.defaultAccountId,
+            schema.splits);
     }
   }
 }
@@ -62,6 +66,7 @@ export class AbsoluteSplitAllocation extends Allocation {
       budgetId: this.budgetId,
       categoryId: this.categoryId,
       splits: this.splits,
+      defaultAccountId: this.defaultAccountId,
     };
   }
 }
@@ -99,6 +104,7 @@ export type AllocationSchema = {
   } | {
     readonly type: AllocationType.ABSOLUTE_SPLIT;
     readonly splits: AbsoluteSplitEntry[];
+    readonly defaultAccountId: string;
   }
 );
 
@@ -116,6 +122,7 @@ export type LegacyAllocationSchema = {
   } | {
     readonly type: AllocationType.ABSOLUTE_SPLIT;
     readonly splits: AbsoluteSplitEntry[];
+    readonly defaultAccountId: string;
   }
 );
 

@@ -1,4 +1,5 @@
-button.ya-button {
+button.ya-button,
+span.ya-button {
   --theme-color_: #eee;
   --theme-complement-color_: #000;
   --shadow-color_: color-mix(in srgb, var(--theme-color_) 70%, #000);
@@ -30,6 +31,7 @@ button.ya-button {
                 0 4px 0 var(--shadow-color_),
                 0 5px 0 var(--shadow-color_);
     transform: translateY(-2px);
+    cursor: pointer;
   }
 
   &:active {
@@ -46,7 +48,7 @@ button.ya-button {
     &:active {
       box-shadow: none;
       transform: translateY(3px);
-      opacity: 0.75;
+      opacity: 0.6;
     }
   }
 

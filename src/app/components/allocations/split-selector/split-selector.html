@@ -1,0 +1,32 @@
+<div class="split">
+  <div>Account</div>
+  <div>Amount</div>
+  <div>&nbsp;</div>
+</div>
+
+@for (split of splits(); track split; let i = $index) {
+  <div class="split">
+    <select [formControl]="split.account">
+      <option [ngValue]="null">Select account:</option>
+      @for (account of ynabStorage.accounts.value(); track account.id) {
+        <option [ngValue]="account">{{ account.name }}</option>
+      }
+    </select>
+
+    <input type="text" [formControl]="split.amount" />
+
+    <!--
+      For some strange reason, if this is a button, it will close the
+      enclosing matmenu when clicked, and no amount of preventDefault() and
+      similar will stop it. Even weirder is the button outside this for
+      loop doesn't have that problem. So, for now this is a span until someone
+      figures out why that happens. -->
+    <span role="button" class="ya-button flat" (click)="removeSplit($event, i)">
+      <mat-icon inline>delete</mat-icon>
+    </span>
+  </div>
+}
+
+<button class="ya-button flat add-button" (click)="addSplit()">
+  <mat-icon inline>add</mat-icon>
+</button>

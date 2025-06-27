@@ -1,19 +1,42 @@
 <ya-dropdown-button
-    dropdownLabel="Allocate to:"
+    [dropdownLabel]="splitMode() ? 'Allocate to accounts' : 'Allocate to account'"
     [menuItems]="menuItems()"
-    [flat]="allocatedAccount() === null">
-  <span label>
-    @if (allocatedAccount() === null) {
-      -
-    } @else {
-      {{ allocatedAccount()!.name }}
-    }
-  </span>
+    [flat]="allocatedAccount() === null"
+    [noClose]="splitMode()">
+  <span label>{{ label() }}</span>
 
-  @if (allocatedAccount() !== null) {
-    <div dropdown class="dropdown">
-        <button class="ya-button flat" (click)="selectAccount(null)">Clear</button>
+  <div dropdown class="dropdown" [class.split-mode]="splitMode()">
+    <div class="actions">
+      <button class="ya-button flat" (click)="toggleSplitMode()">
+        @if (splitMode()) {
+          <mat-icon inline aria-hidden="true">merge</mat-icon>
+          Single
+        } @else {
+          <mat-icon inline aria-hidden="true">call_split</mat-icon>
+          Split
+        }
+      </button>
+
+      @if (splitMode()) {
+        <button class="ya-button flat site-theme" (click)="applySplit()">
+          <mat-icon inline aria-hidden="true">done</mat-icon>
+          Apply
+        </button>
+      }
+
+      <button class="ya-button flat"
+          [disabled]="allocatedAccount() === null"
+          (click)="selectAccount(null)">
+        <mat-icon inline aria-hidden="true">clear</mat-icon>
+        Clear
+      </button>
     </div>
-  }
+
+    @if (splitMode()) {
+      <ya-split-selector [allocation]="allocation()" />
+
+      <h3 class="default-header">Default account:</h3>
+    }
+  </div>
 </ya-dropdown-button>
 

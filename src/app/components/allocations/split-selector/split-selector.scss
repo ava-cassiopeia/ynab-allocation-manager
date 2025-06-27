@@ -1,0 +1,14 @@
+:host {
+  display: grid;
+  grid-template-columns: 1fr 1fr min-content;
+  align-items: center;
+  gap: 6px;
+}
+
+.split {
+  display: contents;
+}
+
+.add-button {
+  grid-column: 3 / 4;
+}

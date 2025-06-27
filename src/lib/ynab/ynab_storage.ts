@@ -1,5 +1,5 @@
 import {Injectable, signal, computed, resource, effect, inject, ResourceRef} from "@angular/core";
-import {AccountType, API, BudgetSummary, Category} from "ynab";
+import {Account, AccountType, API, BudgetSummary, Category} from "ynab";
 
 import {SettingsStorage} from "../firebase/settings_storage";
 import {getMonthsLabel, latestMonth, monthDistance, monthToApiMonth, parseMonth} from "../time/months";
@@ -119,6 +119,8 @@ export class YnabStorage {
           // money there.
           .filter((a) => a.type !== AccountType.CreditCard && a.type !== AccountType.LineOfCredit);
     },
+
+    defaultValue: [],
   });
 
   /**
@@ -234,6 +236,15 @@ export class YnabStorage {
         sessionStorage.removeItem('ynab.apiKey');
       }
     });
+  }
+
+  findAccount(accountId: string): Account | null {
+    const accounts = this.accounts.value();
+    for (const account of accounts) {
+      if (account.id === accountId) return account;
+    }
+
+    return null;
   }
 }
 
