@@ -2,66 +2,66 @@
   {{ account().account.name }}
 </div>
 <div class="allocation">
-  @if (hasAllocations()) {
-    @if (delta() > 0) {
-      <ya-dropdown-button dropdownLabel="Overfunded" theme="overfunded">
-        <ya-currency label [milliunits]="delta()" />
+  @if (delta() > 0) {
+    <ya-dropdown-button dropdownLabel="Overfunded" theme="overfunded">
+      <ya-currency label [milliunits]="delta()" />
 
-        <div dropdown class="allocation-info">
-          <div class="actions">
-            <ya-currency-copy-button [milliunits]="delta()" />
-          </div>
-
-          <p class="info-text">
-            You have <b><ya-currency [milliunits]="delta()" /></b> excess in
-            this account compared to the required allocation.
-          </p>
+      <div dropdown class="allocation-info">
+        <div class="actions">
+          <ya-currency-copy-button [milliunits]="delta()" />
         </div>
-      </ya-dropdown-button>
-    } @else if (delta() < 0) {
-      <ya-dropdown-button dropdownLabel="Missing funds" theme="warning">
-        <ya-currency label [milliunits]="delta() * -1" />
 
-        <div dropdown class="allocation-info">
-          <div class="actions">
-            <ya-currency-copy-button [milliunits]="delta() * -1" />
-          </div>
+        <p class="info-text">
+          You have <b><ya-currency [milliunits]="delta()" /></b> excess in
+          this account compared to the required allocation.
+        </p>
+      </div>
+    </ya-dropdown-button>
+  } @else if (delta() < 0 && hasAllocations()) {
+    <ya-dropdown-button dropdownLabel="Missing funds" theme="warning">
+      <ya-currency label [milliunits]="delta() * -1" />
 
-          <p class="info-text">
-            You don't have enough money in this account to match your allocations.
-            Transfer another <b><ya-currency [milliunits]="delta() * -1" /></b> to
-            this account to fix this.
-          </p>
+      <div dropdown class="allocation-info">
+        <div class="actions">
+          <ya-currency-copy-button [milliunits]="delta() * -1" />
         </div>
-      </ya-dropdown-button>
-    }
+
+        <p class="info-text">
+          You don't have enough money in this account to match your allocations.
+          Transfer another <b><ya-currency [milliunits]="delta() * -1" /></b> to
+          this account to fix this.
+        </p>
+      </div>
+    </ya-dropdown-button>
   }
 
-  <ya-dropdown-button
-      class="allocation-button"
-      dropdownLabel="Allocation"
-      [theme]="allocationsTheme()"
-      [flat]="!hasAllocations()">
-    <div label class="allocation-label">
-      <ya-currency [milliunits]="account().total" />
-      &sol;
-      <ya-currency [milliunits]="account().account.cleared_balance" />
-    </div>
-
-    <div dropdown>
-      <div class="allocation-table">
-        <div>&nbsp;</div>
-        <div>Balance:</div>
+  @if (hasAllocations()) {
+    <ya-dropdown-button
+        class="allocation-button"
+        dropdownLabel="Allocation"
+        [theme]="allocationsTheme()"
+        [flat]="delta() === 0">
+      <div label class="allocation-label">
+        <ya-currency [milliunits]="account().total" />
+        &sol;
         <ya-currency [milliunits]="account().account.cleared_balance" />
-
-        <div class="allocated">-</div>
-        <div class="allocated">Allocated ({{ account().categories.length }}):</div>
-        <ya-currency class="allocated" [milliunits]="account().total" />
-
-        <div>=</div>
-        <div>&nbsp;</div>
-        <ya-currency [milliunits]="delta()" />
       </div>
-    </div>
-  </ya-dropdown-button>
+
+      <div dropdown>
+        <div class="allocation-table">
+          <div>&nbsp;</div>
+          <div>Balance:</div>
+          <ya-currency [milliunits]="account().account.cleared_balance" />
+
+          <div class="allocated">-</div>
+          <div class="allocated">Allocated ({{ account().categories.length }}):</div>
+          <ya-currency class="allocated" [milliunits]="account().total" />
+
+          <div>=</div>
+          <div>&nbsp;</div>
+          <ya-currency [milliunits]="delta()" />
+        </div>
+      </div>
+    </ya-dropdown-button>
+  }
 </div>
