@@ -12,7 +12,6 @@ import {LogoutButton} from '../../components/auth/logout-button/logout-button';
 import {MonthsInfoButton} from '../../components/time/months-info-button/months-info-button';
 import {SettingsButton} from '../../components/settings/settings-button/settings-button';
 import {SettingsStorage} from '../../../lib/firebase/settings_storage';
-import {TotalAllocationsButton} from "../../components/allocations/total-allocations-button/total-allocations-button";
 import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
 
 @Component({
@@ -29,7 +28,6 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
     LogoutButton,
     MonthsInfoButton,
     SettingsButton,
-    TotalAllocationsButton,
   ],
 })
 export class AppPage {
