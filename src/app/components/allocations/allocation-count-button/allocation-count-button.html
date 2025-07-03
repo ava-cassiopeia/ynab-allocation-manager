@@ -1,0 +1,20 @@
+@let diff = status().totalCategories - status().allocatedCategories;
+@let complete = diff < 1;
+<ya-dropdown-button
+    [dropdownLabel]="complete ? 'All categories allocated' : diff + ' categories unallocated'"
+    [icon]="complete ? 'done' : 'warning'"
+    [theme]="complete ? 'default' : 'warning'"
+    flat>
+  <span label>{{ diff }}</span>
+
+  <p dropdown class="dropdown">
+    You have allocated
+    <b>{{ status().allocatedCategories }} of {{ status().totalCategories }}</b>
+    categories.
+
+    @if (!complete) {
+      Allocate more categories to get a better sense of where your funds should
+      be stored.
+    }
+  </p>
+</ya-dropdown-button>

@@ -108,6 +108,16 @@ span.ya-button {
     }
   }
 
+  &.underfunded {
+    --theme-color_: var(--ya-underfunded-color);
+    --theme-complement-color_: var(--ya-underfunded-complement-color);
+
+    &.pastel {
+      --theme-color_: var(--ya-underfunded-pastel-color);
+      --theme-complement-color_: var(--ya-underfunded-pastel-complement-color);
+    }
+  }
+
   &.perfect {
     --theme-color_: var(--ya-perfect-color);
     --theme-complement-color_: var(--ya-perfect-complement-color);

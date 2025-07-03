@@ -4,6 +4,7 @@ import {Component, inject, ElementRef, signal, effect} from '@angular/core';
 import {AccountData} from '../../../lib/accounts/account_data';
 import {AccountList} from '../../components/accounts/account-list/account-list';
 import {AccountsSummary} from '../../components/accounts/accounts-summary/accounts-summary';
+import {AllocationCountButton} from '../../components/allocations/allocation-count-button/allocation-count-button';
 import {BetaInfoButton} from '../../components/common/beta-info-button/beta-info-button';
 import {BudgetSelectorButton} from '../../components/budgets/budget-selector-button/budget-selector-button';
 import {CategoryList} from '../../components/categories/category-list/category-list';
@@ -21,6 +22,7 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
   imports: [
     AccountList,
     AccountsSummary,
+    AllocationCountButton,
     BetaInfoButton,
     BudgetSelectorButton,
     CategoryList,
