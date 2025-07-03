@@ -1,5 +1,7 @@
 <div class="number-section">
-  <ya-dropdown-button dropdownLabel="Unallocated" [flat]="true">
+  <ya-dropdown-button dropdownLabel="Unallocated"
+      [flat]="accountData.availableCash() === 0"
+      [theme]="accountData.availableCash() > 0 ? 'overfunded' : 'perfect'">
     <span label>
       <ya-currency [milliunits]="accountData.availableCash()" />
     </span>
@@ -10,7 +12,10 @@
     </p>
   </ya-dropdown-button>
 
-  <p class="label">Unallocated</p>
+  <p class="label">
+    Available<br>
+    for redistribution
+  </p>
 </div>
 
 <div class="number-section">

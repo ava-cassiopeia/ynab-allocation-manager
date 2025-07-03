@@ -28,8 +28,10 @@ export class AccountSummary {
   });
 
   protected readonly allocationsTheme = computed<ButtonTheme>(() => {
-    if (!this.hasAllocations()) return 'default';
     const delta = this.delta();
+    if (!this.hasAllocations()) {
+      return delta === 0 ? 'perfect' : 'overfunded';
+    }
 
     if (delta > 0) {
       return 'overfunded';

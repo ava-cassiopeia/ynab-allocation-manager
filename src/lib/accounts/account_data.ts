@@ -62,7 +62,17 @@ export class AccountData {
   * The total remaining available cash after all allocations.
   */
  readonly availableCash = computed<number>(() => {
-   return this.totalAvailable() - this.totalAllocated();
+   let total = 0;
+   for (const account of this.accounts()) {
+      const allocated = account.total;
+      const balance = account.account.cleared_balance;
+
+      if (balance > allocated) {
+        const diff = balance - allocated;
+        total += diff;
+      }
+   }
+   return total;
  });
 
   private readonly ynabStorage = inject(YnabStorage);

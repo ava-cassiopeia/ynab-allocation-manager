@@ -1,7 +1,8 @@
 <ya-dropdown-button
     [dropdownLabel]="splitMode() ? 'Allocate to accounts' : 'Allocate to account'"
     [menuItems]="menuItems()"
-    [flat]="allocatedAccount() === null"
+    [flat]="allocatedAccount() !== null"
+    [theme]="allocatedAccount() !== null ? 'perfect' : 'default'"
     [noClose]="splitMode()">
   <span label>{{ label() }}</span>
 

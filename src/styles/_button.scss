@@ -91,11 +91,21 @@ span.ya-button {
   &.overfunded {
     --theme-color_: var(--ya-overfunded-color);
     --theme-complement-color_: var(--ya-overfunded-complement-color);
+
+    &.pastel {
+      --theme-color_: var(--ya-overfunded-pastel-color);
+      --theme-complement-color_: var(--ya-overfunded-pastel-complement-color);
+    }
   }
 
   &.warning {
     --theme-color_: var(--ya-warning-color);
     --theme-complement-color_: var(--ya-warning-complement-color);
+
+    &.pastel {
+      --theme-color_: var(--ya-warning-pastel-color);
+      --theme-complement-color_: var(--ya-warning-pastel-complement-color);
+    }
   }
 
   &.perfect {
