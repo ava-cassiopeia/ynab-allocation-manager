@@ -9,7 +9,9 @@
 
   // Themes for buttons and elements
   @include ya.define-theme("overfunded", #4FC3F7, #000);
+  @include ya.define-theme("overfunded-pastel", #B3E5FC, #000);
   @include ya.define-theme("warning", #D32F2F, #fff);
+  @include ya.define-theme("warning-pastel", #FFCDD2, #000);
   @include ya.define-theme("perfect", #C8E6C9, #000);
 }
 

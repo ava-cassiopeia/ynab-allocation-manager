@@ -40,7 +40,8 @@
         class="allocation-button"
         dropdownLabel="Allocation"
         [theme]="allocationsTheme()"
-        [flat]="delta() === 0">
+        flat
+        pastel>
       <div label class="allocation-label">
         <ya-currency [milliunits]="account().total" />
         &sol;

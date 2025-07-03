@@ -16,6 +16,7 @@ export class DropdownButton<MenuItemType> {
   readonly flat = input(false, {transform: booleanAttribute});
   readonly disabled = input(false, {transform: booleanAttribute});
   readonly noClose = input(false, {transform: booleanAttribute});
+  readonly pastel = input(false, {transform: booleanAttribute});
 
   protected readonly dropdownShowing = signal<boolean>(false);
 
