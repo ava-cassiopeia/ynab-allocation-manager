@@ -13,8 +13,8 @@ export class DropdownButton<MenuItemType> {
   readonly menuItems = input<DropdownMenuItem<MenuItemType>[]>([]);
   readonly theme = input<ButtonTheme>('default');
   readonly icon = input<string | null>(null);
-  readonly flat = input<boolean>(false);
-  readonly disabled = input<boolean>(false);
+  readonly flat = input(false, {transform: booleanAttribute});
+  readonly disabled = input(false, {transform: booleanAttribute});
   readonly noClose = input(false, {transform: booleanAttribute});
 
   protected readonly dropdownShowing = signal<boolean>(false);
