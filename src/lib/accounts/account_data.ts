@@ -4,6 +4,7 @@ import {Account, Category} from "ynab";
 import {YnabStorage} from "../ynab/ynab_storage";
 import {FirestoreStorage} from "../firestore/firestore_storage";
 import {Allocation} from "../models/allocation";
+import {AccountExecutionBuilder} from "./account_execution_result";
 
 /**
  * Contains pre-computed signals for common account information.
@@ -18,41 +19,19 @@ export class AccountData {
     const accounts = this.ynabStorage.accounts.value() ?? [];
     if (accounts.length < 1) return [];
 
-    const allocations = this.firestoreStorage.allocations();
-
-    const allocationsMap = new Map<AccountId, Allocation[]>();
-    for (const allocation of allocations) {
-      if (!allocationsMap.has(allocation.accountId)) {
-        allocationsMap.set(allocation.accountId, [allocation]);
-        continue;
-      }
-
-      allocationsMap.get(allocation.accountId)!.push(allocation);
-    }
-
     const groups = this.ynabStorage.latestCategories.value() ?? [];
     const categories = groups.flatMap((v) => v.categories);
-    const categoriesMap = new Map<CategoryId, Category>();
-    for (const category of categories) {
-      categoriesMap.set(category.id, category);
-    }
+
+    const allocations = this.firestoreStorage.allocations();
+    const executionResults = new AccountExecutionBuilder(allocations, categories).build();
 
     return accounts.map((account) => {
-      const allocations = allocationsMap.get(account.id) ?? [];
-      const accountCategories: Category[] = [];
-      let sum = 0;
-      for (const allocation of allocations) {
-        const category = categoriesMap.get(allocation.categoryId);
-        if (!category) continue;
-
-        accountCategories.push(category);
-        sum += category.balance;
-      }
+      const executionResult = executionResults.get(account.id) ?? null;
 
       return {
         account,
-        categories: accountCategories,
-        total: sum,
+        categories: executionResult?.categories ?? [],
+        total: executionResult?.allocatedMillis ?? 0,
       };
     });
   });
