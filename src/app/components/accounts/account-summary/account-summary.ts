@@ -36,7 +36,7 @@ export class AccountSummary {
     if (delta > 0) {
       return 'overfunded';
     } else if (delta < 0) {
-      return 'warning';
+      return 'underfunded';
     } else {
       return 'perfect';
     }

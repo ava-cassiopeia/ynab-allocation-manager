@@ -1,20 +1,20 @@
+import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import {TotalAllocationsButton} from './total-allocations-button';
-import {provideZonelessChangeDetection} from '@angular/core';
+import {AllocationCountButton} from './allocation-count-button';
 
-describe('TotalAllocationsButton', () => {
-  let component: TotalAllocationsButton;
-  let fixture: ComponentFixture<TotalAllocationsButton>;
+describe('AllocationCountButton', () => {
+  let component: AllocationCountButton;
+  let fixture: ComponentFixture<AllocationCountButton>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [TotalAllocationsButton],
+      imports: [AllocationCountButton],
       providers: [provideZonelessChangeDetection()],
     })
       .compileComponents();
 
-    fixture = TestBed.createComponent(TotalAllocationsButton);
+    fixture = TestBed.createComponent(AllocationCountButton);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

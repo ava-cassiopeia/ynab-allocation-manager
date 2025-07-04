@@ -18,7 +18,7 @@
       </div>
     </ya-dropdown-button>
   } @else if (delta() < 0 && hasAllocations()) {
-    <ya-dropdown-button dropdownLabel="Missing funds" theme="warning">
+    <ya-dropdown-button dropdownLabel="Missing funds" theme="underfunded">
       <ya-currency label [milliunits]="delta() * -1" />
 
       <div dropdown class="allocation-info">

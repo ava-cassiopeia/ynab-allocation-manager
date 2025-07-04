@@ -4,6 +4,7 @@ import {Component, inject, ElementRef, signal, effect} from '@angular/core';
 import {AccountData} from '../../../lib/accounts/account_data';
 import {AccountList} from '../../components/accounts/account-list/account-list';
 import {AccountsSummary} from '../../components/accounts/accounts-summary/accounts-summary';
+import {AllocationCountButton} from '../../components/allocations/allocation-count-button/allocation-count-button';
 import {BetaInfoButton} from '../../components/common/beta-info-button/beta-info-button';
 import {BudgetSelectorButton} from '../../components/budgets/budget-selector-button/budget-selector-button';
 import {CategoryList} from '../../components/categories/category-list/category-list';
@@ -12,7 +13,6 @@ import {LogoutButton} from '../../components/auth/logout-button/logout-button';
 import {MonthsInfoButton} from '../../components/time/months-info-button/months-info-button';
 import {SettingsButton} from '../../components/settings/settings-button/settings-button';
 import {SettingsStorage} from '../../../lib/firebase/settings_storage';
-import {TotalAllocationsButton} from "../../components/allocations/total-allocations-button/total-allocations-button";
 import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
 
 @Component({
@@ -22,6 +22,7 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
   imports: [
     AccountList,
     AccountsSummary,
+    AllocationCountButton,
     BetaInfoButton,
     BudgetSelectorButton,
     CategoryList,
@@ -29,7 +30,6 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
     LogoutButton,
     MonthsInfoButton,
     SettingsButton,
-    TotalAllocationsButton,
   ],
 })
 export class AppPage {
