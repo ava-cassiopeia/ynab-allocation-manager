@@ -3,12 +3,15 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {httpsCallable} from 'firebase/functions';
 
 import {AuthStorage} from '../../../lib/firebase/auth_storage';
+import {LoadingIcon} from '../../components/auth/loading-icon/loading-icon';
+import {LoadingSillyText} from '../../components/auth/loading-silly-text/loading-silly-text';
 import {functions} from '../../../lib/firebase/functions';
 
 @Component({
   selector: 'ya-auth-page',
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
+  imports: [LoadingIcon, LoadingSillyText],
 })
 export class AuthPage {
   protected readonly hasCode = signal<boolean>(true);

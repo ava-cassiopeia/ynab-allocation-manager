@@ -1,0 +1,34 @@
+:host {
+  display: block;
+  position: relative;
+}
+
+mat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  &.changing {
+    transition: transform 300ms ease,
+                opacity   300ms ease;
+  }
+}
+
+.icon.changing {
+  opacity: 0;
+  transform: rotate(-180deg);
+}
+
+.next-icon {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  left: 0;
+  transform: rotate(180deg);
+  opacity: 0;
+
+  &.changing {
+    opacity: 1;
+    transform: rotate(0deg);
+  }
+}

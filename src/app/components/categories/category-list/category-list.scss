@@ -27,7 +27,8 @@ ul {
 .headings {
   display: contents;
 
-  > * {
+  > *,
+  > .collapsable > * {
     white-space: nowrap;
     padding: 8px;
     font-size: 10px;
