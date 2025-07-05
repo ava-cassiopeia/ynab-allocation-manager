@@ -1,1 +1,14 @@
-<p>auth works!</p>
+@if (hasCode()) {
+  <div class="loading-text">
+    <ya-loading-icon />
+    Logging in to YNAB...
+  </div>
+  <ya-loading-silly-text />
+} @else {
+  <p>Invalid auth code.</p>
+  <p>
+    Try
+    <a href="/">logging in</a>
+    again
+  </p>
+}
