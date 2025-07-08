@@ -1,9 +1,26 @@
 :host {
   display: block;
+  display: grid;
+  grid-template-columns: auto min-content 1fr 1fr;
+  align-items: center;
+  padding: 12px;
+  gap: 12px;
 }
 
-ul {
-  list-style-type: none;
-  padding: 0;
-  border: 0;
+ul,
+li {
+  display: contents;
+}
+
+.header {
+  display: contents;
+
+  > * {
+    font-size: 10px;
+    text-transform: uppercase;
+
+    &:last-of-type {
+      text-align: right;
+    }
+  }
 }
