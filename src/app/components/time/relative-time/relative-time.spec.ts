@@ -15,6 +15,7 @@ describe('RelativeTime', () => {
       .compileComponents();
 
     fixture = TestBed.createComponent(RelativeTime);
+    fixture.componentRef.setInput('date', new Date());
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

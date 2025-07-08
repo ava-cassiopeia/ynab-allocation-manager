@@ -25,7 +25,7 @@
 </div>
 
 @if (delta() > 0) {
-  <ya-dropdown-button dropdownLabel="Overfunded" theme="overfunded">
+  <ya-dropdown-button dropdownLabel="Overfunded" theme="overfunded" icon="data_saver_off">
     <ya-currency label [milliunits]="delta()" />
 
     <div dropdown class="allocation-info">
@@ -40,7 +40,7 @@
     </div>
   </ya-dropdown-button>
 } @else if (delta() < 0 && hasAllocations()) {
-  <ya-dropdown-button dropdownLabel="Missing funds" theme="underfunded">
+  <ya-dropdown-button dropdownLabel="Missing funds" theme="underfunded" icon="running_with_errors">
     <ya-currency label [milliunits]="delta() * -1" />
 
     <div dropdown class="allocation-info">
@@ -64,11 +64,14 @@
       class="allocation-button"
       dropdownLabel="Allocation"
       [theme]="allocationsTheme()"
+      [icon]="delta() === 0 ? 'done' : null"
       flat
       pastel>
     <div label class="allocation-label">
-      <ya-currency [milliunits]="account().total" />
-      &sol;
+      @if (delta() !== 0) {
+        <ya-currency [milliunits]="account().total" />
+        &sol;
+      }
       <ya-currency [milliunits]="account().account.cleared_balance" />
     </div>
 
