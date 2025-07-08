@@ -19,6 +19,13 @@ import {AccountAllocation} from '../../../../lib/accounts/account_data';
 export class AccountSummary {
   readonly account = input.required<AccountAllocation>();
 
+  protected readonly lastReconciledAt = computed<Date | null>(() => {
+    const lastReconciledAt = this.account().account.last_reconciled_at;
+    if (!lastReconciledAt) return null;
+
+    return new Date(lastReconciledAt);
+  });
+
   protected readonly delta = computed<number>(() => {
     return this.account().account.cleared_balance - this.account().total;
   });

@@ -1,39 +1,14 @@
 :host {
-  display: flex;
-  padding: 4px 20px;
-  gap: 8px;
-  align-items: center;
-
-  @media screen and (max-width: 1150px) {
-    flex-direction: column;
-    align-items: flex-start;
-
-    .account-name {
-      margin: 0;
-    }
-
-    .allocation-button {
-      order: -1;
-    }
-  }
+  display: contents;
 }
 
 .account-name {
-  flex: 1;
   font-weight: bold;
   margin: 0 0 6px;
   font-size: 16px;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
-}
-
-.allocation {
-  flex: 1;
-  display: flex;
-  align-items: center;
-  justify-content: right;
-  gap: 10px;
 }
 
 .allocation-info {
