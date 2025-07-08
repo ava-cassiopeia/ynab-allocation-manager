@@ -2,6 +2,28 @@
   {{ account().account.name }}
 </div>
 
+<div class="last-reconciled">
+  @let lastReconciled = lastReconciledAt();
+  @if (lastReconciled) {
+    <ya-relative-time [date]="lastReconciled" />
+  } @else {
+    -
+  }
+
+  @if (lastReconciledWarning()) {
+    <ya-dropdown-button dropdownLabel="Last reconciled awhile ago"
+        theme="warning"
+        icon="warning"
+        flat>
+
+      <p dropdown class="warning-text">
+        This account has not been reconciled in awhile. Reconciling this account
+        will help this tool provide more up-to-date, accurate data.
+      </p>
+    </ya-dropdown-button>
+  }
+</div>
+
 @if (delta() > 0) {
   <ya-dropdown-button dropdownLabel="Overfunded" theme="overfunded">
     <ya-currency label [milliunits]="delta()" />

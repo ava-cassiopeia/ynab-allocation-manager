@@ -14,7 +14,7 @@ export class RelativeTime {
     // specific edge-cases, users won't notice this subtlety.
     const now = new Date();
     const deltaMs = now.getTime() - this.date().getTime();
-    const deltaDays = Math.floor(deltaMs / 1000.0 / 60.0 / 24.0);
+    const deltaDays = Math.floor(deltaMs / 1000.0 / 60.0 / 60.0 / 24.0);
 
     if (deltaDays <= 0) {
       return 'Today';

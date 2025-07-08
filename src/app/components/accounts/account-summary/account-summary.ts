@@ -1,10 +1,11 @@
 import {Component, input, computed, inject} from '@angular/core';
 
+import {AccountAllocation} from '../../../../lib/accounts/account_data';
 import {CurrencyCopyButton} from '../../common/currency-copy-button/currency-copy-button';
 import {Currency} from '../../common/currency/currency';
 import {DropdownButton, ButtonTheme} from '../../common/dropdown-button/dropdown-button';
+import {RelativeTime} from '../../time/relative-time/relative-time';
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
-import {AccountAllocation} from '../../../../lib/accounts/account_data';
 
 @Component({
   selector: 'ya-account-summary',
@@ -14,6 +15,7 @@ import {AccountAllocation} from '../../../../lib/accounts/account_data';
     Currency,
     CurrencyCopyButton,
     DropdownButton,
+    RelativeTime,
   ],
 })
 export class AccountSummary {
@@ -24,6 +26,15 @@ export class AccountSummary {
     if (!lastReconciledAt) return null;
 
     return new Date(lastReconciledAt);
+  });
+
+  protected readonly lastReconciledWarning = computed<boolean>(() => {
+    const now = new Date();
+    const last = this.lastReconciledAt();
+    if (!last) return true;
+
+    const deltaMs = now.getTime() - last.getTime();
+    return deltaMs > (1000 * 60 * 60 * 24 * 30); // 30 days
   });
 
   protected readonly delta = computed<number>(() => {
