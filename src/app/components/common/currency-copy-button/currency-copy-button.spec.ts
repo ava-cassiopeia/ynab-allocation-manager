@@ -1,3 +1,4 @@
+import 'zone.js/testing'; // Import for fakeAsync
 import {provideZonelessChangeDetection} from '@angular/core';
 import {ComponentFixture, TestBed, fakeAsync, tick} from '@angular/core/testing';
 import {Clipboard} from '@angular/cdk/clipboard';
