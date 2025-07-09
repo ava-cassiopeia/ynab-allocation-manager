@@ -5,8 +5,8 @@
     "serve": "npm run build && firebase emulators:start --only functions",
     "shell": "npm run build && firebase functions:shell",
     "logs": "firebase functions:log",
-    "internal_test": "ts-mocha -p tsconfig.json src/**/*.spec.ts",
-    "test": "dotenvx run -f .env.test -- npm run internal_test"
+    "internal_test": "mocha lib/**/*.spec.js",
+    "test": "dotenvx run -f .env.test -- npm run build && npm run internal_test"
   },
   "engines": {
     "node": "22"
@@ -25,8 +25,9 @@
     "@types/mocha": "^10.0.10",
     "@types/nock": "^10.0.3",
     "@types/sinon": "^17.0.4",
-    "esbuild": "^0.25.5",
+    "esbuild": "^0.25.6",
     "firebase-functions-test": "^3.4.1",
+    "glob": "^11.0.3",
     "mocha": "^11.6.0",
     "nock": "^14.0.5",
     "sinon": "^21.0.0",
