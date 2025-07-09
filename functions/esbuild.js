@@ -1,13 +1,14 @@
 const esbuild = require('esbuild');
+const glob = require('glob');
+
+// Find all .ts files in the src directory
+const entryPoints = glob.sync('src/**/*.ts');
 
 esbuild.build({
-  entryPoints: [
-    "src/index.ts",
-  ],
-  bundle: true,
+  entryPoints: entryPoints,
   platform: 'node',
   target: 'node22',
-  outfile: 'lib/index.js',
+  outdir: 'lib',
   format: 'cjs',
   sourcemap: true,
 }).catch(() => process.exit(1));
