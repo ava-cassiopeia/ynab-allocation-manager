@@ -11,8 +11,6 @@ describe("tokenResponseToSchema", () => {
       token_type: "bearer",
       expires_in: expiresIn,
       refresh_token: "test_refresh_token",
-      scope: "test_scope",
-      created_at: Math.floor(now.getTime() / 1000), // epoch seconds
     };
 
     const expectedExpiresAt = now.getTime() + expiresIn * 1000;
@@ -35,8 +33,6 @@ describe("tokenResponseToSchema", () => {
       token_type: "bearer",
       expires_in: expiresIn,
       refresh_token: "test_refresh_token_zero_expiry",
-      scope: "test_scope",
-      created_at: Math.floor(now.getTime() / 1000),
     };
 
     const expectedExpiresAt = now.getTime();
