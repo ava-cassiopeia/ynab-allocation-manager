@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ynab-allocation-manager-test # Optional: use the same image tag as in CI
+    volumes:
+      # Mount source code and critical config files for live updates
+      - ./src:/app/src:rw
+      - ./public:/app/public:rw
+      - ./functions:/app/functions:rw # Mount the whole functions directory
+      - ./angular.json:/app/angular.json:ro
+      - ./package.json:/app/package.json:ro
+      - ./package-lock.json:/app/package-lock.json:ro
+      - ./tsconfig.json:/app/tsconfig.json:ro
+      - ./tsconfig.app.json:/app/tsconfig.app.json:ro
+      - ./tsconfig.spec.json:/app/tsconfig.spec.json:ro
+      # - ./firebase.json:/app/firebase.json:ro # Already copied by functions dir mount if it's in there
+      # - ./.firebaserc:/app/.firebaserc:ro # Already copied by functions dir mount if it's in there
+
+      # Ensure node_modules in the container are not overwritten by host node_modules (if any)
+      # These define anonymous volumes that will be initialized by the Dockerfile's npm ci steps
+      # and then persist for the life of the container if not using --rm, or be distinct from host.
+      - /app/node_modules
+      - /app/functions/node_modules
+      - /app/dist # Keep build artifacts within the container, separate from host
+      - /app/functions/lib # Keep functions build artifacts within the container
+
+    # If you need to pass specific environment variables for local testing with emulators,
+    # you can define them here. For example:
+    # environment:
+    #   - FIRESTORE_EMULATOR_HOST=firestore:8080 # Example if firestore was another service
+    #   - FIREBASE_AUTH_EMULATOR_HOST=auth:9099   # Example if auth was another service
+    # For `firebase emulators:exec`, it usually handles these if run within the same environment
+    # where firebase.json is configured and emulators can be started.
+    # The Dockerfile already installs firebase-tools globally.
+    # The default CMD ["npm", "test"] in the Dockerfile will be used.
+    # If you need to override the command or add specific flags for local runs:
+    # command: npm test
+
+  # Example of how you might add emulators as services if you wanted to manage them with compose:
+  # firestore:
+  #   image: google/cloud-sdk:emulators
+  #   ports:
+  #     - "8080:8080" # Host:Container
+  #   command: gcloud beta emulators firestore start --host-port=0.0.0.0:8080
+
+  # auth:
+  #   image: google/cloud-sdk:emulators # This image might not have auth emulator, check Firebase docs
+  #   ports:
+  #     - "9099:9099"
+  #   command: gcloud beta emulators auth start --host-port=0.0.0.0:9099
+
+  # Note: Managing emulators via docker-compose adds complexity.
+  # The current setup relies on `firebase emulators:exec` within the 'test' container,
+  # which should work as `firebase-tools` is installed and `firebase.json` is in the project.
+  # If `firebase emulators:exec` cannot start the emulators correctly inside Docker without
+  # further networking setup (e.g. if emulators try to bind to localhost which is problematic in Docker),
+  # then a more complex docker-compose setup with emulators as separate services might be needed.
+  # For now, keeping it simple and relying on the Dockerfile's setup.
+volumes: {} # Define named volumes if you need to persist data between runs (e.g., emulator data)

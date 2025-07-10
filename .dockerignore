@@ -1,0 +1,33 @@
+# Git
+.git
+.gitignore
+
+# Node modules
+node_modules
+functions/node_modules
+
+# Build artifacts
+dist
+functions/lib
+coverage
+
+# Firebase
+.firebase
+firebase-debug.log
+*.log
+
+# VSCode
+.vscode
+
+# Local environment files
+.env*
+!.env.example # If you have an example/template env file, don't ignore it
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Docker
+Dockerfile
+.dockerignore
+run-tests-docker.sh # Will be created later
