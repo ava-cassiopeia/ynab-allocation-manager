@@ -1,5 +1,6 @@
 import {BudgetSummary} from 'ynab';
 import {Component, inject, ElementRef, signal, effect} from '@angular/core';
+import {MatIcon} from '@angular/material/icon';
 
 import {AccountData} from '../../../lib/accounts/account_data';
 import {AccountList} from '../../components/accounts/account-list/account-list';
@@ -28,6 +29,7 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
     CategoryList,
     ClearAllocationsButton,
     LogoutButton,
+    MatIcon,
     MonthsInfoButton,
     SettingsButton,
   ],

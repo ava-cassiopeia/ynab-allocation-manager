@@ -10,6 +10,11 @@
   <div class="control-panel">
     <ya-budget-selector-button (newBudget)="selectNewBudget($event)" />
 
+    <button class="ya-button site-theme" (click)="ynabStorage.refresh()">
+      <mat-icon inline aria-hidden="true">refresh</mat-icon>
+      Refresh
+    </button>
+
     <ya-clear-allocations-button />
 
     <ya-beta-info-button />
