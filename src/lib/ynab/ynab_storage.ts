@@ -238,6 +238,18 @@ export class YnabStorage {
     });
   }
 
+  /**
+   * Refreshes all YNAB data.
+   */
+  async refresh() {
+    await Promise.all([
+      this.budgets.reload(),
+      this.latestMonth.reload(),
+      this.accounts.reload(),
+      this.latestCategories.reload(),
+    ]);
+  }
+
   findAccount(accountId: string): Account | null {
     const accounts = this.accounts.value();
     for (const account of accounts) {
