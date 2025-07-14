@@ -40,8 +40,16 @@ li {
     margin: 0;
   }
 
+  > .bar,
+  > .mini-bar {
+    border-bottom: 1px solid #aaa;
+  }
+
   > .bar {
     flex: 1;
-    border-bottom: 1px solid #aaa;
+  }
+
+  > .mini-bar {
+    flex: 0 0 12px;
   }
 }
