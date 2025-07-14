@@ -15,10 +15,10 @@ export class LoadingIcon {
     'savings',
     'point_of_sale',
   ];
-  private iconsIndex = 0;
+  private iconsIndex = Math.floor(Math.random() * (this.icons.length - 1));
 
-  protected readonly icon = signal<string>(this.icons[0]);
-  protected readonly nextIcon = signal<string>(this.icons[1]);
+  protected readonly icon = signal<string>(this.icons[this.iconsIndex]);
+  protected readonly nextIcon = signal<string>(this.icons[this.iconsIndex + 1]);
   protected readonly changing = signal<boolean>(false);
 
   constructor(private readonly el: ElementRef<HTMLElement>) {}

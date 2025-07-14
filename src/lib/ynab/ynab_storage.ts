@@ -179,7 +179,7 @@ export class YnabStorage {
   readonly status = computed<YnabStorageStatus>(() => {
     if (this.selectedBudget() === null) return YnabStorageStatus.NO_BUDGET_SELECTED;
 
-    if (this.accounts.isLoading() || this.categories.isLoading()) {
+    if (this.accounts.isLoading() || this.categories.isLoading() || this.latestCategories.isLoading()) {
       return YnabStorageStatus.LOADING_BUDGET_DETAILS;
     }
 
