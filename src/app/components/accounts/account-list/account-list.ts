@@ -34,8 +34,8 @@ export class AccountList {
   protected readonly balances = computed<Sums>(() => {
     const accounts = this.accounts();
 
-    const checking = accounts.checkingAccounts.map((a) => a.account.cleared_balance).reduce((p, c) => p + c);
-    const savings = accounts.savingsAccounts.map((a) => a.account.cleared_balance).reduce((p, c) => p + c);
+    const checking = accounts.checkingAccounts.map((a) => a.account.cleared_balance).reduce((p, c) => p + c, 0);
+    const savings = accounts.savingsAccounts.map((a) => a.account.cleared_balance).reduce((p, c) => p + c, 0);
 
     return {checking, savings};
   });
