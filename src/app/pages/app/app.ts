@@ -10,6 +10,7 @@ import {BetaInfoButton} from '../../components/common/beta-info-button/beta-info
 import {BudgetSelectorButton} from '../../components/budgets/budget-selector-button/budget-selector-button';
 import {CategoryList} from '../../components/categories/category-list/category-list';
 import {ClearAllocationsButton} from "../../components/allocations/clear-allocations-button/clear-allocations-button";
+import {LoadingIcon} from '../../components/auth/loading-icon/loading-icon';
 import {LogoutButton} from '../../components/auth/logout-button/logout-button';
 import {MonthsInfoButton} from '../../components/time/months-info-button/months-info-button';
 import {SettingsButton} from '../../components/settings/settings-button/settings-button';
@@ -28,6 +29,7 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
     BudgetSelectorButton,
     CategoryList,
     ClearAllocationsButton,
+    LoadingIcon,
     LogoutButton,
     MatIcon,
     MonthsInfoButton,
@@ -47,17 +49,27 @@ export class AppPage {
   constructor(private readonly el: ElementRef) {
     effect(() => {
       if (this.ynabStorage.status() === YnabStorageStatus.READY) {
-        setTimeout(() => {
-          this.loading.set(false);
-        }, 300);
+        this.clearLoading();
+      } else if (this.ynabStorage.status() === YnabStorageStatus.LOADING_BUDGET_DETAILS) {
+        this.setLoading();
       }
     });
   }
 
   protected async selectNewBudget(budget: BudgetSummary) {
-    this.loading.set(true);
+    await this.setLoading();
+    // A weird workaround for some animation quirks I haven't figured out yet
     await this.sleep(1000);
     this.settingsStorage.setSelectedBudget(budget);
+  }
+
+  private async setLoading() {
+    this.loading.set(true);
+  }
+
+  private async clearLoading() {
+    await this.sleep(300);
+    this.loading.set(false);
   }
 
   private sleep(ms: number): Promise<void> {
