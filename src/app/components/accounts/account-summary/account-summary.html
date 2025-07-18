@@ -68,11 +68,11 @@
       flat
       pastel>
     <div label class="allocation-label">
-      @if (delta() !== 0) {
-        <ya-currency [milliunits]="account().total" />
-        &sol;
-      }
       <ya-currency [milliunits]="account().account.cleared_balance" />
+      @if (delta() !== 0) {
+        &sol;
+        <ya-currency [milliunits]="account().total" />
+      }
     </div>
 
     <div dropdown>
