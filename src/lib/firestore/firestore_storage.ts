@@ -1,18 +1,20 @@
-import {Injectable, signal, effect, inject, resource, computed} from '@angular/core';
+import {Injectable, signal, effect, inject} from '@angular/core';
 import {User} from 'firebase/auth';
-import {Unsubscribe, onSnapshot, query, collection, where, addDoc, getDocs, updateDoc, doc, setDoc, deleteDoc, writeBatch, getDoc} from 'firebase/firestore';
+import {Unsubscribe, onSnapshot, query, collection, where, addDoc, getDocs, updateDoc, doc, deleteDoc, writeBatch} from 'firebase/firestore';
 import {BudgetSummary, Category} from 'ynab';
 
+import {AccountMetadata} from '../models/account_metadata';
 import {Allocation} from '../models/allocation';
 import {AuthStorage} from '../firebase/auth_storage';
+import {SettingsStorage} from '../firebase/settings_storage';
 import {UserMetadata} from '../models/user_metadata';
 import {YnabStorage} from '../ynab/ynab_storage';
 import {db} from "../firebase/app";
-import {SettingsStorage} from '../firebase/settings_storage';
 
 @Injectable({providedIn: 'root'})
 export class FirestoreStorage {
   readonly allocations = signal<Allocation[]>([]);
+  readonly accountMetadata = signal<Map<AccountId, AccountMetadata>>(new Map());
   readonly userMetadata = signal<UserMetadata | null>(null);
 
   private readonly ynabStorage = inject(YnabStorage);
@@ -20,6 +22,7 @@ export class FirestoreStorage {
   private readonly settingsStorage = inject(SettingsStorage);
 
   private allocationsUnsubscribe: Unsubscribe | null = null;
+  private accountUnsubscribe: Unsubscribe | null = null;
   private settingsUnsubscribe: Unsubscribe | null = null;
   private metadataUnsubscribe: Unsubscribe | null = null;
 
@@ -34,6 +37,7 @@ export class FirestoreStorage {
 
       if (budget === null) return;
       this.listenForAllocationsUpdates(user, budget);
+      this.listenForAccountUpdates(user, budget);
     });
 
     // Subscribe to updates for the user's metadata once we have a user.
@@ -86,6 +90,37 @@ export class FirestoreStorage {
     } else {
       updateDoc(existingAllocation.ref, {
         ...allocation.toSchema(user.uid),
+      });
+    }
+  }
+
+  /**
+   * We never really want there to be multiple account metadata entries per
+   * account, so if there is one, just update it.
+   */
+  async upsertAccount(account: AccountMetadata) {
+    const user = this.authStorage.currentUser();
+    if (user === null) return;
+
+    const budget = this.ynabStorage.selectedBudget();
+    if (budget === null) return;
+
+    const accountsQuery = query(
+      collection(db, 'accounts'),
+      where("userId", "==", user.uid),
+      where("budgetId", "==", budget.id),
+      where("accountId", "==", account.accountId));
+    const querySnapshot = await getDocs(accountsQuery);
+
+    const existingAccount = querySnapshot.docs[0] ?? null;
+
+    if (existingAccount === null) {
+      await addDoc(
+        collection(db, 'accounts'),
+        account.toSchema(this.assertUser().uid));
+    } else {
+      updateDoc(existingAccount.ref, {
+        ...account.toSchema(user.uid),
       });
     }
   }
@@ -162,6 +197,27 @@ export class FirestoreStorage {
     });
   }
 
+  private listenForAccountUpdates(forUser: User, forBudget: BudgetSummary) {
+    if (this.accountUnsubscribe !== null) {
+      this.accountUnsubscribe();
+    }
+
+    // Update local copy of accounts' metadata whenever the user's metadata
+    // change in the database.
+    const accountsQuery = query(
+      collection(db, 'accounts'),
+      where("userId", "==", forUser.uid),
+      where("budgetId", "==", forBudget.id));
+    this.accountUnsubscribe = onSnapshot(accountsQuery, (querySnapshot) => {
+      const accounts = new Map<AccountId, AccountMetadata>();
+      querySnapshot.forEach((doc) => {
+        const account = AccountMetadata.fromSchema(doc.data() as any);
+        accounts.set(account.accountId, account);
+      });
+      this.accountMetadata.set(accounts);
+    });
+  }
+
   private listenForSettingsUpdates(forUser: User) {
     if (this.settingsUnsubscribe !== null) {
       this.settingsUnsubscribe();
@@ -190,3 +246,5 @@ export class FirestoreStorage {
     });
   }
 }
+
+type AccountId = string;

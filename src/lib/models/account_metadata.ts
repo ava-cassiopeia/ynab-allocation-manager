@@ -4,6 +4,7 @@
 export class AccountMetadata {
   constructor(
     readonly accountId: string,
+    readonly budgetId: string,
     readonly interestRate: number,
     readonly interestThresholdMillis: number,
     readonly minimumBalanceMillis: number
@@ -17,6 +18,7 @@ export class AccountMetadata {
     return {
       userId,
       accountId: this.accountId,
+      budgetId: this.budgetId,
       interestRate: this.interestRate,
       interestThresholdMillis: this.interestThresholdMillis,
       minimumBalanceMillis: this.minimumBalanceMillis,
@@ -26,6 +28,7 @@ export class AccountMetadata {
   static fromSchema(schema: AccountMetadataSchema): AccountMetadata {
     return new AccountMetadata(
       schema.accountId,
+      schema.budgetId,
       schema.interestRate,
       schema.interestThresholdMillis,
       schema.minimumBalanceMillis
@@ -36,6 +39,7 @@ export class AccountMetadata {
 export interface AccountMetadataSchema {
   readonly userId: string;
   readonly accountId: string;
+  readonly budgetId: string;
   readonly interestRate: number;
   readonly interestThresholdMillis: number;
   readonly minimumBalanceMillis: number;
