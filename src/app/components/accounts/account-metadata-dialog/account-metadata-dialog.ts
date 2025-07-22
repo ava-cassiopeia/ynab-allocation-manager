@@ -6,6 +6,7 @@ import {MatIcon} from '@angular/material/icon';
 
 import {AccountMetadata} from '../../../../lib/models/account_metadata';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
+import {ReconciledTime} from '../../time/reconciled-time/reconciled-time';
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
 
 /**
@@ -15,7 +16,13 @@ import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
   selector: 'ya-account-metadata-dialog',
   templateUrl: './account-metadata-dialog.html',
   styleUrl: './account-metadata-dialog.scss',
-  imports: [ReactiveFormsModule, MatDialogContent, MatDialogTitle, MatIcon],
+  imports: [
+    MatDialogContent,
+    MatDialogTitle,
+    MatIcon,
+    ReactiveFormsModule,
+    ReconciledTime,
+  ],
 })
 export class AccountMetadataDialog implements OnInit {
   protected readonly interestRateControl = new FormControl<number>(0);
