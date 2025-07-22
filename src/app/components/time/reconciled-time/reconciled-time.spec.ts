@@ -14,6 +14,7 @@ describe('ReconciledTime', () => {
     }).compileComponents();
 
     fixture = TestBed.createComponent(ReconciledTime);
+    fixture.componentRef.setInput('time', null);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
