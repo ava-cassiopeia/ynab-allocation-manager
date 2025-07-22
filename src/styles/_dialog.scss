@@ -9,5 +9,11 @@
       margin: 0 0 20px;
       text-align: center;
     }
+
+    .mat-mdc-dialog-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
   }
 }

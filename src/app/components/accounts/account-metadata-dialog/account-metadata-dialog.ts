@@ -1,7 +1,7 @@
 import {Account} from 'ynab';
 import {Component, inject, OnInit, HostBinding} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
+import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
 import {MatIcon} from '@angular/material/icon';
 
 import {AccountMetadata} from '../../../../lib/models/account_metadata';
@@ -17,6 +17,7 @@ import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
   templateUrl: './account-metadata-dialog.html',
   styleUrl: './account-metadata-dialog.scss',
   imports: [
+    MatDialogActions,
     MatDialogContent,
     MatDialogTitle,
     MatIcon,
@@ -43,8 +44,8 @@ export class AccountMetadataDialog implements OnInit {
     // Populate values from the provided AccountMetadata instance, if it exists.
     if (this.data.metadata) {
       this.interestRateControl.setValue(this.data.metadata.interestRate * 100.0);
-      this.interestThresholdControl.setValue(this.data.metadata.interestThresholdMillis * 1000.0);
-      this.minimumBalanceControl.setValue(this.data.metadata.minimumBalanceMillis * 1000.0);
+      this.interestThresholdControl.setValue(this.data.metadata.interestThresholdMillis / 1000.0);
+      this.minimumBalanceControl.setValue(this.data.metadata.minimumBalanceMillis / 1000.0);
     }
   }
 
@@ -59,14 +60,15 @@ export class AccountMetadataDialog implements OnInit {
     const newMetadata = new AccountMetadata(
         this.data.account.id,
         currentBudget.id,
-        newInterestRate,
+        newInterestRate === 0 ? newInterestRate : (newInterestRate / 100.0),
         newInterestThreshold,
         newMinimumBalance);
 
     await this.firestoreStorage.upsertAccount(newMetadata);
+    this.closeDialog();
   }
 
-  closeDialog(): void {
+  protected closeDialog(): void {
     this.dialogRef.close();
   }
 }
