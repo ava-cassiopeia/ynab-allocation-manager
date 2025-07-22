@@ -2,11 +2,11 @@ import {Component, input, computed, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 
 import {AccountAllocation} from '../../../../lib/accounts/account_data';
+import {AccountMetadataDialog} from '../account-metadata-dialog/account-metadata-dialog';
 import {CurrencyCopyButton} from '../../common/currency-copy-button/currency-copy-button';
 import {Currency} from '../../common/currency/currency';
 import {DropdownButton, ButtonTheme} from '../../common/dropdown-button/dropdown-button';
-import {RelativeTime} from '../../time/relative-time/relative-time';
-import {AccountMetadataDialog} from '../account-metadata-dialog/account-metadata-dialog';
+import {ReconciledTime} from "../../time/reconciled-time/reconciled-time";
 
 @Component({
   selector: 'ya-account-summary',
@@ -16,7 +16,7 @@ import {AccountMetadataDialog} from '../account-metadata-dialog/account-metadata
     Currency,
     CurrencyCopyButton,
     DropdownButton,
-    RelativeTime,
+    ReconciledTime,
   ],
 })
 export class AccountSummary {
