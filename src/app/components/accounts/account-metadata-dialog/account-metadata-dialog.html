@@ -1,0 +1,69 @@
+<h2 mat-dialog-title>{{ data.account.name }}</h2>
+
+<mat-dialog-content>
+  <div class="form">
+    <div class="form-item">
+      <mat-icon inline aria-hidden="true">percent</mat-icon>
+      <label>Interest rate</label>
+      <input class="ya-input" [formControl]="interestRateControl" />
+      <span>%</span>
+      <p class="info">
+        The APY interest rate on this account. This will be shown in the
+        accounts list to help indicate which accounts are more optimal for
+        storing cash.
+      </p>
+    </div>
+
+    <div class="form-item">
+      <mat-icon inline aria-hidden="true">vertical_align_top</mat-icon>
+      <label>Interest rate threshold</label>
+      <input class="ya-input" [formControl]="interestThresholdControl" />
+      <span>&nbsp;</span>
+      <p class="info">
+        The minimum account balanced required to get this account's advertised
+        interest rate.
+      </p>
+    </div>
+
+    <div class="form-item">
+      <mat-icon inline aria-hidden="true">running_with_errors</mat-icon>
+      <label>Minimum balance</label>
+      <input class="ya-input" [formControl]="minimumBalanceControl" />
+      <span>&nbsp;</span>
+      <p class="info">
+        The minimum balance required in this account to not accrue fees.
+      </p>
+    </div>
+
+    <div class="spacer"></div>
+    <div class="spacer"></div>
+
+    <div class="form-item">
+      <span>&nbsp;</span>
+      <label>Last reconciled on YNAB</label>
+      <ya-reconciled-time [time]="data.account.last_reconciled_at" />
+      <span>&nbsp;</span>
+    </div>
+
+    <div class="spacer"></div>
+
+    <div class="form-item">
+      <span>&nbsp;</span>
+      <label>Last reconciled</label>
+      <ya-reconciled-time [time]="null" />
+      <span>&nbsp;</span>
+    </div>
+  </div>
+</mat-dialog-content>
+
+<mat-dialog-actions>
+  <button class="ya-button flat" (click)="closeDialog()">
+    <mat-icon inline aria-hidden="true">close</mat-icon>
+    Cancel
+  </button>
+
+  <button class="ya-button flat site-theme" (click)="save()">
+    <mat-icon inline aria-hidden="true">save</mat-icon>
+    Save
+  </button>
+</mat-dialog-actions>

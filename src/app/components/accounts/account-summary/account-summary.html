@@ -1,14 +1,9 @@
-<div class="account-name">
+<button class="account-name" (click)="showMetadataDialog()">
   {{ account().account.name }}
-</div>
+</button>
 
 <div class="last-reconciled">
-  @let lastReconciled = lastReconciledAt();
-  @if (lastReconciled) {
-    <ya-relative-time [date]="lastReconciled" />
-  } @else {
-    -
-  }
+  <ya-reconciled-time [time]="account().account.last_reconciled_at" />
 
   @if (lastReconciledWarning()) {
     <ya-dropdown-button dropdownLabel="Last reconciled awhile ago"

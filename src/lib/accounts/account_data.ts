@@ -3,8 +3,8 @@ import {Account, Category} from "ynab";
 
 import {YnabStorage} from "../ynab/ynab_storage";
 import {FirestoreStorage} from "../firestore/firestore_storage";
-import {Allocation} from "../models/allocation";
 import {AccountExecutionBuilder} from "./account_execution_result";
+import {AccountMetadata} from "../models/account_metadata";
 
 /**
  * Contains pre-computed signals for common account information.
@@ -17,6 +17,7 @@ export class AccountData {
    */
   readonly accounts = computed<AccountAllocation[]>(() => {
     const accounts = this.ynabStorage.accounts.value() ?? [];
+    const metadata = this.firestoreStorage.accountMetadata();
     if (accounts.length < 1) return [];
 
     const groups = this.ynabStorage.latestCategories.value() ?? [];
@@ -27,9 +28,11 @@ export class AccountData {
 
     return accounts.map((account) => {
       const executionResult = executionResults.get(account.id) ?? null;
+      const accountMetadata = metadata.get(account.id) ?? null;
 
       return {
         account,
+        metadata: accountMetadata,
         categories: executionResult?.categories ?? [],
         total: executionResult?.allocatedMillis ?? 0,
       };
@@ -84,9 +87,7 @@ export class AccountData {
  */
 export interface AccountAllocation {
   readonly account: Account;
+  readonly metadata: AccountMetadata | null;
   readonly categories: Category[];
   readonly total: number;
 }
-
-type AccountId = string;
-type CategoryId = string;

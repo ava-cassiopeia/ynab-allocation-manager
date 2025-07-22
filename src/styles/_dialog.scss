@@ -1,0 +1,19 @@
+.mat-mdc-dialog-container {
+  .ya-dialog {
+    .mat-mdc-dialog-title,
+    .mat-mdc-dialog-content {
+      font-family: var(--body-font);
+    }
+
+    .mat-mdc-dialog-title {
+      margin: 0 0 20px;
+      text-align: center;
+    }
+
+    .mat-mdc-dialog-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+  }
+}

@@ -1,0 +1,6 @@
+@let reconDate = date();
+@if (reconDate !== null) {
+  <ya-relative-time [date]="reconDate" />
+} @else {
+  <span>-</span>
+}
