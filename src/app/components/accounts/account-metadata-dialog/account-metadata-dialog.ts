@@ -1,7 +1,8 @@
 import {Account} from 'ynab';
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, HostBinding} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
+import {MatIcon} from '@angular/material/icon';
 
 import {AccountMetadata} from '../../../../lib/models/account_metadata';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
@@ -14,7 +15,7 @@ import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
   selector: 'ya-account-metadata-dialog',
   templateUrl: './account-metadata-dialog.html',
   styleUrl: './account-metadata-dialog.scss',
-  imports: [ReactiveFormsModule, MatDialogContent, MatDialogTitle],
+  imports: [ReactiveFormsModule, MatDialogContent, MatDialogTitle, MatIcon],
 })
 export class AccountMetadataDialog implements OnInit {
   protected readonly interestRateControl = new FormControl<number>(0);
@@ -25,6 +26,11 @@ export class AccountMetadataDialog implements OnInit {
   private readonly firestoreStorage = inject(FirestoreStorage);
   private readonly ynabStorage = inject(YnabStorage);
   private readonly dialogRef = inject(MatDialogRef<AccountMetadataDialog>);
+
+  @HostBinding('class')
+  get dialogClass(): string {
+    return 'ya-dialog';
+  }
 
   ngOnInit() {
     // Populate values from the provided AccountMetadata instance, if it exists.

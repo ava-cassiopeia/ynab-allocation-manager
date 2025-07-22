@@ -1,5 +1,38 @@
 <h2 mat-dialog-title>{{ data.account.name }}</h2>
 
 <mat-dialog-content>
-  Something coming soon.
+  <div class="form">
+    <div class="form-item">
+      <mat-icon inline aria-hidden="true">percent</mat-icon>
+      <label>Interest rate</label>
+      <input class="ya-input" />
+      <span>%</span>
+      <p class="info">
+        The APY interest rate on this account. This will be shown in the
+        accounts list to help indicate which accounts are more optimal for
+        storing cash.
+      </p>
+    </div>
+
+    <div class="form-item">
+      <mat-icon inline aria-hidden="true">vertical_align_top</mat-icon>
+      <label>Interest rate threshold</label>
+      <input class="ya-input" />
+      <span>&nbsp;</span>
+      <p class="info">
+        The minimum account balanced required to get this account's advertised
+        interest rate.
+      </p>
+    </div>
+
+    <div class="form-item">
+      <mat-icon inline aria-hidden="true">running_with_errors</mat-icon>
+      <label>Minimum balance</label>
+      <input class="ya-input" />
+      <span>&nbsp;</span>
+      <p class="info">
+        The minimum balance required in this account to not accrue fees.
+      </p>
+    </div>
+  </div>
 </mat-dialog-content>

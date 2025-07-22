@@ -1,4 +1,38 @@
 :host {
   display: block;
-  background: #fff;
+}
+
+.form {
+  display: grid;
+  grid-template-columns: min-content 1fr min-content;
+  align-items: center;
+  gap: 4px 12px;
+}
+
+.form-item {
+  display: contents;
+
+  > label,
+  > span {
+    white-space: nowrap;
+  }
+
+  > mat-icon {
+    font-size: 20px;
+  }
+
+  > label {
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  .ya-input {
+    text-align: right;
+  }
+
+  .info {
+    grid-column: 2 / 5;
+    margin: 0 0 10px;
+    font-size: 14px;
+  }
 }
