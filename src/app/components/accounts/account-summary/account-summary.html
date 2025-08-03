@@ -2,7 +2,9 @@
   {{ account().account.name }}
 </button>
 
-<div class="interest-rate">{{ interestRate() }}</div>
+<div class="interest-rate">
+  <ya-interest-warning-button [account]="account()" />
+</div>
 
 <div class="last-reconciled">
   @if (lastReconciledWarning()) {

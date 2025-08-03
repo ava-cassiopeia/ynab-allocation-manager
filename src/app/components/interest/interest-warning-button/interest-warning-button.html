@@ -1,0 +1,15 @@
+@if (missingAmount()) {
+  <ya-dropdown-button dropdownLabel="Not enough funds for interest" flat theme="warning" icon="vertical_align_top">
+    <span label>{{ interestRate() }}</span>
+
+    <p dropdown class="dropdown-info">
+      You do not have enough funds in this account to get the advertised
+      interest rate.
+      <br><br>
+      Transfer an additional <b><ya-currency [milliunits]="missingAmount()!" /></b> to
+      fix this.
+    </p>
+  </ya-dropdown-button>
+} @else {
+  <span>{{ interestRate() }}</span>
+}
