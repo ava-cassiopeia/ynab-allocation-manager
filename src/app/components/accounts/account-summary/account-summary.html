@@ -2,6 +2,8 @@
   {{ account().account.name }}
 </button>
 
+<div class="interest-rate">{{ interestRate() }}</div>
+
 <div class="last-reconciled">
   <ya-reconciled-time [time]="account().account.last_reconciled_at" />
 
