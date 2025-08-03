@@ -1,3 +1,4 @@
+import {AccountType} from 'ynab';
 import {Component, input, computed, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -59,6 +60,15 @@ export class AccountSummary {
     } else {
       return 'perfect';
     }
+  });
+
+  protected readonly interestRate = computed<string>(() => {
+    if (this.account().account.type !== AccountType.Savings) return '-';
+    const metadata = this.account().metadata;
+    if (metadata == null || metadata.interestRate === 0) return '-';
+
+    const rate = (metadata.interestRate * 100.0).toFixed(1);
+    return `${rate}%`;
   });
 
   private readonly matDialog = inject(MatDialog);
