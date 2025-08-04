@@ -1,0 +1,32 @@
+:host {
+  display: block;
+}
+
+.dropdown-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dropdown-content {
+  .warning {
+    max-width: 400px;
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    padding: 10px 20px;
+
+    &:last-of-type {
+      padding: 10px 20px 20px;
+    }
+
+    > mat-icon {
+      flex: 0 0 24px;
+    }
+  }
+
+  p {
+    margin: 0;
+    padding: 0;
+  }
+}

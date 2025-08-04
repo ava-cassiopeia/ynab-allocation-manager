@@ -3,42 +3,26 @@ import {MatDialog} from '@angular/material/dialog';
 
 import {AccountAllocation} from '../../../../lib/accounts/account_data';
 import {AccountMetadataDialog} from '../account-metadata-dialog/account-metadata-dialog';
+import {AccountStatusIndicator} from '../account-status-indicator/account-status-indicator';
 import {CurrencyCopyButton} from '../../common/currency-copy-button/currency-copy-button';
 import {Currency} from '../../common/currency/currency';
 import {DropdownButton, ButtonTheme} from '../../common/dropdown-button/dropdown-button';
 import {InterestWarningButton} from '../../interest/interest-warning-button/interest-warning-button';
-import {ReconciledTime} from "../../time/reconciled-time/reconciled-time";
 
 @Component({
   selector: 'ya-account-summary',
   templateUrl: './account-summary.html',
   styleUrl: './account-summary.scss',
   imports: [
+    AccountStatusIndicator,
     Currency,
     CurrencyCopyButton,
     DropdownButton,
     InterestWarningButton,
-    ReconciledTime,
   ],
 })
 export class AccountSummary {
   readonly account = input.required<AccountAllocation>();
-
-  protected readonly lastReconciledAt = computed<Date | null>(() => {
-    const lastReconciledAt = this.account().account.last_reconciled_at;
-    if (!lastReconciledAt) return null;
-
-    return new Date(lastReconciledAt);
-  });
-
-  protected readonly lastReconciledWarning = computed<boolean>(() => {
-    const now = new Date();
-    const last = this.lastReconciledAt();
-    if (!last) return true;
-
-    const deltaMs = now.getTime() - last.getTime();
-    return deltaMs > (1000 * 60 * 60 * 24 * 30); // 30 days
-  });
 
   protected readonly delta = computed<number>(() => {
     return this.account().account.cleared_balance - this.account().total;
