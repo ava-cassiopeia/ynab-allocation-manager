@@ -1,4 +1,3 @@
-import {AccountType} from 'ynab';
 import {Component, input, computed, inject} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -7,6 +6,7 @@ import {AccountMetadataDialog} from '../account-metadata-dialog/account-metadata
 import {CurrencyCopyButton} from '../../common/currency-copy-button/currency-copy-button';
 import {Currency} from '../../common/currency/currency';
 import {DropdownButton, ButtonTheme} from '../../common/dropdown-button/dropdown-button';
+import {InterestWarningButton} from '../../interest/interest-warning-button/interest-warning-button';
 import {ReconciledTime} from "../../time/reconciled-time/reconciled-time";
 
 @Component({
@@ -17,6 +17,7 @@ import {ReconciledTime} from "../../time/reconciled-time/reconciled-time";
     Currency,
     CurrencyCopyButton,
     DropdownButton,
+    InterestWarningButton,
     ReconciledTime,
   ],
 })
@@ -60,15 +61,6 @@ export class AccountSummary {
     } else {
       return 'perfect';
     }
-  });
-
-  protected readonly interestRate = computed<string>(() => {
-    if (this.account().account.type !== AccountType.Savings) return '-';
-    const metadata = this.account().metadata;
-    if (metadata == null || metadata.interestRate === 0) return '-';
-
-    const rate = (metadata.interestRate * 100.0).toFixed(1);
-    return `${rate}%`;
   });
 
   private readonly matDialog = inject(MatDialog);

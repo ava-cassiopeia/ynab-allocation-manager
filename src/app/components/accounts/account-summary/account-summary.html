@@ -2,22 +2,25 @@
   {{ account().account.name }}
 </button>
 
-<div class="interest-rate">{{ interestRate() }}</div>
+<div class="interest-rate">
+  <ya-interest-warning-button [account]="account()" />
+</div>
 
 <div class="last-reconciled">
-  <ya-reconciled-time [time]="account().account.last_reconciled_at" />
-
   @if (lastReconciledWarning()) {
     <ya-dropdown-button dropdownLabel="Last reconciled awhile ago"
         theme="warning"
         icon="warning"
         flat>
+      <ya-reconciled-time label [time]="account().account.last_reconciled_at" />
 
       <p dropdown class="warning-text">
         This account has not been reconciled in awhile. Reconciling this account
         will help this tool provide more up-to-date, accurate data.
       </p>
     </ya-dropdown-button>
+  } @else {
+    <ya-reconciled-time [time]="account().account.last_reconciled_at" />
   }
 </div>
 
