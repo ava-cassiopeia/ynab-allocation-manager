@@ -3,7 +3,11 @@
 </button>
 
 <div class="interest-rate">
-  <ya-interest-warning-button [account]="account()" />
+  @if (hideInterest()) {
+    &nbsp;
+  } @else {
+    <ya-interest-warning-button [account]="account()" />
+  }
 </div>
 
 <div class="last-reconciled">

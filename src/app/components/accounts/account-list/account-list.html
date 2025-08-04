@@ -29,7 +29,7 @@
 
 <div class="header">
   <span>Account</span>
-  <span>Interest rate</span>
+  <span>&nbsp;</span>
   <span>Status</span>
   <span>Available</span>
   <span>Balance / Allocated</span>
@@ -37,7 +37,7 @@
 <ul>
   @for (account of accounts().checkingAccounts; track account.account.id) {
     <li>
-      <ya-account-summary [account]="account" />
+      <ya-account-summary [account]="account" hideInterest />
     </li>
   }
 </ul>

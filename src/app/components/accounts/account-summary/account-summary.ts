@@ -1,4 +1,4 @@
-import {Component, input, computed, inject} from '@angular/core';
+import {Component, input, computed, inject, booleanAttribute} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 
 import {AccountAllocation} from '../../../../lib/accounts/account_data';
@@ -23,6 +23,7 @@ import {InterestWarningButton} from '../../interest/interest-warning-button/inte
 })
 export class AccountSummary {
   readonly account = input.required<AccountAllocation>();
+  readonly hideInterest = input(false, {transform: booleanAttribute});
 
   protected readonly delta = computed<number>(() => {
     return this.account().account.cleared_balance - this.account().total;
