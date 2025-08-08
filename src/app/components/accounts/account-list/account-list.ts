@@ -18,6 +18,7 @@ export class AccountList {
   protected readonly accounts = computed<SortedAccounts>(() => {
     const accounts = this.accountData.accounts();
 
+    // TODO: Add sorting here.
     const checkingAccounts: AccountAllocation[] = [];
     const savingsAccounts: AccountAllocation[] = [];
     for (const account of accounts) {
