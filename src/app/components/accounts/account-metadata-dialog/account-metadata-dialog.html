@@ -50,7 +50,7 @@
     <div class="form-item">
       <span>&nbsp;</span>
       <label>Last reconciled</label>
-      <ya-reconciled-time [time]="null" />
+      <ya-reconciled-time [time]="data.metadata?.lastReconciled ?? null" />
       <span>&nbsp;</span>
     </div>
   </div>
@@ -63,7 +63,7 @@
   </button>
 
   <button class="ya-button flat site-theme" (click)="save()">
-    <mat-icon inline aria-hidden="true">save</mat-icon>
-    Save
+    <mat-icon inline aria-hidden="true">done</mat-icon>
+    Reconcile
   </button>
 </mat-dialog-actions>

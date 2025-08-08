@@ -168,6 +168,10 @@ export class FirestoreStorage {
     await batch.commit();
   }
 
+  async reconcileMetadata(metadata: AccountMetadata) {
+    await this.upsertAccount(metadata.reconcile());
+  }
+
   private assertUser(): User {
     const user = this.authStorage.currentUser();
     if (user === null) {

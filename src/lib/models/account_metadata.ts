@@ -7,7 +7,8 @@ export class AccountMetadata {
     readonly budgetId: string,
     readonly interestRate: number,
     readonly interestThresholdMillis: number,
-    readonly minimumBalanceMillis: number
+    readonly minimumBalanceMillis: number,
+    readonly lastReconciled: Date | null,
   ) {}
 
   /**
@@ -22,7 +23,19 @@ export class AccountMetadata {
       interestRate: this.interestRate,
       interestThresholdMillis: this.interestThresholdMillis,
       minimumBalanceMillis: this.minimumBalanceMillis,
+      lastReconciled: this.lastReconciled?.getTime() ?? null,
     };
+  }
+
+  reconcile(date = new Date()): AccountMetadata {
+    return new AccountMetadata(
+      this.accountId,
+      this.budgetId,
+      this.interestRate,
+      this.interestThresholdMillis,
+      this.minimumBalanceMillis,
+      date,
+    );
   }
 
   static fromSchema(schema: AccountMetadataSchema): AccountMetadata {
@@ -31,7 +44,8 @@ export class AccountMetadata {
       schema.budgetId,
       schema.interestRate,
       schema.interestThresholdMillis,
-      schema.minimumBalanceMillis
+      schema.minimumBalanceMillis,
+      (schema.lastReconciled ? new Date(schema.lastReconciled) : null),
     );
   }
 }
@@ -43,4 +57,5 @@ export interface AccountMetadataSchema {
   readonly interestRate: number;
   readonly interestThresholdMillis: number;
   readonly minimumBalanceMillis: number;
+  readonly lastReconciled: number | null; // milliseconds
 }

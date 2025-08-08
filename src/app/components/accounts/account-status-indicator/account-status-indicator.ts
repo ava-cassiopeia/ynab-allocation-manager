@@ -35,8 +35,10 @@ export class AccountStatusIndicator {
   });
 
   protected readonly metadataReconIsOutdated = computed<boolean>(() => {
-    // TODO: Implement metadata recon date and use it here.
-    return false;
+    const lastRecon = this.account().metadata?.lastReconciled ?? null;
+    if (lastRecon == null) return true;
+
+    return isOutOfDate(lastRecon);
   });
 
   protected readonly amountBelowMinimum = computed<number | null>(() => {
