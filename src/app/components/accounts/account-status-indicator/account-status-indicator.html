@@ -1,0 +1,48 @@
+@if (hasProblems()) {
+  <ya-dropdown-button dropdownLabel="Account warnings" theme="warning">
+    <div label class="dropdown-label">
+      @if (ynabReconIsOutdated() || metadataReconIsOutdated()) {
+        <mat-icon inline>history_toggle_off</mat-icon>
+      }
+      @if (amountBelowMinimum() !== null) {
+        <mat-icon inline>running_with_errors</mat-icon>
+      }
+    </div>
+
+    <div dropdown class="dropdown-content">
+      @if (ynabReconIsOutdated()) {
+        <div class="warning">
+          <mat-icon inline aria-hidden="true">history_toggle_off</mat-icon>
+          <p>
+            This account has not been reconciled in YNAB in a long time.
+          </p>
+        </div>
+      }
+
+      @if (metadataReconIsOutdated()) {
+        <div class="warning">
+          <mat-icon inline aria-hidden="true">history_toggle_off</mat-icon>
+          <p>
+            This account's interest rate and minimum balances have not been
+            reconciled in a long time.
+          </p>
+        </div>
+      }
+
+      @if (amountBelowMinimum() !== null) {
+        <div class="warning">
+          <mat-icon inline aria-hidden="true">running_with_errors</mat-icon>
+          <p>
+            This account does not have the minimum funds to avoid fees, and may
+            accrue them soon.
+            <br><br>
+            To fix this, transfer an additional
+            <b><ya-currency [milliunits]="amountBelowMinimum()!" /></b>.
+          </p>
+        </div>
+      }
+    </div>
+  </ya-dropdown-button>
+} @else {
+  <mat-icon inline aria-label="No problems!">done</mat-icon>
+}

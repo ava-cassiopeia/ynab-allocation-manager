@@ -1,14 +1,14 @@
 <h3 class="section-title">
   Savings accounts
-  <div class="mini-bar"></div>
-  <ya-currency [milliunits]="balances().savings" />
   <div class="bar"></div>
+  <ya-currency [milliunits]="balances().savings" />
+  <div class="mini-bar"></div>
 </h3>
 
 <div class="header">
   <span>Account</span>
-  <span>Interest rate</span>
-  <span>Last reconciled</span>
+  <span>Interest</span>
+  <span>Status</span>
   <span>Available</span>
   <span>Balance / Allocated</span>
 </div>
@@ -22,22 +22,22 @@
 
 <h3 class="section-title">
   Other accounts
-  <div class="mini-bar"></div>
-  <ya-currency [milliunits]="balances().checking" />
   <div class="bar"></div>
+  <ya-currency [milliunits]="balances().checking" />
+  <div class="mini-bar"></div>
 </h3>
 
 <div class="header">
   <span>Account</span>
-  <span>Interest rate</span>
-  <span>Last reconciled</span>
+  <span>&nbsp;</span>
+  <span>Status</span>
   <span>Available</span>
   <span>Balance / Allocated</span>
 </div>
 <ul>
   @for (account of accounts().checkingAccounts; track account.account.id) {
     <li>
-      <ya-account-summary [account]="account" />
+      <ya-account-summary [account]="account" hideInterest />
     </li>
   }
 </ul>

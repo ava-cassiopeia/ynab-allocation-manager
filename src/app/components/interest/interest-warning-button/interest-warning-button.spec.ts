@@ -57,7 +57,8 @@ const EMPTY_ACCOUNT_METADATA = new AccountMetadata(
   'test-budget',
   0,
   0,
-  0
+  0,
+  null,
 );
 
 const EMPTY_ACCOUNT_ALLOCATION: AccountAllocation = {
@@ -91,7 +92,8 @@ const NOT_ENOUGH_FUNDS_ACCOUNT_METADATA = new AccountMetadata(
   'test-budget',
   0.02,
   100000,
-  0
+  0,
+  null,
 );
 
 const NOT_ENOUGH_FUNDS_ACCOUNT_ALLOCATION: AccountAllocation = {

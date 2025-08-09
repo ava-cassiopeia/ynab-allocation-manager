@@ -3,25 +3,15 @@
 </button>
 
 <div class="interest-rate">
-  <ya-interest-warning-button [account]="account()" />
+  @if (hideInterest()) {
+    &nbsp;
+  } @else {
+    <ya-interest-warning-button [account]="account()" />
+  }
 </div>
 
 <div class="last-reconciled">
-  @if (lastReconciledWarning()) {
-    <ya-dropdown-button dropdownLabel="Last reconciled awhile ago"
-        theme="warning"
-        icon="warning"
-        flat>
-      <ya-reconciled-time label [time]="account().account.last_reconciled_at" />
-
-      <p dropdown class="warning-text">
-        This account has not been reconciled in awhile. Reconciling this account
-        will help this tool provide more up-to-date, accurate data.
-      </p>
-    </ya-dropdown-button>
-  } @else {
-    <ya-reconciled-time [time]="account().account.last_reconciled_at" />
-  }
+  <ya-account-status-indicator [account]="account()" />
 </div>
 
 @if (delta() > 0) {
