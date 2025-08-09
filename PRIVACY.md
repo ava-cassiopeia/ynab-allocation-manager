@@ -1,8 +1,8 @@
 # Privacy Policy
 
-EFFECTIVE DATE: 2025-06-15
+EFFECTIVE DATE: 2025-08-09
 
-In this Privacy Policy (“Policy”), we describe how YNAB Allocation Manager
+In this Privacy Policy (“Policy”), we describe how Allocation Manager for YNAB
 (“YAM,” “we,” or “us”) collects, uses, and discloses information that we obtain
 about visitors to our website https://yam.ynab.rocks (the “Site”) and the
 services available through our Site (collectively, the “Services”).
@@ -18,18 +18,15 @@ of disputes.
 We collect information about you directly from you and from third parties, and
 automatically through your use of our Site or Services.
 
-Information We Collect Directly From You. The information we collect from you
-depends on how you use our Services. To create an account, you must authorize
-access to your YNAB account. Once authorized, we collect the following
+**Information We Collect Directly From You.** The information we collect from
+you depends on how you use our Services. To create an account, you must
+authorize access to your YNAB account. Once authorized, we collect the following
 information from YNAB:
 
 -   **Pseudoanonymous identifiers.** These are strings of characters which
     uniquely identify you or your data in YNAB. They do not include financial
     data or directly identifiable data, like a name or address.
 
-    Pseudoanonymous identifiers are stored for the lifetime of your user account
-    with us. User accounts and their associated data may be deleted for
-    inactivity after 2 years.
 
     We collect pseudoanonymous identifiers for:
 
@@ -38,7 +35,19 @@ information from YNAB:
     -   Your budgets
     -   Your categories within a budget
 
-We collect the following information when you visit our Site:
+-   **Bank account metadata.** These are specific attributes related to your
+    bank accounts that are not available via YNAB, which you optionally provide.
+    They include:
+
+    -   Account interest rate
+    -   Account interest rate threshold
+    -   Account minimum balance
+
+Pseudoanonymous identifiers and bank account metadata are stored for the
+lifetime of your user account with us. User accounts and their associated data
+may be deleted for inactivity after 2 years.
+
+Additionally, we collect the following information when you visit our Site:
 
 -   Your browser type and operating system
 -   Web pages you view on the Site
