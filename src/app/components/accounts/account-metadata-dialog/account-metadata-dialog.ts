@@ -63,7 +63,7 @@ export class AccountMetadataDialog implements OnInit {
         newInterestRate === 0 ? newInterestRate : (newInterestRate / 100.0),
         newInterestThreshold,
         newMinimumBalance,
-        this.data.metadata?.lastReconciled ?? null,
+        new Date(),
     );
 
     await this.firestoreStorage.upsertAccount(newMetadata);
