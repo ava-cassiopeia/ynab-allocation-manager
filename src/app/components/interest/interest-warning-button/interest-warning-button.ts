@@ -18,7 +18,7 @@ export class InterestWarningButton {
     if (!metadata) return '-';
     if (metadata.interestRate <= 0) return '-';
 
-    const rate = (metadata.interestRate * 100.0).toFixed(1);
+    const rate = (metadata.interestRate * 100.0).toFixed(2);
     return `${rate}%`;
   });
 

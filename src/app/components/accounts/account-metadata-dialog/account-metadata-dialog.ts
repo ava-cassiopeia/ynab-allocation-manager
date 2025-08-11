@@ -1,5 +1,5 @@
-import {Account} from 'ynab';
-import {Component, inject, OnInit, HostBinding} from '@angular/core';
+import {Account, AccountType} from 'ynab';
+import {Component, inject, OnInit, HostBinding, signal} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
 import {MatIcon} from '@angular/material/icon';
@@ -30,6 +30,7 @@ export class AccountMetadataDialog implements OnInit {
   protected readonly interestThresholdControl = new FormControl<number>(0);
   protected readonly minimumBalanceControl = new FormControl<number>(0);
   protected readonly data = inject<DialogData>(MAT_DIALOG_DATA);
+  protected readonly isCheckingAccount = signal<boolean>(false);
 
   private readonly firestoreStorage = inject(FirestoreStorage);
   private readonly ynabStorage = inject(YnabStorage);
@@ -47,6 +48,8 @@ export class AccountMetadataDialog implements OnInit {
       this.interestThresholdControl.setValue(this.data.metadata.interestThresholdMillis / 1000.0);
       this.minimumBalanceControl.setValue(this.data.metadata.minimumBalanceMillis / 1000.0);
     }
+
+    this.isCheckingAccount.set(this.data.account.type === AccountType.Checking);
   }
 
   protected async save() {

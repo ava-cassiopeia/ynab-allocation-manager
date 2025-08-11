@@ -1,4 +1,4 @@
-<button class="account-name" (click)="showMetadataDialog()">
+<button class="account-name" [class.no-click]="!allowMetadata()" (click)="showMetadataDialog()">
   {{ account().account.name }}
 </button>
 

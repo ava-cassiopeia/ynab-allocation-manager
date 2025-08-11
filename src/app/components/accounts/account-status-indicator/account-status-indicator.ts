@@ -5,6 +5,7 @@ import {Currency} from '../../common/currency/currency';
 import {AccountAllocation} from '../../../../lib/accounts/account_data';
 import {DropdownButton} from '../../common/dropdown-button/dropdown-button';
 import {ReconciledTime} from '../../time/reconciled-time/reconciled-time';
+import { AccountType } from 'ynab';
 
 @Component({
   selector: 'ya-account-status-indicator',
@@ -35,6 +36,8 @@ export class AccountStatusIndicator {
   });
 
   protected readonly metadataReconIsOutdated = computed<boolean>(() => {
+    if (this.isCashAccount()) return false;
+
     const lastRecon = this.account().metadata?.lastReconciled ?? null;
     if (lastRecon == null) return true;
 
@@ -42,6 +45,8 @@ export class AccountStatusIndicator {
   });
 
   protected readonly amountBelowMinimum = computed<number | null>(() => {
+    if (this.isCashAccount()) return null;
+
     const metadata = this.account().metadata;
     if (!metadata) return null;
     if (metadata.minimumBalanceMillis <= 0) return null;
@@ -50,6 +55,10 @@ export class AccountStatusIndicator {
     if (balance >= metadata.minimumBalanceMillis) return null;
 
     return metadata.minimumBalanceMillis - balance;
+  });
+
+  private readonly isCashAccount = computed<boolean>(() => {
+    return this.account().account.type === AccountType.Cash;
   });
 }
 

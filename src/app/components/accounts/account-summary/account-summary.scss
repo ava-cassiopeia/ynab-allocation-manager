@@ -17,8 +17,12 @@
   text-align: left;
   transition: color 200ms ease;
 
-  &:hover {
+  &:not(.no-click):hover {
     color: var(--theme-primary-color);
+  }
+
+  &.no-click {
+    cursor: initial;
   }
 }
 
