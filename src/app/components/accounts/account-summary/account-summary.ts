@@ -1,3 +1,4 @@
+import {AccountType} from 'ynab';
 import {Component, input, computed, inject, booleanAttribute} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -48,9 +49,19 @@ export class AccountSummary {
     }
   });
 
+  /**
+   * Only allow the user to edit metadata if the account isn't a cash account.
+   * A cash account definitionally shouldn't have metadata.
+   */
+  protected readonly allowMetadata = computed<boolean>(() => {
+    return this.account().account.type !== AccountType.Cash;
+  });
+
   private readonly matDialog = inject(MatDialog);
 
   protected showMetadataDialog() {
+    if (!this.allowMetadata()) return;
+
     this.matDialog.open(AccountMetadataDialog, {
       data: {
         metadata: this.account().metadata,
