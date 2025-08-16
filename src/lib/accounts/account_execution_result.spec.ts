@@ -94,9 +94,9 @@ function cat(id: string, balance: number): Category {
 }
 
 function single(categoryId: string, accountId: string): SingleAllocation {
-  return new SingleAllocation("fake_budget", categoryId, accountId);
+  return new SingleAllocation("fake_id", "fake_budget", categoryId, accountId);
 }
 
 function absoluteSplit(categoryId: string, entries: AbsoluteSplitEntry[], defaultCategoryId: string): AbsoluteSplitAllocation {
-  return new AbsoluteSplitAllocation("fake_budget", categoryId, defaultCategoryId, entries);
+  return new AbsoluteSplitAllocation("fake_id", "fake_budget", categoryId, defaultCategoryId, entries);
 }

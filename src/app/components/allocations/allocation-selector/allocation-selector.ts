@@ -134,7 +134,7 @@ export class AllocationSelector {
     const budget = this.ynabStorage.selectedBudget();
     if (budget === null) return;
 
-    const newAllocation = new SingleAllocation(budget.id, this.category().id, account.id);
+    const newAllocation = new SingleAllocation(null, budget.id, this.category().id, account.id);
     await this.firestoreStorage.upsertAllocation(newAllocation);
     this.dropdownButton.close();
   }
@@ -151,6 +151,7 @@ export class AllocationSelector {
     if (!defaultAccount) return;
 
     const allocation = new AbsoluteSplitAllocation(
+        null,
         budget.id,
         this.category().id,
         defaultAccount.id,

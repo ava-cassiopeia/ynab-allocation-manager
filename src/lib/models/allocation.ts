@@ -4,18 +4,24 @@
  */
 export abstract class Allocation {
   constructor(
+      readonly id: string | null,
       readonly budgetId: string,
       readonly categoryId: string) {}
 
   abstract toSchema(userId: string): AllocationSchema;
 
-  static fromSchema(schema: LegacyAllocationSchema): Allocation {
+  static fromSchema(id: string, schema: LegacyAllocationSchema): Allocation {
     switch (schema.type) {
       case undefined:
       case AllocationType.SINGLE:
-        return new SingleAllocation(schema.budgetId, schema.categoryId, schema.accountId);
+        return new SingleAllocation(
+            id,
+            schema.budgetId,
+            schema.categoryId,
+            schema.accountId);
       case AllocationType.ABSOLUTE_SPLIT:
         return new AbsoluteSplitAllocation(
+            id,
             schema.budgetId,
             schema.categoryId,
             schema.defaultAccountId,
@@ -29,10 +35,11 @@ export abstract class Allocation {
  */
 export class SingleAllocation extends Allocation {
   constructor(
+      id: string | null,
       budgetId: string,
       categoryId: string,
       readonly accountId: string) {
-    super(budgetId, categoryId);
+    super(id, budgetId, categoryId);
   }
 
   /**
@@ -52,11 +59,12 @@ export class SingleAllocation extends Allocation {
 
 export class AbsoluteSplitAllocation extends Allocation {
   constructor(
+      id: string | null,
       budgetId: string,
       categoryId: string,
       readonly defaultAccountId: string,
       readonly splits: AbsoluteSplitEntry[]) {
-    super(budgetId, categoryId);
+    super(id, budgetId, categoryId);
   }
 
   override toSchema(userId: string): AllocationSchema {
