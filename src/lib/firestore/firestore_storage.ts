@@ -195,7 +195,7 @@ export class FirestoreStorage {
     this.allocationsUnsubscribe = onSnapshot(allocationsQuery, (querySnapshot) => {
       const allocations: Allocation[] = [];
       querySnapshot.forEach((doc) => {
-        allocations.push(Allocation.fromSchema(doc.data() as any));
+        allocations.push(Allocation.fromSchema(doc.id, doc.data() as any));
       });
       this.allocations.set(allocations);
     });
