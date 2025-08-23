@@ -63,6 +63,7 @@ function account(name: string, interestRate: number): AccountAllocation {
   return {
     account: { name } as Account, // thin fake
     metadata: new AccountMetadata(
+      null,
       'fake_account_id',
       'fake_budget_id',
       interestRate,

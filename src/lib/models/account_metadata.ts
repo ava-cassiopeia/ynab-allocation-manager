@@ -3,6 +3,7 @@
  */
 export class AccountMetadata {
   constructor(
+    readonly id: string | null,
     readonly accountId: string,
     readonly budgetId: string,
     readonly interestRate: number,
@@ -29,6 +30,7 @@ export class AccountMetadata {
 
   reconcile(date = new Date()): AccountMetadata {
     return new AccountMetadata(
+      this.id,
       this.accountId,
       this.budgetId,
       this.interestRate,
@@ -38,8 +40,9 @@ export class AccountMetadata {
     );
   }
 
-  static fromSchema(schema: AccountMetadataSchema): AccountMetadata {
+  static fromSchema(id: string, schema: AccountMetadataSchema): AccountMetadata {
     return new AccountMetadata(
+      id,
       schema.accountId,
       schema.budgetId,
       schema.interestRate,

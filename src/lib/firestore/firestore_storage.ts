@@ -260,7 +260,7 @@ export class FirestoreStorage {
     this.accountUnsubscribe = onSnapshot(accountsQuery, (querySnapshot) => {
       const accounts = new Map<AccountId, AccountMetadata>();
       querySnapshot.forEach((doc) => {
-        const account = AccountMetadata.fromSchema(doc.data() as any);
+        const account = AccountMetadata.fromSchema(doc.id, doc.data() as any);
         accounts.set(account.accountId, account);
       });
       this.accountMetadata.set(accounts);

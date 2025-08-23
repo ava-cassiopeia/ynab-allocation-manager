@@ -61,6 +61,7 @@ export class AccountMetadataDialog implements OnInit {
     const newMinimumBalance = toMillis(this.minimumBalanceControl.value);
 
     const newMetadata = new AccountMetadata(
+        /* id= */ null,
         this.data.account.id,
         currentBudget.id,
         newInterestRate === 0 ? newInterestRate : (newInterestRate / 100.0),
