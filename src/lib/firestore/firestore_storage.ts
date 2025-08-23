@@ -246,6 +246,35 @@ export class FirestoreStorage {
     return {used, unused};
   }
 
+  private async cullUnusedAccountMetadata(unused: AccountMetadata[]): Promise<void> {
+    const batch = writeBatch(db);
+
+    for (const metadata of unused) {
+      if (metadata.id === null) continue;
+
+      batch.delete(doc(db, "accounts", metadata.id));
+    }
+
+    await batch.commit();
+  }
+
+  private filterUnusedAccountMetadata(metadataList: AccountMetadata[]): FilteredAccountMetadata {
+    const used: AccountMetadata[] = [];
+    const unused: AccountMetadata[] = [];
+
+    for (const metadata of metadataList) {
+      const accountExists = this.ynabStorage.findAccount(metadata.accountId);
+
+      if (accountExists) {
+        used.push(metadata);
+      } else {
+        unused.push(metadata);
+      }
+    }
+
+    return {used, unused};
+  }
+
   private listenForAccountUpdates(forUser: User, forBudget: BudgetSummary) {
     if (this.accountUnsubscribe !== null) {
       this.accountUnsubscribe();
@@ -263,7 +292,14 @@ export class FirestoreStorage {
         const account = AccountMetadata.fromSchema(doc.id, doc.data() as any);
         accounts.set(account.accountId, account);
       });
-      this.accountMetadata.set(accounts);
+
+      const {used, unused} = this.filterUnusedAccountMetadata([...accounts.values()]);
+      this.cullUnusedAccountMetadata(unused);
+
+      // TODO: Encapsulate this logic more.
+      const output = new Map<AccountId, AccountMetadata>();
+      used.forEach((u) => output.set(u.accountId, u));
+      this.accountMetadata.set(output);
     });
   }
 
@@ -297,7 +333,13 @@ export class FirestoreStorage {
 }
 
 type AccountId = string;
+
 interface FilteredAllocations {
   readonly used: Allocation[];
   readonly unused: Allocation[];
+}
+
+interface FilteredAccountMetadata {
+  readonly used: AccountMetadata[];
+  readonly unused: AccountMetadata[];
 }
