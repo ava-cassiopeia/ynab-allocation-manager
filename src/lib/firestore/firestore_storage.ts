@@ -4,7 +4,7 @@ import {Unsubscribe, onSnapshot, query, collection, where, addDoc, getDocs, upda
 import {BudgetSummary, Category} from 'ynab';
 
 import {AccountMetadata} from '../models/account_metadata';
-import {Allocation} from '../models/allocation';
+import {AbsoluteSplitAllocation, Allocation, SingleAllocation} from '../models/allocation';
 import {AuthStorage} from '../firebase/auth_storage';
 import {SettingsStorage} from '../firebase/settings_storage';
 import {UserMetadata} from '../models/user_metadata';
@@ -58,9 +58,7 @@ export class FirestoreStorage {
         this.ynabStorage.apiKey.set(metadata.lastToken.access_token);
       }
     });
-
   }
-
 
   /**
    * We never really want there to be multiple allocations per category (maybe
@@ -197,8 +195,55 @@ export class FirestoreStorage {
       querySnapshot.forEach((doc) => {
         allocations.push(Allocation.fromSchema(doc.id, doc.data() as any));
       });
-      this.allocations.set(allocations);
+
+      const {unused, used} = this.filterUnusedAllocations(allocations);
+      // Don't await this method, it can happen in the background.
+      this.cullUnusedAllocations(unused);
+
+      this.allocations.set(used);
     });
+  }
+
+  private async cullUnusedAllocations(unused: Allocation[]): Promise<void> {
+    const batch = writeBatch(db);
+
+    for (const alloc of unused) {
+      if (alloc.id === null) continue;
+
+      batch.delete(doc(db, "allocations", alloc.id));
+    }
+
+    await batch.commit();
+  }
+
+  /**
+   * Sorts all of the provided allocations by whether they are used or not.
+   * Each allocation is compared against the current list of accounts in YNAB
+   * to determine whether it is used.
+   */
+  private filterUnusedAllocations(allocations: Allocation[]): FilteredAllocations {
+    const used: Allocation[] = [];
+    const unused: Allocation[] = [];
+
+    for (const allocation of allocations) {
+      const accountIds: string[] = [];
+      if (allocation instanceof SingleAllocation) {
+        accountIds.push(allocation.accountId);
+      } else if (allocation instanceof AbsoluteSplitAllocation) {
+        accountIds.push(allocation.defaultAccountId);
+        accountIds.push(...allocation.splits.map((s) => s.accountId));
+      }
+
+      const matches = accountIds.filter((id) => !!this.ynabStorage.findAccount(id));
+
+      if (matches.length > 0) {
+        used.push(allocation);
+      } else {
+        unused.push(allocation);
+      }
+    }
+
+    return {used, unused};
   }
 
   private listenForAccountUpdates(forUser: User, forBudget: BudgetSummary) {
@@ -252,3 +297,7 @@ export class FirestoreStorage {
 }
 
 type AccountId = string;
+interface FilteredAllocations {
+  readonly used: Allocation[];
+  readonly unused: Allocation[];
+}
