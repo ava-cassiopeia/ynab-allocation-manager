@@ -7,6 +7,7 @@ describe('AccountMetadata', () => {
   describe('.toSchema()', () => {
     it('outputs equivalent schema', () => {
       const accountMetadata = new AccountMetadata(
+        null,
         'fake_account_id',
         'fake_budget_id',
         0.05,
@@ -38,8 +39,9 @@ describe('AccountMetadata', () => {
         minimumBalanceMillis: 50_000,
         lastReconciled: 100_000,
       };
-      const accountMetadata = AccountMetadata.fromSchema(schema);
+      const accountMetadata = AccountMetadata.fromSchema('fake_id', schema);
 
+      expect(accountMetadata.id).toEqual('fake_id');
       expect(accountMetadata.accountId).toEqual('fake_account_id');
       expect(accountMetadata.budgetId).toEqual('fake_budget_id');
       expect(accountMetadata.interestRate).toEqual(0.05);

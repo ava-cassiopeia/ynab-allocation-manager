@@ -53,6 +53,7 @@ describe('InterestWarningButton', () => {
 });
 
 const EMPTY_ACCOUNT_METADATA = new AccountMetadata(
+  null,
   'test-account',
   'test-budget',
   0,
@@ -88,6 +89,7 @@ const EMPTY_ACCOUNT_ALLOCATION: AccountAllocation = {
 };
 
 const NOT_ENOUGH_FUNDS_ACCOUNT_METADATA = new AccountMetadata(
+  null,
   'test-account',
   'test-budget',
   0.02,
