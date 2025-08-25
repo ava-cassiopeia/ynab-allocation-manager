@@ -222,6 +222,15 @@ export class FirestoreStorage {
    * to determine whether it is used.
    */
   private filterUnusedAllocations(allocations: Allocation[]): FilteredAllocations {
+    // Treat all allocations as valid if we don't have a list of accounts. This
+    // most likely is a transient state while we fetch accounts from YNAB.
+    if (this.ynabStorage.accounts.value().length < 1) {
+      return {
+        used: allocations,
+        unused: [],
+      };
+    }
+
     const used: Allocation[] = [];
     const unused: Allocation[] = [];
 
@@ -259,6 +268,15 @@ export class FirestoreStorage {
   }
 
   private filterUnusedAccountMetadata(metadataList: AccountMetadata[]): FilteredAccountMetadata {
+    // Treat all allocations as valid if we don't have a list of accounts. This
+    // most likely is a transient state while we fetch accounts from YNAB.
+    if (this.ynabStorage.accounts.value().length < 1) {
+      return {
+        used: metadataList,
+        unused: [],
+      };
+    }
+
     const used: AccountMetadata[] = [];
     const unused: AccountMetadata[] = [];
 
