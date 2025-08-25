@@ -9,6 +9,8 @@
     "test:ng": "firebase emulators:exec 'ng test --browsers ChromeHeadless --watch false'",
     "test:fn": "firebase emulators:exec 'npm run --prefix functions test'",
     "test": "npm run test:ng && npm run test:fn",
+    "test:e2e": "npm run build && firebase emulators:exec 'playwright test'",
+    "test:e2e:update": "firebase emulators:exec 'playwright test --update-snapshots'",
     "emulate": "npm --prefix functions run build && dotenv -e .env.dev -- firebase emulators:start"
   },
   "private": true,
@@ -31,6 +33,7 @@
     "@angular/cli": "^20.0.1",
     "@angular/compiler-cli": "^20.0.0",
     "@dotenvx/dotenvx": "^1.44.2",
+    "@playwright/test": "^1.55.0",
     "@types/jasmine": "~5.1.0",
     "dotenv-cli": "^8.0.0",
     "jasmine-core": "~5.7.0",
@@ -39,6 +42,7 @@
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
+    "playwright": "^1.55.0",
     "typescript": "~5.8.2"
   }
 }
