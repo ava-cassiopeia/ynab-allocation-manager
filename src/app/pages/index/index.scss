@@ -127,8 +127,12 @@
   }
 
   .links {
-    font-size: smaller;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     text-align: center;
+    gap: 8px;
+    font-size: smaller;
     white-space: nowrap;
   }
 
