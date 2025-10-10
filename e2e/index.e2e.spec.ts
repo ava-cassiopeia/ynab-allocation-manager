@@ -1,6 +1,6 @@
 import {test} from "@playwright/test";
 
-import {takeScreenshot} from "../../testing/screenshot";
+import {takeScreenshot} from "./common/screenshot";
 
 test.describe("IndexPage", () => {
   test("should match screenshot", async ({page}) => {

@@ -1,7 +1,8 @@
 import { defineConfig, devices } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './src',
+  testDir: './e2e',
+  snapshotPathTemplate: '{testDir}/{testFilePath}-snapshots/{arg}-{projectName}{ext}',
   testMatch: '**/*.e2e.spec.ts',
   timeout: 2 * 60 * 1000,
   /* Run tests in files in parallel */
@@ -37,7 +38,7 @@ export default defineConfig({
   webServer: {
     command: 'echo "Nothing."',
     url: 'http://127.0.0.1:5002',
-    reuseExistingServer: !process.env.CI,
+    reuseExistingServer: true,
     stdout: 'pipe',
     timeout: 120 * 1000,
   },
