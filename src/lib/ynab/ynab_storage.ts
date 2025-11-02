@@ -177,6 +177,7 @@ export class YnabStorage {
   });
 
   readonly status = computed<YnabStorageStatus>(() => {
+    if (this.budgets.isLoading()) return YnabStorageStatus.LOADING_BUDGET_LIST;
     if (this.selectedBudget() === null) return YnabStorageStatus.NO_BUDGET_SELECTED;
 
     if (this.accounts.isLoading() || this.categories.isLoading() || this.latestCategories.isLoading()) {
@@ -261,9 +262,10 @@ export class YnabStorage {
 }
 
 export enum YnabStorageStatus {
-  NO_BUDGET_SELECTED = 1,
-  LOADING_BUDGET_DETAILS = 2,
-  READY = 3,
+  LOADING_BUDGET_LIST = 1,
+  NO_BUDGET_SELECTED,
+  LOADING_BUDGET_DETAILS,
+  READY,
 }
 
 interface SimpleCategoryGroup {

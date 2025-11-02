@@ -48,10 +48,11 @@ export class AppPage {
 
   constructor(private readonly el: ElementRef) {
     effect(() => {
-      if (this.ynabStorage.status() === YnabStorageStatus.READY) {
-        this.clearLoading();
-      } else if (this.ynabStorage.status() === YnabStorageStatus.LOADING_BUDGET_DETAILS) {
+      const status = this.ynabStorage.status();
+      if (status === YnabStorageStatus.LOADING_BUDGET_DETAILS || status === YnabStorageStatus.LOADING_BUDGET_LIST) {
         this.setLoading();
+      } else {
+        this.clearLoading();
       }
     });
   }
