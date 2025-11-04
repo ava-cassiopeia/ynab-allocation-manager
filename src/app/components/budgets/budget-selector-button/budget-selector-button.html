@@ -5,6 +5,8 @@
     icon="keyboard_arrow_down">
   @if (ynabStorage.selectedBudget() !== null) {
     <span label>{{ ynabStorage.selectedBudget()!.name }}</span>
+  } @else if (isLoading()) {
+    <i label>Loading...</i>
   } @else {
     <i label>Select a budget</i>
   }

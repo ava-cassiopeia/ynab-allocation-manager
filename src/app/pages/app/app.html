@@ -8,7 +8,7 @@
   </section>
 
   <div class="control-panel">
-    <ya-budget-selector-button (newBudget)="selectNewBudget($event)" />
+    <ya-budget-selector-button [isLoading]="loading()" (newBudget)="selectNewBudget($event)" />
 
     <button class="ya-button site-theme" (click)="ynabStorage.refresh()">
       <mat-icon inline aria-hidden="true">refresh</mat-icon>
@@ -29,9 +29,12 @@
   <main class="main-content" [class.show-accounts]="showAccounts()">
     <div #accountSidebar
         class="account-sidebar card"
-        [class.loading]="loading()">
+        [class]="contentClass()">
       <div class="loading-overlay">
         <p><ya-loading-icon /> Loading...</p>
+      </div>
+      <div class="no-budget-overlay">
+        <p>Select a budget to get started!</p>
       </div>
 
       <div class="header">
@@ -47,9 +50,12 @@
     </div>
 
     <div class="categories card"
-        [class.loading]="loading()">
+        [class]="contentClass()">
       <div class="loading-overlay">
         <p><ya-loading-icon /> Loading...</p>
+      </div>
+      <div class="no-budget-overlay">
+        <p>Select a budget to get started!</p>
       </div>
 
       <div class="header">
