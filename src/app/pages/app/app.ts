@@ -1,5 +1,5 @@
 import {BudgetSummary} from 'ynab';
-import {Component, inject, ElementRef, signal, effect} from '@angular/core';
+import {Component, inject, ElementRef, signal, effect, computed} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 
 import {AccountData} from '../../../lib/accounts/account_data';
@@ -45,6 +45,17 @@ export class AppPage {
   // Only relevant on mobile screens
   protected readonly showAccounts = signal<boolean>(false);
   protected readonly YnabStorageStatus = YnabStorageStatus;
+
+  protected readonly budgetIsSelected = computed<boolean>(() => {
+    return this.ynabStorage.status() === YnabStorageStatus.READY && this.ynabStorage.selectedBudget() !== null;
+  });
+
+  protected readonly contentClass = computed<string | null>(() => {
+    if (this.loading()) return 'loading';
+    if (!this.budgetIsSelected()) return 'no-budget';
+
+    return null;
+  });
 
   constructor(private readonly el: ElementRef) {
     effect(() => {

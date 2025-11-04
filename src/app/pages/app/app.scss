@@ -114,7 +114,8 @@ $sideBySideWidth: 850px;
   display: flex;
   flex-direction: column;
 
-  > .loading-overlay {
+  > .loading-overlay,
+  > .no-budget-overlay {
     position: absolute;
     z-index: 20;
     top: 0;
@@ -139,6 +140,13 @@ $sideBySideWidth: 850px;
 
   &.loading {
     > .loading-overlay {
+      opacity: 1;
+      pointer-events: all;
+    }
+  }
+
+  &.no-budget {
+    > .no-budget-overlay {
       opacity: 1;
       pointer-events: all;
     }
