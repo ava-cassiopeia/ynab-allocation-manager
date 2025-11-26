@@ -1,6 +1,6 @@
 {
   "name": "ynab-allocation-manager",
-  "version": "0.15.4",
+  "version": "0.15.5",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
