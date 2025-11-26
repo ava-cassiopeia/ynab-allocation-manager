@@ -26,7 +26,11 @@ jobs:
       - name: Build project
         run: npm run build && npm --prefix functions run build
 
+      - name: Get version
+        id: get_version
+        run: echo "version=$(node -p "require('./package.json').version")" >> $GITHUB_OUTPUT
+
       - name: Deploy to Firebase
-        run: firebase deploy --token "$FIREBASE_TOKEN"
+        run: firebase deploy --token "$FIREBASE_TOKEN" --message "Version ${{ steps.get_version.outputs.version }}"
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
