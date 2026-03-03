@@ -11,9 +11,11 @@ export class YnabAuthManager {
   private readonly redirectUri: string;
 
   constructor() {
-    const isLocalhost = window.location.hostname === "localhost";
+    const isLocalhost = window.location.hostname === "localhost" ||
+                        window.location.hostname === "127.0.0.1";
+
     if (isLocalhost) {
-      this.redirectUri = "http://localhost:5002/auth";
+      this.redirectUri = "http://127.0.0.1:5002/auth";
     } else {
       this.redirectUri = "https://yam.ynab.rocks/auth";
     }
