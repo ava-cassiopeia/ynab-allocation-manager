@@ -1,11 +1,17 @@
-import {Injectable, signal} from "@angular/core";
-import {browserSessionPersistence, onAuthStateChanged, setPersistence, signInWithCustomToken, User} from "firebase/auth";
-import {doc, getDoc} from "firebase/firestore";
+import {Injectable, signal} from '@angular/core';
+import {
+  browserSessionPersistence,
+  onAuthStateChanged,
+  setPersistence,
+  signInWithCustomToken,
+  User,
+} from 'firebase/auth';
+import {doc, getDoc} from 'firebase/firestore';
 
-import {auth, db} from "./app";
-import {TokenSnapshot} from "../models/user_metadata";
-import {httpsCallable} from "firebase/functions";
-import {functions} from "./functions";
+import {auth, db} from './app';
+import {TokenSnapshot} from '../models/user_metadata';
+import {httpsCallable} from 'firebase/functions';
+import {functions} from './functions';
 
 const HALF_HOUR = 1000 * 60 * 30; // in milliseconds
 
@@ -31,7 +37,7 @@ export class AuthStorage {
     setPersistence(auth, browserSessionPersistence);
 
     // Listen for when the user signs in and out.
-    onAuthStateChanged(auth, async (user) => {
+    onAuthStateChanged(auth, async user => {
       try {
         await this.updateUser(user);
       } finally {
@@ -56,7 +62,7 @@ export class AuthStorage {
     // token has an expiration date, so we need to check if it is still valid.
     // If it is not, call out to the backend to refresh it so that the token
     // works in the long run.
-    const snapshot = await getDoc(doc(db, "users", user.uid));
+    const snapshot = await getDoc(doc(db, 'users', user.uid));
 
     // This is an edge case that probably will never happen, but better to cover
     // it explicitly anyway. If the user doesn't have metadata, we have no YNAB

@@ -1,8 +1,15 @@
-import {Category} from "ynab";
-import {AbsoluteSplitAllocation, Allocation, SingleAllocation} from "../models/allocation";
+import {Category} from 'ynab';
+import {
+  AbsoluteSplitAllocation,
+  Allocation,
+  SingleAllocation,
+} from '../models/allocation';
 
 export class AccountExecutionBuilder {
-  private readonly accumulator = new Map<AccountId, AccountExecutionResultBuilder>();
+  private readonly accumulator = new Map<
+    AccountId,
+    AccountExecutionResultBuilder
+  >();
   private readonly categories = new Map<CategoryId, Category>();
 
   constructor(
@@ -24,7 +31,10 @@ export class AccountExecutionBuilder {
       } else if (allocation instanceof AbsoluteSplitAllocation) {
         let runningBalance = category.balance;
         for (const split of allocation.splits) {
-          const splitAmount = runningBalance < split.millisAmount ? runningBalance : split.millisAmount;
+          const splitAmount =
+            runningBalance < split.millisAmount
+              ? runningBalance
+              : split.millisAmount;
           runningBalance -= splitAmount;
           this.add(split.accountId, category, splitAmount);
         }
@@ -33,7 +43,7 @@ export class AccountExecutionBuilder {
 
         this.add(allocation.defaultAccountId, category, runningBalance);
       } else {
-        throw new Error("Unsupported allocation type.");
+        throw new Error('Unsupported allocation type.');
       }
     }
 

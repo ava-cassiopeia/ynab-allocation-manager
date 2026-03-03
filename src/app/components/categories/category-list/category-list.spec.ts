@@ -11,8 +11,7 @@ describe('CategoryList', () => {
     await TestBed.configureTestingModule({
       imports: [CategoryList],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(CategoryList);
     component = fixture.componentInstance;

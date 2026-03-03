@@ -17,10 +17,10 @@ describe('AuthPage', () => {
           provide: ActivatedRoute,
           useValue: {
             snapshot: {
-              queryParamMap: new Map<string, string | null>([["code", null]]),
+              queryParamMap: new Map<string, string | null>([['code', null]]),
             },
           },
-        }
+        },
       ],
     }).compileComponents();
 

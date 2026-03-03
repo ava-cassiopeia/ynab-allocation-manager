@@ -11,8 +11,7 @@ describe('LoadingIcon', () => {
     await TestBed.configureTestingModule({
       imports: [LoadingIcon],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoadingIcon);
     component = fixture.componentInstance;

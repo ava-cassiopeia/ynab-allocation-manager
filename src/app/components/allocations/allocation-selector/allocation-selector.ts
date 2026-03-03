@@ -1,9 +1,24 @@
-import {Component, inject, input, computed, ViewChild, signal, effect} from '@angular/core';
+import {
+  Component,
+  inject,
+  input,
+  computed,
+  ViewChild,
+  signal,
+  effect,
+} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {Account, Category} from 'ynab';
 
-import {AbsoluteSplitAllocation, Allocation, SingleAllocation} from '../../../../lib/models/allocation';
-import {DropdownButton, DropdownMenuItem} from '../../common/dropdown-button/dropdown-button';
+import {
+  AbsoluteSplitAllocation,
+  Allocation,
+  SingleAllocation,
+} from '../../../../lib/models/allocation';
+import {
+  DropdownButton,
+  DropdownMenuItem,
+} from '../../common/dropdown-button/dropdown-button';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
 import {SplitSelector} from '../split-selector/split-selector';
@@ -82,9 +97,11 @@ export class AllocationSelector {
     const accounts = this.ynabStorage.accounts.value();
     if (!accounts) return [];
 
-    const selectedAccount = this.splitMode() ? this.splitState.defaultAccount() : this.allocatedAccount();
+    const selectedAccount = this.splitMode()
+      ? this.splitState.defaultAccount()
+      : this.allocatedAccount();
 
-    return accounts.map((a) => ({
+    return accounts.map(a => ({
       label: a.name,
       icon: selectedAccount === a ? 'done' : 'account_balance',
       value: a,
@@ -109,7 +126,9 @@ export class AllocationSelector {
 
       if (allocation instanceof AbsoluteSplitAllocation) {
         this.splitMode.set(true);
-        const defaultAccount = this.ynabStorage.findAccount(allocation.defaultAccountId);
+        const defaultAccount = this.ynabStorage.findAccount(
+          allocation.defaultAccountId,
+        );
         if (defaultAccount) {
           this.splitState.defaultAccount.set(defaultAccount);
         }
@@ -134,13 +153,18 @@ export class AllocationSelector {
     const budget = this.ynabStorage.selectedBudget();
     if (budget === null) return;
 
-    const newAllocation = new SingleAllocation(null, budget.id, this.category().id, account.id);
+    const newAllocation = new SingleAllocation(
+      null,
+      budget.id,
+      this.category().id,
+      account.id,
+    );
     await this.firestoreStorage.upsertAllocation(newAllocation);
     this.dropdownButton.close();
   }
 
   protected toggleSplitMode() {
-    this.splitMode.update((s) => !s);
+    this.splitMode.update(s => !s);
   }
 
   protected async applySplit() {
@@ -151,11 +175,12 @@ export class AllocationSelector {
     if (!defaultAccount) return;
 
     const allocation = new AbsoluteSplitAllocation(
-        null,
-        budget.id,
-        this.category().id,
-        defaultAccount.id,
-        splits);
+      null,
+      budget.id,
+      this.category().id,
+      defaultAccount.id,
+      splits,
+    );
     await this.firestoreStorage.upsertAllocation(allocation);
 
     this.dropdownButton.close();

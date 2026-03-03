@@ -8,7 +8,7 @@ import {SettingsStorage} from '../../../../lib/firebase/settings_storage';
 @Component({
   selector: 'ya-budget-selector',
   templateUrl: './budget-selector.html',
-  styleUrl: './budget-selector.scss'
+  styleUrl: './budget-selector.scss',
 })
 export class BudgetSelector {
   protected readonly firestoreStorage = inject(FirestoreStorage);

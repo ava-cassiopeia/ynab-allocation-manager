@@ -11,8 +11,7 @@ describe('BudgetSelectorButton', () => {
     await TestBed.configureTestingModule({
       imports: [BudgetSelectorButton],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BudgetSelectorButton);
     component = fixture.componentInstance;

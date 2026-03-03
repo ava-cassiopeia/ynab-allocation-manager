@@ -4,7 +4,11 @@ import {MatIcon} from '@angular/material/icon';
 import {Account} from 'ynab';
 
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
-import {AbsoluteSplitAllocation, AbsoluteSplitEntry, Allocation} from '../../../../lib/models/allocation';
+import {
+  AbsoluteSplitAllocation,
+  AbsoluteSplitEntry,
+  Allocation,
+} from '../../../../lib/models/allocation';
 
 @Component({
   selector: 'ya-split-selector',
@@ -45,7 +49,7 @@ export class SplitSelector {
   }
 
   getEntries(): AbsoluteSplitEntry[] {
-    return this.getSplits().map((s) => ({
+    return this.getSplits().map(s => ({
       accountId: s.account.id,
       millisAmount: s.amount * 1000.0,
     }));
@@ -56,16 +60,13 @@ export class SplitSelector {
     event.stopPropagation();
 
     const splits = this.splits();
-    const newSplits = [
-      ...splits.slice(0, index),
-      ...splits.slice(index + 1),
-    ];
+    const newSplits = [...splits.slice(0, index), ...splits.slice(index + 1)];
 
     this.splits.set(newSplits);
   }
 
   protected addSplit() {
-    this.splits.update((s) => [...s, this.mkSplit()]);
+    this.splits.update(s => [...s, this.mkSplit()]);
   }
 
   private mkSplit(): ConfiguredSplit {

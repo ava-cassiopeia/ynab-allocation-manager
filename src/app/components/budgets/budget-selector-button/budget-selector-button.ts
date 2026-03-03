@@ -1,8 +1,19 @@
 import {BudgetSummary} from 'ynab';
-import {Component, inject, ViewChild, computed, Output, EventEmitter, input} from '@angular/core';
+import {
+  Component,
+  inject,
+  ViewChild,
+  computed,
+  Output,
+  EventEmitter,
+  input,
+} from '@angular/core';
 
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
-import {DropdownButton, DropdownMenuItem} from '../../common/dropdown-button/dropdown-button';
+import {
+  DropdownButton,
+  DropdownMenuItem,
+} from '../../common/dropdown-button/dropdown-button';
 
 @Component({
   selector: 'ya-budget-selector-button',
@@ -21,20 +32,22 @@ export class BudgetSelectorButton {
   @ViewChild(DropdownButton)
   private readonly dropdownButton!: DropdownButton<BudgetSummary>;
 
-  protected readonly menuItems = computed<DropdownMenuItem<BudgetSummary>[]>(() => {
-    const budgets = this.ynabStorage.budgets.value();
-    const selectedBudget = this.ynabStorage.selectedBudget();
-    if (!budgets) return [];
+  protected readonly menuItems = computed<DropdownMenuItem<BudgetSummary>[]>(
+    () => {
+      const budgets = this.ynabStorage.budgets.value();
+      const selectedBudget = this.ynabStorage.selectedBudget();
+      if (!budgets) return [];
 
-    return budgets.map((b) => ({
-      label: b.name,
-      icon: selectedBudget === b ? 'done' : 'account_balance_wallet',
-      value: b,
-      action: (value: BudgetSummary) => {
-        this.selectBudget(value);
-      },
-    }));
-  });
+      return budgets.map(b => ({
+        label: b.name,
+        icon: selectedBudget === b ? 'done' : 'account_balance_wallet',
+        value: b,
+        action: (value: BudgetSummary) => {
+          this.selectBudget(value);
+        },
+      }));
+    },
+  );
 
   protected selectBudget(budget: BudgetSummary) {
     this.newBudgetEvent.emit(budget);

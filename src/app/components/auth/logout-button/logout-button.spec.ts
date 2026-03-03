@@ -11,8 +11,7 @@ describe('LogoutButton', () => {
     await TestBed.configureTestingModule({
       imports: [LogoutButton],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LogoutButton);
     component = fixture.componentInstance;

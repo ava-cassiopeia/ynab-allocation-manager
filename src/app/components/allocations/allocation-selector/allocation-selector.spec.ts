@@ -11,8 +11,7 @@ describe('AllocationSelector', () => {
     await TestBed.configureTestingModule({
       imports: [AllocationSelector],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AllocationSelector);
     component = fixture.componentInstance;

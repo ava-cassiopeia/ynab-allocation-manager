@@ -1,5 +1,7 @@
 # Allocation Manager for YNAB
 
+[![Code Style: Google](https://img.shields.io/badge/code%20style-google-blueviolet.svg)](https://github.com/google/gts)
+
 **Prod:** [yam.ynab.rocks](https://yam.ynab.rocks)
 
 Allocation Manager for YNAB is an Angular webapp that helps YNAB users assign

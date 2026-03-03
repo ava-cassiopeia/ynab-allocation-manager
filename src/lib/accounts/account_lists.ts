@@ -3,7 +3,10 @@ import {AccountAllocation} from './account_data';
 /**
  * sort()-friendly comparison that sorts by interest rate and then name.
  */
-export function compareAccounts(a: AccountAllocation, b: AccountAllocation): number {
+export function compareAccounts(
+  a: AccountAllocation,
+  b: AccountAllocation,
+): number {
   let aInterest = a.metadata?.interestRate ?? null;
   let bInterest = b.metadata?.interestRate ?? null;
   if (aInterest === 0) aInterest = null;

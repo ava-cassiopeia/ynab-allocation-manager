@@ -7,7 +7,10 @@ import {db} from './app';
 import {SettingsStorage, CurrencyFormat} from './settings_storage';
 import {sleep} from '../tests/sleep';
 import {AuthStorage} from './auth_storage';
-import {FakeAuthStorage, fakeAuthStorageProvider} from '../tests/fake_auth_storage';
+import {
+  FakeAuthStorage,
+  fakeAuthStorageProvider,
+} from '../tests/fake_auth_storage';
 
 describe('SettingsStorage', () => {
   beforeEach(() => {
@@ -26,7 +29,7 @@ describe('SettingsStorage', () => {
     const uid = authStorage.currentUser()?.uid ?? null;
     if (!uid) return;
 
-    await deleteDoc(doc(db, "users", uid));
+    await deleteDoc(doc(db, 'users', uid));
   });
 
   it('should be created', () => {
@@ -47,43 +50,53 @@ describe('SettingsStorage', () => {
     const fakeAuthStorage = TestBed.inject(FakeAuthStorage);
     const uid = await fakeAuthStorage.createFakeUser();
 
-    await setDoc(doc(db, "settings", uid), {
-      selectedBudgetId: "fake_budget_id",
+    await setDoc(doc(db, 'settings', uid), {
+      selectedBudgetId: 'fake_budget_id',
     });
     await sleep(100); // wait for Firestore to update
     const settings = settingsStorage.settings();
 
-    expect(settings.selectedBudgetId).toEqual("fake_budget_id");
+    expect(settings.selectedBudgetId).toEqual('fake_budget_id');
   });
 
-  describe(".setSelectedBudget()", () => {
-    it("updates the budget in settings and in the db", async () => {
+  describe('.setSelectedBudget()', () => {
+    it('updates the budget in settings and in the db', async () => {
       const settingsStorage = TestBed.inject(SettingsStorage);
       const fakeAuthStorage = TestBed.inject(FakeAuthStorage);
       const uid = await fakeAuthStorage.createFakeUser();
 
-      await settingsStorage.setSelectedBudget({id: "fake_budget_id"} as BudgetSummary);
+      await settingsStorage.setSelectedBudget({
+        id: 'fake_budget_id',
+      } as BudgetSummary);
       await sleep(10); // wait for Firestore to update
-      const snapshot = await getDoc(doc(db, "settings", uid));
-      const dbValue = !!snapshot.data() ? snapshot.data()!['selectedBudgetId'] : null;
+      const snapshot = await getDoc(doc(db, 'settings', uid));
+      const dbValue = snapshot.data()
+        ? snapshot.data()!['selectedBudgetId']
+        : null;
 
-      expect(settingsStorage.settings().selectedBudgetId).toEqual("fake_budget_id");
-      expect(dbValue).toEqual("fake_budget_id");
+      expect(settingsStorage.settings().selectedBudgetId).toEqual(
+        'fake_budget_id',
+      );
+      expect(dbValue).toEqual('fake_budget_id');
     });
   });
 
-  describe(".setCurrencyFormat()", () => {
-    it("updates the time range in settings and in the db", async () => {
+  describe('.setCurrencyFormat()', () => {
+    it('updates the time range in settings and in the db', async () => {
       const settingsStorage = TestBed.inject(SettingsStorage);
       const fakeAuthStorage = TestBed.inject(FakeAuthStorage);
       const uid = await fakeAuthStorage.createFakeUser();
 
       await settingsStorage.setCurrencyFormat(CurrencyFormat.FINANCE);
       await sleep(10); // wait for Firestore to update
-      const snapshot = await getDoc(doc(db, "settings", uid));
-      const dbValue = !!snapshot.data() ? snapshot.data()!['currencyFormat'] : null;
+      const snapshot = await getDoc(doc(db, 'settings', uid));
+      const dbValue = snapshot.data()
+        ? snapshot.data()!['currencyFormat']
+        : null;
 
-      expect(settingsStorage.settings().currencyFormat).toEqual(CurrencyFormat.FINANCE);
+      expect(settingsStorage.settings().currencyFormat).toEqual(
+        CurrencyFormat.FINANCE,
+      );
       expect(dbValue).toEqual(CurrencyFormat.FINANCE);
     });
   });

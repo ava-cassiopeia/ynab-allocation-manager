@@ -11,8 +11,7 @@ describe('DropdownButton', () => {
     await TestBed.configureTestingModule({
       imports: [DropdownButton],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(DropdownButton);
     component = fixture.componentInstance;

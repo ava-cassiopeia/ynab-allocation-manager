@@ -1,8 +1,8 @@
-import {Injectable, Provider, signal} from "@angular/core";
-import {signInAnonymously, User} from "firebase/auth";
+import {Injectable, Provider, signal} from '@angular/core';
+import {signInAnonymously, User} from 'firebase/auth';
 
-import {auth} from "../firebase/app";
-import {AuthStorage} from "../firebase/auth_storage";
+import {auth} from '../firebase/app';
+import {AuthStorage} from '../firebase/auth_storage';
 
 @Injectable({providedIn: 'root'})
 export class FakeAuthStorage extends AuthStorage {

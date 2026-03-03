@@ -1,5 +1,11 @@
 import {AccountType} from 'ynab';
-import {Component, input, computed, inject, booleanAttribute} from '@angular/core';
+import {
+  Component,
+  input,
+  computed,
+  inject,
+  booleanAttribute,
+} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 
 import {AccountAllocation} from '../../../../lib/accounts/account_data';
@@ -7,7 +13,10 @@ import {AccountMetadataDialog} from '../account-metadata-dialog/account-metadata
 import {AccountStatusIndicator} from '../account-status-indicator/account-status-indicator';
 import {CurrencyCopyButton} from '../../common/currency-copy-button/currency-copy-button';
 import {Currency} from '../../common/currency/currency';
-import {DropdownButton, ButtonTheme} from '../../common/dropdown-button/dropdown-button';
+import {
+  DropdownButton,
+  ButtonTheme,
+} from '../../common/dropdown-button/dropdown-button';
 import {InterestWarningButton} from '../../interest/interest-warning-button/interest-warning-button';
 
 @Component({

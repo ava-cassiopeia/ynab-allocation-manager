@@ -2,21 +2,22 @@ import {provideZonelessChangeDetection} from '@angular/core';
 import {TestBed} from '@angular/core/testing';
 
 import {Currency} from './currency';
-import {CurrencyFormat, SettingsStorage} from '../../../../lib/firebase/settings_storage';
+import {
+  CurrencyFormat,
+  SettingsStorage,
+} from '../../../../lib/firebase/settings_storage';
 import {sleep} from '../../../../lib/tests/sleep';
-import {FakeAuthStorage, fakeAuthStorageProvider} from '../../../../lib/tests/fake_auth_storage';
+import {
+  FakeAuthStorage,
+  fakeAuthStorageProvider,
+} from '../../../../lib/tests/fake_auth_storage';
 
 describe('Currency', () => {
-
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [Currency],
-      providers: [
-        provideZonelessChangeDetection(),
-        fakeAuthStorageProvider,
-      ],
-    })
-      .compileComponents();
+      providers: [provideZonelessChangeDetection(), fakeAuthStorageProvider],
+    }).compileComponents();
   });
 
   it('should create', () => {

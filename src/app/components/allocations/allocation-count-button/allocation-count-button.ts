@@ -17,9 +17,9 @@ export class AllocationCountButton {
 
     let totalCategories = 0;
     for (const categoryGroup of categoryGroups) {
-      totalCategories += categoryGroup.categories
-          .filter((c) => !c.deleted && !c.hidden)
-          .length;
+      totalCategories += categoryGroup.categories.filter(
+        c => !c.deleted && !c.hidden,
+      ).length;
     }
 
     return {

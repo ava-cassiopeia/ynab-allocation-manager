@@ -4,9 +4,10 @@
  */
 export abstract class Allocation {
   constructor(
-      readonly id: string | null,
-      readonly budgetId: string,
-      readonly categoryId: string) {}
+    readonly id: string | null,
+    readonly budgetId: string,
+    readonly categoryId: string,
+  ) {}
 
   abstract toSchema(userId: string): AllocationSchema;
 
@@ -15,17 +16,19 @@ export abstract class Allocation {
       case undefined:
       case AllocationType.SINGLE:
         return new SingleAllocation(
-            id,
-            schema.budgetId,
-            schema.categoryId,
-            schema.accountId);
+          id,
+          schema.budgetId,
+          schema.categoryId,
+          schema.accountId,
+        );
       case AllocationType.ABSOLUTE_SPLIT:
         return new AbsoluteSplitAllocation(
-            id,
-            schema.budgetId,
-            schema.categoryId,
-            schema.defaultAccountId,
-            schema.splits);
+          id,
+          schema.budgetId,
+          schema.categoryId,
+          schema.defaultAccountId,
+          schema.splits,
+        );
     }
   }
 }
@@ -35,10 +38,11 @@ export abstract class Allocation {
  */
 export class SingleAllocation extends Allocation {
   constructor(
-      id: string | null,
-      budgetId: string,
-      categoryId: string,
-      readonly accountId: string) {
+    id: string | null,
+    budgetId: string,
+    categoryId: string,
+    readonly accountId: string,
+  ) {
     super(id, budgetId, categoryId);
   }
 
@@ -59,11 +63,12 @@ export class SingleAllocation extends Allocation {
 
 export class AbsoluteSplitAllocation extends Allocation {
   constructor(
-      id: string | null,
-      budgetId: string,
-      categoryId: string,
-      readonly defaultAccountId: string,
-      readonly splits: AbsoluteSplitEntry[]) {
+    id: string | null,
+    budgetId: string,
+    categoryId: string,
+    readonly defaultAccountId: string,
+    readonly splits: AbsoluteSplitEntry[],
+  ) {
     super(id, budgetId, categoryId);
   }
 
@@ -106,14 +111,15 @@ export type AllocationSchema = {
   readonly budgetId: string;
   readonly categoryId: string;
 } & (
-  {
-    readonly type: AllocationType.SINGLE;
-    readonly accountId: string;
-  } | {
-    readonly type: AllocationType.ABSOLUTE_SPLIT;
-    readonly splits: AbsoluteSplitEntry[];
-    readonly defaultAccountId: string;
-  }
+  | {
+      readonly type: AllocationType.SINGLE;
+      readonly accountId: string;
+    }
+  | {
+      readonly type: AllocationType.ABSOLUTE_SPLIT;
+      readonly splits: AbsoluteSplitEntry[];
+      readonly defaultAccountId: string;
+    }
 );
 
 /**
@@ -124,14 +130,15 @@ export type LegacyAllocationSchema = {
   readonly budgetId: string;
   readonly categoryId: string;
 } & (
-  {
-    readonly type?: AllocationType.SINGLE;
-    readonly accountId: string;
-  } | {
-    readonly type: AllocationType.ABSOLUTE_SPLIT;
-    readonly splits: AbsoluteSplitEntry[];
-    readonly defaultAccountId: string;
-  }
+  | {
+      readonly type?: AllocationType.SINGLE;
+      readonly accountId: string;
+    }
+  | {
+      readonly type: AllocationType.ABSOLUTE_SPLIT;
+      readonly splits: AbsoluteSplitEntry[];
+      readonly defaultAccountId: string;
+    }
 );
 
 export interface AbsoluteSplitEntry {

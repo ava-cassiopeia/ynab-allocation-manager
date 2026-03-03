@@ -11,8 +11,7 @@ describe('LoadingSillyText', () => {
     await TestBed.configureTestingModule({
       imports: [LoadingSillyText],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(LoadingSillyText);
     component = fixture.componentInstance;

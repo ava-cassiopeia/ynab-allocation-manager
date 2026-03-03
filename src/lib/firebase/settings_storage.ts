@@ -1,9 +1,9 @@
-import {computed, Injectable, resource, inject} from "@angular/core";
-import {doc, getDoc, setDoc} from "firebase/firestore";
-import {BudgetSummary} from "ynab";
+import {computed, Injectable, resource, inject} from '@angular/core';
+import {doc, getDoc, setDoc} from 'firebase/firestore';
+import {BudgetSummary} from 'ynab';
 
-import {db} from "./app";
-import {AuthStorage} from "./auth_storage";
+import {db} from './app';
+import {AuthStorage} from './auth_storage';
 
 @Injectable({providedIn: 'root'})
 export class SettingsStorage {
@@ -27,7 +27,7 @@ export class SettingsStorage {
       const {user} = params;
       if (!user) return null;
 
-      const snapshot = await getDoc(doc(db, "settings", user.uid));
+      const snapshot = await getDoc(doc(db, 'settings', user.uid));
       if (!snapshot.exists()) return null;
 
       return snapshot.data();
@@ -37,13 +37,13 @@ export class SettingsStorage {
   private readonly authStorage = inject(AuthStorage);
 
   async setSelectedBudget(budget: BudgetSummary) {
-    await this.updateSettings((settings) => {
+    await this.updateSettings(settings => {
       settings.selectedBudgetId = budget.id;
     });
   }
 
   async setCurrencyFormat(currencyFormat?: CurrencyFormat) {
-    await this.updateSettings((settings) => {
+    await this.updateSettings(settings => {
       if (!currencyFormat) {
         delete settings.currencyFormat;
         return;
@@ -64,7 +64,7 @@ export class SettingsStorage {
     const oldSettings = this.settings();
     fn(oldSettings);
 
-    await setDoc(doc(db, "settings", user.uid), oldSettings);
+    await setDoc(doc(db, 'settings', user.uid), oldSettings);
   }
 }
 

@@ -11,8 +11,7 @@ describe('ClearAllocationsButton', () => {
     await TestBed.configureTestingModule({
       imports: [ClearAllocationsButton],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(ClearAllocationsButton);
     component = fixture.componentInstance;

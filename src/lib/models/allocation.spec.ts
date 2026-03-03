@@ -1,13 +1,14 @@
-import {Allocation, AllocationType, SingleAllocation} from "./allocation";
+import {Allocation, AllocationType, SingleAllocation} from './allocation';
 
 describe('SingleAllocation', () => {
   describe('.toSchema()', () => {
     it('outputs equivalent schema', () => {
       const alloc = new SingleAllocation(
-          'fake_id',
-          'fake_budget_id',
-          'fake_category_id',
-          'fake_account_id');
+        'fake_id',
+        'fake_budget_id',
+        'fake_category_id',
+        'fake_account_id',
+      );
 
       expect(alloc.toSchema('fake_user_id')).toEqual({
         type: AllocationType.SINGLE,

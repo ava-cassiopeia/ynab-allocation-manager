@@ -1,7 +1,4 @@
-import {
-  AccountMetadata,
-  AccountMetadataSchema,
-} from './account_metadata';
+import {AccountMetadata, AccountMetadataSchema} from './account_metadata';
 
 describe('AccountMetadata', () => {
   describe('.toSchema()', () => {

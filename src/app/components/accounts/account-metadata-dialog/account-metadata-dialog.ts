@@ -1,7 +1,13 @@
 import {Account, AccountType} from 'ynab';
 import {Component, inject, OnInit, HostBinding, signal} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
-import {MAT_DIALOG_DATA, MatDialogActions, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
+import {
+  MAT_DIALOG_DATA,
+  MatDialogActions,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 import {MatIcon} from '@angular/material/icon';
 
 import {AccountMetadata} from '../../../../lib/models/account_metadata';
@@ -44,9 +50,15 @@ export class AccountMetadataDialog implements OnInit {
   ngOnInit() {
     // Populate values from the provided AccountMetadata instance, if it exists.
     if (this.data.metadata) {
-      this.interestRateControl.setValue(this.data.metadata.interestRate * 100.0);
-      this.interestThresholdControl.setValue(this.data.metadata.interestThresholdMillis / 1000.0);
-      this.minimumBalanceControl.setValue(this.data.metadata.minimumBalanceMillis / 1000.0);
+      this.interestRateControl.setValue(
+        this.data.metadata.interestRate * 100.0,
+      );
+      this.interestThresholdControl.setValue(
+        this.data.metadata.interestThresholdMillis / 1000.0,
+      );
+      this.minimumBalanceControl.setValue(
+        this.data.metadata.minimumBalanceMillis / 1000.0,
+      );
     }
 
     this.isCheckingAccount.set(this.data.account.type === AccountType.Checking);
@@ -61,13 +73,13 @@ export class AccountMetadataDialog implements OnInit {
     const newMinimumBalance = toMillis(this.minimumBalanceControl.value);
 
     const newMetadata = new AccountMetadata(
-        /* id= */ null,
-        this.data.account.id,
-        currentBudget.id,
-        newInterestRate === 0 ? newInterestRate : (newInterestRate / 100.0),
-        newInterestThreshold,
-        newMinimumBalance,
-        new Date(),
+      /* id= */ null,
+      this.data.account.id,
+      currentBudget.id,
+      newInterestRate === 0 ? newInterestRate : newInterestRate / 100.0,
+      newInterestThreshold,
+      newMinimumBalance,
+      new Date(),
     );
 
     await this.firestoreStorage.upsertAccount(newMetadata);

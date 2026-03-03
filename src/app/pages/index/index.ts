@@ -15,7 +15,9 @@ import {version} from '../../../lib/version';
 export class IndexPage {
   protected readonly auth = inject(YnabAuthManager);
   protected readonly loading = computed<boolean>(() => {
-    return !this.authStorage.checkedOnce() || this.authStorage.currentUser() !== null;
+    return (
+      !this.authStorage.checkedOnce() || this.authStorage.currentUser() !== null
+    );
   });
   // Mirror for the template
   protected readonly version = version;
@@ -29,7 +31,7 @@ export class IndexPage {
       const currentUser = this.authStorage.currentUser();
       if (currentUser === null) return;
 
-      this.router.navigate(["app"]);
+      this.router.navigate(['app']);
     });
   }
 }

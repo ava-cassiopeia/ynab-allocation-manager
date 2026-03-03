@@ -10,8 +10,7 @@ describe('RelativeTime', () => {
     await TestBed.configureTestingModule({
       imports: [RelativeTime],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(RelativeTime);
   });

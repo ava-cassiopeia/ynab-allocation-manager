@@ -1,15 +1,31 @@
 import {Injectable, signal, effect, inject} from '@angular/core';
 import {User} from 'firebase/auth';
-import {Unsubscribe, onSnapshot, query, collection, where, addDoc, getDocs, updateDoc, doc, deleteDoc, writeBatch} from 'firebase/firestore';
+import {
+  Unsubscribe,
+  onSnapshot,
+  query,
+  collection,
+  where,
+  addDoc,
+  getDocs,
+  updateDoc,
+  doc,
+  deleteDoc,
+  writeBatch,
+} from 'firebase/firestore';
 import {BudgetSummary, Category} from 'ynab';
 
 import {AccountMetadata} from '../models/account_metadata';
-import {AbsoluteSplitAllocation, Allocation, SingleAllocation} from '../models/allocation';
+import {
+  AbsoluteSplitAllocation,
+  Allocation,
+  SingleAllocation,
+} from '../models/allocation';
 import {AuthStorage} from '../firebase/auth_storage';
 import {SettingsStorage} from '../firebase/settings_storage';
 import {UserMetadata} from '../models/user_metadata';
 import {YnabStorage} from '../ynab/ynab_storage';
-import {db} from "../firebase/app";
+import {db} from '../firebase/app';
 
 @Injectable({providedIn: 'root'})
 export class FirestoreStorage {
@@ -74,9 +90,10 @@ export class FirestoreStorage {
 
     const allocationsQuery = query(
       collection(db, 'allocations'),
-      where("userId", "==", user.uid),
-      where("categoryId", "==", allocation.categoryId),
-      where("budgetId", "==", budget.id));
+      where('userId', '==', user.uid),
+      where('categoryId', '==', allocation.categoryId),
+      where('budgetId', '==', budget.id),
+    );
     const querySnapshot = await getDocs(allocationsQuery);
 
     const existingAllocation = querySnapshot.docs[0] ?? null;
@@ -84,7 +101,8 @@ export class FirestoreStorage {
     if (existingAllocation === null) {
       await addDoc(
         collection(db, 'allocations'),
-        allocation.toSchema(this.assertUser().uid));
+        allocation.toSchema(this.assertUser().uid),
+      );
     } else {
       updateDoc(existingAllocation.ref, {
         ...allocation.toSchema(user.uid),
@@ -105,9 +123,10 @@ export class FirestoreStorage {
 
     const accountsQuery = query(
       collection(db, 'accounts'),
-      where("userId", "==", user.uid),
-      where("budgetId", "==", budget.id),
-      where("accountId", "==", account.accountId));
+      where('userId', '==', user.uid),
+      where('budgetId', '==', budget.id),
+      where('accountId', '==', account.accountId),
+    );
     const querySnapshot = await getDocs(accountsQuery);
 
     const existingAccount = querySnapshot.docs[0] ?? null;
@@ -115,7 +134,8 @@ export class FirestoreStorage {
     if (existingAccount === null) {
       await addDoc(
         collection(db, 'accounts'),
-        account.toSchema(this.assertUser().uid));
+        account.toSchema(this.assertUser().uid),
+      );
     } else {
       updateDoc(existingAccount.ref, {
         ...account.toSchema(user.uid),
@@ -132,13 +152,14 @@ export class FirestoreStorage {
 
     const allocationsQuery = query(
       collection(db, 'allocations'),
-      where("userId", "==", user.uid),
-      where("categoryId", "==", category.id),
-      where("budgetId", "==", budget.id));
+      where('userId', '==', user.uid),
+      where('categoryId', '==', category.id),
+      where('budgetId', '==', budget.id),
+    );
     const querySnapshot = await getDocs(allocationsQuery);
 
     const promises: Promise<void>[] = [];
-    querySnapshot.forEach((doc) => {
+    querySnapshot.forEach(doc => {
       promises.push(deleteDoc(doc.ref));
     });
     await Promise.all(promises);
@@ -151,16 +172,16 @@ export class FirestoreStorage {
     const budget = this.ynabStorage.selectedBudget();
     if (budget === null) return;
 
-
     const deleteQuery = query(
       collection(db, 'allocations'),
-      where("userId", "==", user.uid),
-      where("budgetId", "==", budget.id));
+      where('userId', '==', user.uid),
+      where('budgetId', '==', budget.id),
+    );
     const snapshot = await getDocs(deleteQuery);
     if (snapshot.empty) return;
 
     const batch = writeBatch(db);
-    snapshot.docs.forEach((doc) => {
+    snapshot.docs.forEach(doc => {
       batch.delete(doc.ref);
     });
     await batch.commit();
@@ -188,20 +209,24 @@ export class FirestoreStorage {
     // in the database.
     const allocationsQuery = query(
       collection(db, 'allocations'),
-      where("userId", "==", forUser.uid),
-      where("budgetId", "==", forBudget.id));
-    this.allocationsUnsubscribe = onSnapshot(allocationsQuery, (querySnapshot) => {
-      const allocations: Allocation[] = [];
-      querySnapshot.forEach((doc) => {
-        allocations.push(Allocation.fromSchema(doc.id, doc.data() as any));
-      });
+      where('userId', '==', forUser.uid),
+      where('budgetId', '==', forBudget.id),
+    );
+    this.allocationsUnsubscribe = onSnapshot(
+      allocationsQuery,
+      querySnapshot => {
+        const allocations: Allocation[] = [];
+        querySnapshot.forEach(doc => {
+          allocations.push(Allocation.fromSchema(doc.id, doc.data() as any));
+        });
 
-      const {unused, used} = this.filterUnusedAllocations(allocations);
-      // Don't await this method, it can happen in the background.
-      this.cullUnusedAllocations(unused);
+        const {unused, used} = this.filterUnusedAllocations(allocations);
+        // Don't await this method, it can happen in the background.
+        this.cullUnusedAllocations(unused);
 
-      this.allocations.set(used);
-    });
+        this.allocations.set(used);
+      },
+    );
   }
 
   private async cullUnusedAllocations(unused: Allocation[]): Promise<void> {
@@ -210,7 +235,7 @@ export class FirestoreStorage {
     for (const alloc of unused) {
       if (alloc.id === null) continue;
 
-      batch.delete(doc(db, "allocations", alloc.id));
+      batch.delete(doc(db, 'allocations', alloc.id));
     }
 
     await batch.commit();
@@ -221,7 +246,9 @@ export class FirestoreStorage {
    * Each allocation is compared against the current list of accounts in YNAB
    * to determine whether it is used.
    */
-  private filterUnusedAllocations(allocations: Allocation[]): FilteredAllocations {
+  private filterUnusedAllocations(
+    allocations: Allocation[],
+  ): FilteredAllocations {
     // Treat all allocations as valid if we don't have a list of accounts. This
     // most likely is a transient state while we fetch accounts from YNAB.
     if (this.ynabStorage.accounts.value().length < 1) {
@@ -240,10 +267,12 @@ export class FirestoreStorage {
         accountIds.push(allocation.accountId);
       } else if (allocation instanceof AbsoluteSplitAllocation) {
         accountIds.push(allocation.defaultAccountId);
-        accountIds.push(...allocation.splits.map((s) => s.accountId));
+        accountIds.push(...allocation.splits.map(s => s.accountId));
       }
 
-      const matches = accountIds.filter((id) => !!this.ynabStorage.findAccount(id));
+      const matches = accountIds.filter(
+        id => !!this.ynabStorage.findAccount(id),
+      );
 
       if (matches.length > 0) {
         used.push(allocation);
@@ -255,19 +284,23 @@ export class FirestoreStorage {
     return {used, unused};
   }
 
-  private async cullUnusedAccountMetadata(unused: AccountMetadata[]): Promise<void> {
+  private async cullUnusedAccountMetadata(
+    unused: AccountMetadata[],
+  ): Promise<void> {
     const batch = writeBatch(db);
 
     for (const metadata of unused) {
       if (metadata.id === null) continue;
 
-      batch.delete(doc(db, "accounts", metadata.id));
+      batch.delete(doc(db, 'accounts', metadata.id));
     }
 
     await batch.commit();
   }
 
-  private filterUnusedAccountMetadata(metadataList: AccountMetadata[]): FilteredAccountMetadata {
+  private filterUnusedAccountMetadata(
+    metadataList: AccountMetadata[],
+  ): FilteredAccountMetadata {
     // Treat all allocations as valid if we don't have a list of accounts. This
     // most likely is a transient state while we fetch accounts from YNAB.
     if (this.ynabStorage.accounts.value().length < 1) {
@@ -302,21 +335,24 @@ export class FirestoreStorage {
     // change in the database.
     const accountsQuery = query(
       collection(db, 'accounts'),
-      where("userId", "==", forUser.uid),
-      where("budgetId", "==", forBudget.id));
-    this.accountUnsubscribe = onSnapshot(accountsQuery, (querySnapshot) => {
+      where('userId', '==', forUser.uid),
+      where('budgetId', '==', forBudget.id),
+    );
+    this.accountUnsubscribe = onSnapshot(accountsQuery, querySnapshot => {
       const accounts = new Map<AccountId, AccountMetadata>();
-      querySnapshot.forEach((doc) => {
+      querySnapshot.forEach(doc => {
         const account = AccountMetadata.fromSchema(doc.id, doc.data() as any);
         accounts.set(account.accountId, account);
       });
 
-      const {used, unused} = this.filterUnusedAccountMetadata([...accounts.values()]);
+      const {used, unused} = this.filterUnusedAccountMetadata([
+        ...accounts.values(),
+      ]);
       this.cullUnusedAccountMetadata(unused);
 
       // TODO: Encapsulate this logic more.
       const output = new Map<AccountId, AccountMetadata>();
-      used.forEach((u) => output.set(u.accountId, u));
+      used.forEach(u => output.set(u.accountId, u));
       this.accountMetadata.set(output);
     });
   }
@@ -327,12 +363,15 @@ export class FirestoreStorage {
     }
 
     // Keep user settings in sync.
-    this.settingsUnsubscribe = onSnapshot(doc(db, 'settings', forUser.uid), (docSnapshot) => {
-      const data = docSnapshot.data();
-      if (!data) return;
+    this.settingsUnsubscribe = onSnapshot(
+      doc(db, 'settings', forUser.uid),
+      docSnapshot => {
+        const data = docSnapshot.data();
+        if (!data) return;
 
-      this.settingsStorage.reload();
-    });
+        this.settingsStorage.reload();
+      },
+    );
   }
 
   private listenForMetadataUpdates(forUser: User) {
@@ -341,12 +380,15 @@ export class FirestoreStorage {
     }
 
     // Keep user metadata in sync.
-    this.metadataUnsubscribe = onSnapshot(doc(db, 'users', forUser.uid), (docSnapshot) => {
-      const data = docSnapshot.data();
-      if (!data) return;
+    this.metadataUnsubscribe = onSnapshot(
+      doc(db, 'users', forUser.uid),
+      docSnapshot => {
+        const data = docSnapshot.data();
+        if (!data) return;
 
-      this.userMetadata.set(data as UserMetadata);
-    });
+        this.userMetadata.set(data as UserMetadata);
+      },
+    );
   }
 }
 

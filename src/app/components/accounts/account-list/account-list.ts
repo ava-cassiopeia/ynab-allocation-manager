@@ -1,7 +1,10 @@
 import {AccountType} from 'ynab';
 import {Component, inject, computed} from '@angular/core';
 
-import {AccountData, AccountAllocation} from '../../../../lib/accounts/account_data';
+import {
+  AccountData,
+  AccountAllocation,
+} from '../../../../lib/accounts/account_data';
 import {AccountSummary} from '../account-summary/account-summary';
 import {Currency} from '../../common/currency/currency';
 import {compareAccounts} from '../../../../lib/accounts/account_lists';
@@ -39,11 +42,11 @@ export class AccountList {
     const accounts = this.accounts();
 
     const checking = accounts.checkingAccounts
-        .map((a) => a.account.cleared_balance)
-        .reduce((p, c) => p + c, 0);
+      .map(a => a.account.cleared_balance)
+      .reduce((p, c) => p + c, 0);
     const savings = accounts.savingsAccounts
-        .map((a) => a.account.cleared_balance)
-        .reduce((p, c) => p + c, 0);
+      .map(a => a.account.cleared_balance)
+      .reduce((p, c) => p + c, 0);
 
     return {checking, savings};
   });

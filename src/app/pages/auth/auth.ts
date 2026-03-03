@@ -32,7 +32,7 @@ export class AuthPage {
       return;
     }
 
-    const oauthLogIn = httpsCallable(functions, "oauthLogIn");
+    const oauthLogIn = httpsCallable(functions, 'oauthLogIn');
 
     const res = await oauthLogIn({code});
     const token = (res.data as any).token ?? null;
@@ -43,6 +43,6 @@ export class AuthPage {
     }
 
     await this.authStorage.signInUser(token);
-    this.router.navigate(["app"]);
+    this.router.navigate(['app']);
   }
 }
