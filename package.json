@@ -27,8 +27,8 @@
     "ynab": "^2.9.0"
   },
   "devDependencies": {
-    "@angular/build": "^21.0.0",
-    "@angular/cli": "^21.0.0",
+    "@angular/build": "^21.2.0",
+    "@angular/cli": "^21.2.0",
     "@angular/compiler-cli": "^21.0.1",
     "@dotenvx/dotenvx": "^1.44.2",
     "@types/jasmine": "~5.1.0",
