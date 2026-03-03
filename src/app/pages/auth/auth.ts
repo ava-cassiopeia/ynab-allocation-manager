@@ -35,6 +35,7 @@ export class AuthPage {
     const oauthLogIn = httpsCallable(functions, 'oauthLogIn');
 
     const res = await oauthLogIn({code});
+    // tslint-disable-next-line @typescript-eslint/no-explicit-any
     const token = (res.data as any).token ?? null;
 
     if (token === null) {
@@ -43,6 +44,6 @@ export class AuthPage {
     }
 
     await this.authStorage.signInUser(token);
-    this.router.navigate(['app']);
+    void this.router.navigate(['app']);
   }
 }

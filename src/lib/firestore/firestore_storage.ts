@@ -15,10 +15,14 @@ import {
 } from 'firebase/firestore';
 import {BudgetSummary, Category} from 'ynab';
 
-import {AccountMetadata} from '../models/account_metadata';
+import {
+  AccountMetadata,
+  AccountMetadataSchema,
+} from '../models/account_metadata';
 import {
   AbsoluteSplitAllocation,
   Allocation,
+  LegacyAllocationSchema,
   SingleAllocation,
 } from '../models/allocation';
 import {AuthStorage} from '../firebase/auth_storage';
@@ -104,7 +108,7 @@ export class FirestoreStorage {
         allocation.toSchema(this.assertUser().uid),
       );
     } else {
-      updateDoc(existingAllocation.ref, {
+      await updateDoc(existingAllocation.ref, {
         ...allocation.toSchema(user.uid),
       });
     }
@@ -137,7 +141,7 @@ export class FirestoreStorage {
         account.toSchema(this.assertUser().uid),
       );
     } else {
-      updateDoc(existingAccount.ref, {
+      await updateDoc(existingAccount.ref, {
         ...account.toSchema(user.uid),
       });
     }
@@ -217,12 +221,14 @@ export class FirestoreStorage {
       querySnapshot => {
         const allocations: Allocation[] = [];
         querySnapshot.forEach(doc => {
-          allocations.push(Allocation.fromSchema(doc.id, doc.data() as any));
+          allocations.push(
+            Allocation.fromSchema(doc.id, doc.data() as LegacyAllocationSchema),
+          );
         });
 
         const {unused, used} = this.filterUnusedAllocations(allocations);
         // Don't await this method, it can happen in the background.
-        this.cullUnusedAllocations(unused);
+        void this.cullUnusedAllocations(unused);
 
         this.allocations.set(used);
       },
@@ -341,14 +347,17 @@ export class FirestoreStorage {
     this.accountUnsubscribe = onSnapshot(accountsQuery, querySnapshot => {
       const accounts = new Map<AccountId, AccountMetadata>();
       querySnapshot.forEach(doc => {
-        const account = AccountMetadata.fromSchema(doc.id, doc.data() as any);
+        const account = AccountMetadata.fromSchema(
+          doc.id,
+          doc.data() as AccountMetadataSchema,
+        );
         accounts.set(account.accountId, account);
       });
 
       const {used, unused} = this.filterUnusedAccountMetadata([
         ...accounts.values(),
       ]);
-      this.cullUnusedAccountMetadata(unused);
+      void this.cullUnusedAccountMetadata(unused);
 
       // TODO: Encapsulate this logic more.
       const output = new Map<AccountId, AccountMetadata>();

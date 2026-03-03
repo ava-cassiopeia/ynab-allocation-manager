@@ -31,7 +31,7 @@ export class IndexPage {
       const currentUser = this.authStorage.currentUser();
       if (currentUser === null) return;
 
-      this.router.navigate(['app']);
+      void this.router.navigate(['app']);
     });
   }
 }

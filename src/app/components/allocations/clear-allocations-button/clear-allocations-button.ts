@@ -22,7 +22,7 @@ export class ClearAllocationsButton {
   }
 
   protected clearAll() {
-    this.firestoreStorage.clearAllocationsForBudget();
+    void this.firestoreStorage.clearAllocationsForBudget();
     this.dropdownButton.close();
   }
 }

@@ -74,9 +74,9 @@ export class AppPage {
         status === YnabStorageStatus.LOADING_BUDGET_DETAILS ||
         status === YnabStorageStatus.LOADING_BUDGET_LIST
       ) {
-        this.setLoading();
+        void this.setLoading();
       } else {
-        this.clearLoading();
+        void this.clearLoading();
       }
     });
   }
@@ -85,7 +85,7 @@ export class AppPage {
     await this.setLoading();
     // A weird workaround for some animation quirks I haven't figured out yet
     await this.sleep(1000);
-    this.settingsStorage.setSelectedBudget(budget);
+    await this.settingsStorage.setSelectedBudget(budget);
   }
 
   private async setLoading() {

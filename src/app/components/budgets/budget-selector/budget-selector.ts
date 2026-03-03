@@ -1,4 +1,4 @@
-import {Component, input, inject} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {BudgetSummary} from 'ynab';
 
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
@@ -17,6 +17,6 @@ export class BudgetSelector {
   private readonly settingsStorage = inject(SettingsStorage);
 
   protected selectBudget(budget: BudgetSummary) {
-    this.settingsStorage.setSelectedBudget(budget);
+    void this.settingsStorage.setSelectedBudget(budget);
   }
 }

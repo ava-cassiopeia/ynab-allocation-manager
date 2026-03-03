@@ -30,6 +30,6 @@ export class SettingsDialog {
   protected updateCurrencyFormat(event: MatSlideToggleChange) {
     // in this case, `undefined` means "default value"
     const format = event.checked ? CurrencyFormat.FINANCE : undefined;
-    this.settingsStorage.setCurrencyFormat(format);
+    void this.settingsStorage.setCurrencyFormat(format);
   }
 }

@@ -29,7 +29,7 @@ export class LoadingIcon {
 
   private waitAndSwap() {
     setTimeout(() => {
-      this.swap();
+      void this.swap();
     }, 750);
   }
 

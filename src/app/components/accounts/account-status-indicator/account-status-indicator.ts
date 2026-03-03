@@ -26,7 +26,7 @@ export class AccountStatusIndicator {
 
   protected readonly ynabReconIsOutdated = computed<boolean>(() => {
     const lastRecon = this.account().account.last_reconciled_at;
-    if (lastRecon == null) return true;
+    if (lastRecon === null || lastRecon === undefined) return true;
 
     const last = new Date(lastRecon);
     return isOutOfDate(last);
@@ -36,7 +36,7 @@ export class AccountStatusIndicator {
     if (this.isCashAccount()) return false;
 
     const lastRecon = this.account().metadata?.lastReconciled ?? null;
-    if (lastRecon == null) return true;
+    if (lastRecon === null) return true;
 
     return isOutOfDate(lastRecon);
   });

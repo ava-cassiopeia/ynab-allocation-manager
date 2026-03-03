@@ -15,6 +15,6 @@ export class LogoutButton {
 
   protected async logout() {
     await auth.signOut();
-    this.router.navigate(['']);
+    void this.router.navigate(['']);
   }
 }

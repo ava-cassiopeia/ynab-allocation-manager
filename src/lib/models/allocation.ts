@@ -89,6 +89,7 @@ export class AbsoluteSplitAllocation extends Allocation {
  * unrecognized.
  */
 export class UnknownAllocation extends Allocation {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   override toSchema(userId: string): AllocationSchema {
     throw new Error('Cannot convert allocation to schema, it is unknown.');
   }

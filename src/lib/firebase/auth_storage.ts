@@ -34,7 +34,7 @@ export class AuthStorage {
   constructor() {
     // Configure Firebase to store user session credentials in the user's
     // session storage so that they will stay logged in.
-    setPersistence(auth, browserSessionPersistence);
+    void setPersistence(auth, browserSessionPersistence);
 
     // Listen for when the user signs in and out.
     onAuthStateChanged(auth, async user => {
@@ -90,6 +90,7 @@ export class AuthStorage {
     const refreshYnabToken = httpsCallable(functions, 'refreshYnabToken');
     const refreshToken = await user.getIdToken();
     const res = await refreshYnabToken({refreshToken});
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const success = (res.data as any)?.success ?? false;
 
     // If we didn't succeed in refreshing the user's token, then we should just

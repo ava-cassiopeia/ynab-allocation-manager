@@ -19,6 +19,7 @@ export class FakeAuthStorage extends AuthStorage {
     return cred.user.uid;
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   override async updateUser(user: User | null) {
     // no op
   }

@@ -106,7 +106,7 @@ export class AllocationSelector {
       icon: selectedAccount === a ? 'done' : 'account_balance',
       value: a,
       action: (value: Account) => {
-        this.selectAccount(value);
+        void this.selectAccount(value);
       },
     }));
   });
