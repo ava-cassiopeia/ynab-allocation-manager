@@ -13,6 +13,7 @@ const redirectUri = defineString("YNAB_CALLBACK_URL");
 const ALLOWED_ORIGINS = [
   "https://yam.ynab.rocks",
   "http://localhost:5002",
+  "http://127.0.0.1:5002",
 ];
 
 export const oauthLogIn = onRequest(
