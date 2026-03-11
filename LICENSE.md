@@ -1,4 +1,4 @@
-Copyright 2025 Ava Mattie
+Copyright 2026 Ava Mattie
 
 Permission to use, copy, modify, and/or distribute this software for any purpose
 with or without fee is hereby granted, provided that the above copyright notice
@@ -14,4 +14,4 @@ THIS SOFTWARE.
 
 <br>
 
-"YNAB", "Works with YNAB.", and the YNAB logo copyright YNAB 2025
+"YNAB", "Works with YNAB.", and the YNAB logo copyright YNAB 2026
