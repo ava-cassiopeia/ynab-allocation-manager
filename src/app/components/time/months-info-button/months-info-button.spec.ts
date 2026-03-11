@@ -11,8 +11,7 @@ describe('MonthsInfoButton', () => {
     await TestBed.configureTestingModule({
       imports: [MonthsInfoButton],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(MonthsInfoButton);
     component = fixture.componentInstance;

@@ -7,14 +7,14 @@ import {compareAccounts} from './account_lists';
 describe('compareAccounts()', () => {
   it('indicates that a is greater than b', () => {
     const a = account('Fake A', 0.15);
-    const b = account('Fake B', 0.10);
+    const b = account('Fake B', 0.1);
 
     expect(compareAccounts(a, b)).toBeLessThan(0);
   });
 
   it('indicates that b is greater than a', () => {
     const a = account('Fake A', 0.05);
-    const b = account('Fake B', 0.10);
+    const b = account('Fake B', 0.1);
 
     expect(compareAccounts(a, b)).toBeGreaterThan(0);
   });
@@ -48,7 +48,9 @@ describe('compareAccounts()', () => {
       account('BBB', 0.15),
     ];
 
-    const sorted = accounts.sort((a, b) => compareAccounts(a, b)).map((a) => a.account.name);
+    const sorted = accounts
+      .sort((a, b) => compareAccounts(a, b))
+      .map(a => a.account.name);
 
     expect(sorted).toEqual([
       'BBB', // because this has a rate
@@ -61,7 +63,7 @@ describe('compareAccounts()', () => {
 
 function account(name: string, interestRate: number): AccountAllocation {
   return {
-    account: { name } as Account, // thin fake
+    account: {name} as Account, // thin fake
     metadata: new AccountMetadata(
       null,
       'fake_account_id',

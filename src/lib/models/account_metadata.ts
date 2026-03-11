@@ -40,7 +40,10 @@ export class AccountMetadata {
     );
   }
 
-  static fromSchema(id: string, schema: AccountMetadataSchema): AccountMetadata {
+  static fromSchema(
+    id: string,
+    schema: AccountMetadataSchema,
+  ): AccountMetadata {
     return new AccountMetadata(
       id,
       schema.accountId,
@@ -48,7 +51,7 @@ export class AccountMetadata {
       schema.interestRate,
       schema.interestThresholdMillis,
       schema.minimumBalanceMillis,
-      (schema.lastReconciled ? new Date(schema.lastReconciled) : null),
+      schema.lastReconciled ? new Date(schema.lastReconciled) : null,
     );
   }
 }

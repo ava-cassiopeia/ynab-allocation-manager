@@ -1,5 +1,12 @@
 import {BudgetSummary} from 'ynab';
-import {Component, inject, ElementRef, signal, effect, computed} from '@angular/core';
+import {
+  Component,
+  inject,
+  ElementRef,
+  signal,
+  effect,
+  computed,
+} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 
 import {AccountData} from '../../../lib/accounts/account_data';
@@ -9,7 +16,7 @@ import {AllocationCountButton} from '../../components/allocations/allocation-cou
 import {BetaInfoButton} from '../../components/common/beta-info-button/beta-info-button';
 import {BudgetSelectorButton} from '../../components/budgets/budget-selector-button/budget-selector-button';
 import {CategoryList} from '../../components/categories/category-list/category-list';
-import {ClearAllocationsButton} from "../../components/allocations/clear-allocations-button/clear-allocations-button";
+import {ClearAllocationsButton} from '../../components/allocations/clear-allocations-button/clear-allocations-button';
 import {LoadingIcon} from '../../components/auth/loading-icon/loading-icon';
 import {LogoutButton} from '../../components/auth/logout-button/logout-button';
 import {MonthsInfoButton} from '../../components/time/months-info-button/months-info-button';
@@ -47,7 +54,10 @@ export class AppPage {
   protected readonly YnabStorageStatus = YnabStorageStatus;
 
   protected readonly budgetIsSelected = computed<boolean>(() => {
-    return this.ynabStorage.status() === YnabStorageStatus.READY && this.ynabStorage.selectedBudget() !== null;
+    return (
+      this.ynabStorage.status() === YnabStorageStatus.READY &&
+      this.ynabStorage.selectedBudget() !== null
+    );
   });
 
   protected readonly contentClass = computed<string | null>(() => {
@@ -60,10 +70,13 @@ export class AppPage {
   constructor(private readonly el: ElementRef) {
     effect(() => {
       const status = this.ynabStorage.status();
-      if (status === YnabStorageStatus.LOADING_BUDGET_DETAILS || status === YnabStorageStatus.LOADING_BUDGET_LIST) {
-        this.setLoading();
+      if (
+        status === YnabStorageStatus.LOADING_BUDGET_DETAILS ||
+        status === YnabStorageStatus.LOADING_BUDGET_LIST
+      ) {
+        void this.setLoading();
       } else {
-        this.clearLoading();
+        void this.clearLoading();
       }
     });
   }
@@ -72,7 +85,7 @@ export class AppPage {
     await this.setLoading();
     // A weird workaround for some animation quirks I haven't figured out yet
     await this.sleep(1000);
-    this.settingsStorage.setSelectedBudget(budget);
+    await this.settingsStorage.setSelectedBudget(budget);
   }
 
   private async setLoading() {
@@ -85,7 +98,7 @@ export class AppPage {
   }
 
   private sleep(ms: number): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       setTimeout(() => {
         resolve();
       }, ms);

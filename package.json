@@ -9,7 +9,11 @@
     "test:ng": "firebase emulators:exec 'ng test --browsers ChromeHeadless --watch false'",
     "test:fn": "firebase emulators:exec 'npm run --prefix functions test'",
     "test": "npm run test:ng && npm run test:fn",
-    "emulate": "npm --prefix functions run build && dotenv -e .env.dev -- firebase emulators:start"
+    "emulate": "npm --prefix functions run build && dotenv -e .env.dev -- firebase emulators:start",
+    "format": "gts fix",
+    "lint": "gts lint",
+    "clean": "gts clean",
+    "fix": "gts fix"
   },
   "private": true,
   "dependencies": {
@@ -33,12 +37,14 @@
     "@dotenvx/dotenvx": "^1.44.2",
     "@types/jasmine": "~5.1.0",
     "dotenv-cli": "^8.0.0",
+    "gts": "^7.0.0",
     "jasmine-core": "~5.7.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.2.0",
     "karma-coverage": "~2.2.0",
     "karma-jasmine": "~5.1.0",
     "karma-jasmine-html-reporter": "~2.1.0",
-    "typescript": "~5.9.3"
+    "typescript": "~5.9.3",
+    "@types/node": "^22.7.5"
   }
 }

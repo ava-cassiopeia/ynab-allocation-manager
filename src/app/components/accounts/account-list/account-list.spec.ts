@@ -11,8 +11,7 @@ describe('AccountList', () => {
     await TestBed.configureTestingModule({
       imports: [AccountList],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AccountList);
     component = fixture.componentInstance;

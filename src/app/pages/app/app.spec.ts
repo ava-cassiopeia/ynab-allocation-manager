@@ -11,8 +11,7 @@ describe('AppPage', () => {
     await TestBed.configureTestingModule({
       imports: [AppPage],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AppPage);
     component = fixture.componentInstance;

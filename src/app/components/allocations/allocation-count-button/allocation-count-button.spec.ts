@@ -11,8 +11,7 @@ describe('AllocationCountButton', () => {
     await TestBed.configureTestingModule({
       imports: [AllocationCountButton],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AllocationCountButton);
     component = fixture.componentInstance;

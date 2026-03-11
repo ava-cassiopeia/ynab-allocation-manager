@@ -29,7 +29,7 @@ export class LoadingIcon {
 
   private waitAndSwap() {
     setTimeout(() => {
-      this.swap();
+      void this.swap();
     }, 750);
   }
 
@@ -59,12 +59,16 @@ export class LoadingIcon {
   }
 
   private waitForAnimation(): Promise<void> {
-    return new Promise((resolve) => {
+    return new Promise(resolve => {
       requestAnimationFrame(() => {
-        const nextIconEl = this.el.nativeElement.querySelector(".next-icon")!;
-        nextIconEl.addEventListener("transitionend", () => {
-          resolve();
-        }, {once: true});
+        const nextIconEl = this.el.nativeElement.querySelector('.next-icon')!;
+        nextIconEl.addEventListener(
+          'transitionend',
+          () => {
+            resolve();
+          },
+          {once: true},
+        );
       });
     });
   }

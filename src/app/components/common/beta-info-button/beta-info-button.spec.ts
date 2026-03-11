@@ -11,8 +11,7 @@ describe('BetaInfoButton', () => {
     await TestBed.configureTestingModule({
       imports: [BetaInfoButton],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(BetaInfoButton);
     component = fixture.componentInstance;

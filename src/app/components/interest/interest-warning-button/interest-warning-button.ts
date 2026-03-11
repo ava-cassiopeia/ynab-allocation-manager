@@ -32,7 +32,6 @@ export class InterestWarningButton {
     if (metadata.interestRate <= 0) return null;
     if (metadata.interestThresholdMillis <= 0) return null;
 
-
     const balance = this.account().account.cleared_balance;
     if (balance >= metadata.interestThresholdMillis) return null;
 

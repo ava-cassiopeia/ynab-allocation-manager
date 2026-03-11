@@ -1,4 +1,10 @@
-import {Component, signal, input, ViewChild, booleanAttribute} from '@angular/core';
+import {
+  Component,
+  signal,
+  input,
+  ViewChild,
+  booleanAttribute,
+} from '@angular/core';
 import {CdkMenuTrigger, CdkMenu, CdkMenuItem} from '@angular/cdk/menu';
 import {MatIcon} from '@angular/material/icon';
 
@@ -35,8 +41,14 @@ export class DropdownButton<MenuItemType> {
 export interface DropdownMenuItem<ValueType> {
   readonly label: string;
   readonly icon?: string;
-  readonly action: (value: ValueType) => void,
-  readonly value: ValueType,
+  readonly action: (value: ValueType) => void;
+  readonly value: ValueType;
 }
 
-export type ButtonTheme = 'default' | 'overfunded' | 'underfunded' | 'warning' | 'perfect' | 'site-theme';
+export type ButtonTheme =
+  | 'default'
+  | 'overfunded'
+  | 'underfunded'
+  | 'warning'
+  | 'perfect'
+  | 'site-theme';

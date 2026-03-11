@@ -39,12 +39,14 @@ describe('CurrencyCopyButton', () => {
     expect(clipboard.copy).toHaveBeenCalledWith('10');
   });
 
-  it('should reset the copied state after a timeout', (done) => {
+  it('should reset the copied state after a timeout', done => {
     const button = fixture.nativeElement.querySelector('button');
     button.click();
     fixture.detectChanges();
 
-    let activeIcon = fixture.nativeElement.querySelector('.icons.active .active');
+    let activeIcon = fixture.nativeElement.querySelector(
+      '.icons.active .active',
+    );
     expect(activeIcon).toBeTruthy();
 
     setTimeout(() => {

@@ -11,8 +11,7 @@ describe('IndexPage', () => {
     await TestBed.configureTestingModule({
       imports: [IndexPage],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(IndexPage);
     component = fixture.componentInstance;

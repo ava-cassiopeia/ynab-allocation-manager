@@ -61,7 +61,9 @@ describe('ReconciledTime', () => {
     fixture.componentRef.setInput('time', date.toISOString());
     fixture.detectChanges();
 
-    expect(fixture.debugElement.query(By.directive(RelativeTime))).not.toBeNull();
+    expect(
+      fixture.debugElement.query(By.directive(RelativeTime)),
+    ).not.toBeNull();
 
     fixture.componentRef.setInput('time', null);
     fixture.detectChanges();

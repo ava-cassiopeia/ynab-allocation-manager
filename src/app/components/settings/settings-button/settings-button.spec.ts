@@ -11,8 +11,7 @@ describe('SettingsButton', () => {
     await TestBed.configureTestingModule({
       imports: [SettingsButton],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsButton);
     component = fixture.componentInstance;

@@ -1,5 +1,5 @@
 import {Component, inject} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog} from '@angular/material/dialog';
 import {MatIcon} from '@angular/material/icon';
 
 import {SettingsDialog} from '../settings-dialog/settings-dialog';

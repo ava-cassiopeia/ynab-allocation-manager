@@ -12,8 +12,7 @@ describe('AccountSummary', () => {
     await TestBed.configureTestingModule({
       imports: [AccountSummary],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
     const account: Account = {
       id: 'fake_account',
       name: 'Fake account',

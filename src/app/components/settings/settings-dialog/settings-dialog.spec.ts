@@ -11,8 +11,7 @@ describe('SettingsDialog', () => {
     await TestBed.configureTestingModule({
       imports: [SettingsDialog],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SettingsDialog);
     component = fixture.componentInstance;

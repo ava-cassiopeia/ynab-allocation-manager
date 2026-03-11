@@ -11,8 +11,7 @@ describe('SplitSelector', () => {
     await TestBed.configureTestingModule({
       imports: [SplitSelector],
       providers: [provideZonelessChangeDetection()],
-    })
-      .compileComponents();
+    }).compileComponents();
 
     fixture = TestBed.createComponent(SplitSelector);
     component = fixture.componentInstance;
