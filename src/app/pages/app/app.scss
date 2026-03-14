@@ -79,7 +79,15 @@ $sideBySideWidth: 850px;
     gap: 12px;
 
     @media screen and (max-width: 850px) {
-      flex-wrap: wrap;
+      display: none;
+    }
+  }
+
+  ya-mobile-menu {
+    display: none;
+
+    @media screen and (max-width: 850px) {
+      display: flex;
     }
   }
 }

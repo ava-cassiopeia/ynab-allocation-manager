@@ -7,6 +7,11 @@
   // The same font that YNAB uses in their main app, for consistency.
   --body-font: Figtree, sans-serif;
 
+  // Material overrides
+  --mat-menu-item-label-text-font: var(--body-font);
+  --mat-sys-headline-small-font: var(--body-font);
+  --mat-sys-body-medium-font: var(--body-font);
+
   // Themes for buttons and elements
   @include ya.define-theme("overfunded",         #4FC3F7, #000);
   @include ya.define-theme("overfunded-pastel",  #B3E5FC, #000);

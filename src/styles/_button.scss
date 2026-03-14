@@ -90,9 +90,26 @@ span.ya-button {
   }
 
   // === Special mobile mode ===
-  &.big-on-mobile {
-    font-size: 18px;
-    padding: 20px;
+  &.mobile-set {
+    font-size: 16px;
+    padding: 12px;
+
+    &:first-of-type,
+    &:not(:first-of-type):not(:last-of-type) {
+      border-right: 1px solid var(--shadow-color_);
+    }
+
+    &:first-of-type {
+      border-radius: 100px 0 0 100px;
+    }
+
+    &:not(:first-of-type):not(:last-of-type) {
+      border-radius: 0;
+    }
+
+    &:last-of-type {
+      border-radius: 0 100px 100px 0;
+    }
   }
 
   // === Themes ===
