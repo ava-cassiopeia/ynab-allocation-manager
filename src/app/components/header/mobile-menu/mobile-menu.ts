@@ -33,6 +33,6 @@ export class MobileMenu {
 
   protected async logout() {
     await auth.signOut();
-    this.router.navigate(['']);
+    void this.router.navigate(['']);
   }
 }

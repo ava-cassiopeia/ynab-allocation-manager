@@ -4,7 +4,6 @@ import {MatIcon} from '@angular/material/icon';
 import {Currency} from '../../common/currency/currency';
 import {AccountAllocation} from '../../../../lib/accounts/account_data';
 import {DropdownButton} from '../../common/dropdown-button/dropdown-button';
-import {ReconciledTime} from '../../time/reconciled-time/reconciled-time';
 import {AccountType} from 'ynab';
 
 @Component({

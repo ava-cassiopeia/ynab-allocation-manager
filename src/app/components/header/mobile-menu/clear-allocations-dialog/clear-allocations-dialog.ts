@@ -1,5 +1,11 @@
 import {Component, inject} from '@angular/core';
-import {MatDialogActions, MatDialogClose, MatDialogContent, MatDialogRef, MatDialogTitle} from '@angular/material/dialog';
+import {
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
 
 import {FirestoreStorage} from '../../../../../lib/firestore/firestore_storage';
 
