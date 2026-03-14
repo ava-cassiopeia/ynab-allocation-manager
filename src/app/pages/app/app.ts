@@ -19,6 +19,7 @@ import {CategoryList} from '../../components/categories/category-list/category-l
 import {ClearAllocationsButton} from '../../components/allocations/clear-allocations-button/clear-allocations-button';
 import {LoadingIcon} from '../../components/auth/loading-icon/loading-icon';
 import {LogoutButton} from '../../components/auth/logout-button/logout-button';
+import {MobileMenu} from '../../components/header/mobile-menu/mobile-menu';
 import {MonthsInfoButton} from '../../components/time/months-info-button/months-info-button';
 import {SettingsButton} from '../../components/settings/settings-button/settings-button';
 import {SettingsStorage} from '../../../lib/firebase/settings_storage';
@@ -39,6 +40,7 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
     LoadingIcon,
     LogoutButton,
     MatIcon,
+    MobileMenu,
     MonthsInfoButton,
     SettingsButton,
   ],

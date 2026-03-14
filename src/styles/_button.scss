@@ -1,3 +1,5 @@
+$mobileCutoff: 850px;
+
 button.ya-button,
 span.ya-button {
   --theme-color_: #eee;
@@ -84,6 +86,29 @@ span.ya-button {
                   0 4px 0 var(--shadow-color_),
                   0 5px 0 var(--shadow-color_);
       transform: translateY(-2px);
+    }
+  }
+
+  // === Special mobile mode ===
+  &.mobile-set {
+    font-size: 16px;
+    padding: 12px;
+
+    &:first-of-type,
+    &:not(:first-of-type):not(:last-of-type) {
+      border-right: 1px solid var(--shadow-color_);
+    }
+
+    &:first-of-type {
+      border-radius: 100px 0 0 100px;
+    }
+
+    &:not(:first-of-type):not(:last-of-type) {
+      border-radius: 0;
+    }
+
+    &:last-of-type {
+      border-radius: 0 100px 100px 0;
     }
   }
 

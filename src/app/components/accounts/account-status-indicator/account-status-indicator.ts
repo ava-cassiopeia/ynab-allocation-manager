@@ -4,14 +4,13 @@ import {MatIcon} from '@angular/material/icon';
 import {Currency} from '../../common/currency/currency';
 import {AccountAllocation} from '../../../../lib/accounts/account_data';
 import {DropdownButton} from '../../common/dropdown-button/dropdown-button';
-import {ReconciledTime} from '../../time/reconciled-time/reconciled-time';
 import {AccountType} from 'ynab';
 
 @Component({
   selector: 'ya-account-status-indicator',
   templateUrl: './account-status-indicator.html',
   styleUrl: './account-status-indicator.scss',
-  imports: [Currency, DropdownButton, MatIcon, ReconciledTime],
+  imports: [Currency, DropdownButton, MatIcon],
 })
 export class AccountStatusIndicator {
   readonly account = input.required<AccountAllocation>();
