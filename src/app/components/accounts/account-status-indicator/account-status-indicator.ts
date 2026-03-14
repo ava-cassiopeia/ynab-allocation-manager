@@ -11,7 +11,7 @@ import {AccountType} from 'ynab';
   selector: 'ya-account-status-indicator',
   templateUrl: './account-status-indicator.html',
   styleUrl: './account-status-indicator.scss',
-  imports: [Currency, DropdownButton, MatIcon, ReconciledTime],
+  imports: [Currency, DropdownButton, MatIcon],
 })
 export class AccountStatusIndicator {
   readonly account = input.required<AccountAllocation>();
