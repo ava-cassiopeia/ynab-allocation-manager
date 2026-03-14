@@ -41,6 +41,18 @@ $sideBySideWidth: 850px;
       color: red;
       font-weight: bold;
     }
+
+    @media screen and (max-width: $sideBySideWidth) {
+      margin: 0 auto 12px;
+      border-radius: 0 0 20px 20px;
+
+      .beta-text {
+        left: 0;
+        transform: translateY(-16px) rotate(-35deg);
+        transform-origin: center;
+        opacity: 0.85;
+      }
+    }
   }
 
   .site-title {
@@ -92,19 +104,9 @@ $sideBySideWidth: 850px;
   padding: 20px;
 
   @media screen and (max-width: $sideBySideWidth) {
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 200%;
-    max-width: none;
-    height: 100%;
-    grid-template-columns: calc(50% - 20px) calc(50% - 20px);
-    gap: 40px;
-    transition: transform 300ms ease;
-
-    &.show-accounts {
-      transform: translateX(50%);
-    }
+    display: block;
+    max-width: initial;
+    padding: 12px;
   }
 }
 
@@ -114,6 +116,10 @@ $sideBySideWidth: 850px;
   overflow: hidden;
   display: flex;
   flex-direction: column;
+
+  @media screen and (max-width: $sideBySideWidth) {
+    margin: 0 0 20px;
+  }
 
   > .loading-overlay,
   > .no-budget-overlay {

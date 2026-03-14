@@ -1,3 +1,5 @@
+$mobileCutoff: 850px;
+
 button.ya-button,
 span.ya-button {
   --theme-color_: #eee;
@@ -85,6 +87,12 @@ span.ya-button {
                   0 5px 0 var(--shadow-color_);
       transform: translateY(-2px);
     }
+  }
+
+  // === Special mobile mode ===
+  &.big-on-mobile {
+    font-size: 18px;
+    padding: 20px;
   }
 
   // === Themes ===

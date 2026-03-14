@@ -26,7 +26,7 @@
 </header>
 
 <div class="content-wrapper">
-  <main class="main-content" [class.show-accounts]="showAccounts()">
+  <main class="main-content">
     <div #accountSidebar
         class="account-sidebar card"
         [class]="contentClass()">
@@ -70,14 +70,3 @@
     </div>
   </main>
 </div>
-
-<nav class="section-navigation" aria-label="Section navigation">
-  <div class="button-rail">
-    <button [class.current]="showAccounts()" (click)="showAccounts.set(true)">
-      Accounts
-    </button>
-    <button [class.current]="!showAccounts()" (click)="showAccounts.set(false)">
-      Categories
-    </button>
-  </div>
-</nav>
