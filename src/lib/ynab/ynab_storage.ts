@@ -290,6 +290,39 @@ export class YnabStorage {
 
     return null;
   }
+
+  /**
+   * Similar to findAccount(), but verifies that the matching account is not
+   * closed or deleted.
+   */
+  findActiveAccount(accountId: string): Account | null {
+    const account = this.findAccount(accountId);
+    if (!account) return null;
+    if (account.closed || account.deleted) return null;
+
+    return account;
+  }
+
+  /**
+   * Attempts to find an 'active' category that matches the given category ID,
+   * where an active category is defined as a category that has not been hidden
+   * or deleted.
+   */
+  findActiveCategory(categoryId: string): Category | null {
+    const categoryGroups = this.categories.value();
+    for (const group of categoryGroups) {
+      if (group.deleted || group.hidden) continue;
+
+      for (const category of group.categories) {
+        if (category.deleted || category.hidden) continue;
+        if (category.id !== categoryId) continue;
+
+        return category;
+      }
+    }
+
+    return null;
+  }
 }
 
 export enum YnabStorageStatus {
