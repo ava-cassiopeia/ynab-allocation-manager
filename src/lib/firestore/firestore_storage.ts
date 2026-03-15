@@ -269,18 +269,24 @@ export class FirestoreStorage {
 
     for (const allocation of allocations) {
       const accountIds: string[] = [];
+      const categoryIds: string[] = [];
       if (allocation instanceof SingleAllocation) {
+        categoryIds.push(allocation.categoryId);
         accountIds.push(allocation.accountId);
       } else if (allocation instanceof AbsoluteSplitAllocation) {
+        categoryIds.push(allocation.categoryId);
         accountIds.push(allocation.defaultAccountId);
         accountIds.push(...allocation.splits.map(s => s.accountId));
       }
 
-      const matches = accountIds.filter(
-        id => !!this.ynabStorage.findAccount(id),
-      );
+      const matchesAccount = !!accountIds.filter(
+        id => !!this.ynabStorage.findActiveAccount(id),
+      ).length;
+      const matchesCategory = !!categoryIds.filter(
+        id => !!this.ynabStorage.findActiveCategory(id),
+      ).length;
 
-      if (matches.length > 0) {
+      if (matchesAccount && matchesCategory) {
         used.push(allocation);
       } else {
         unused.push(allocation);
