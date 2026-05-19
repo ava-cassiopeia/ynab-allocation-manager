@@ -28,7 +28,7 @@ import {
 import {AuthStorage} from '../firebase/auth_storage';
 import {SettingsStorage} from '../firebase/settings_storage';
 import {UserMetadata} from '../models/user_metadata';
-import {YnabStorage} from '../ynab/ynab_storage';
+import {YnabStorage, YnabStorageStatus} from '../ynab/ynab_storage';
 import {db} from '../firebase/app';
 
 @Injectable({providedIn: 'root'})
@@ -36,6 +36,11 @@ export class FirestoreStorage {
   readonly allocations = signal<Allocation[]>([]);
   readonly accountMetadata = signal<Map<AccountId, AccountMetadata>>(new Map());
   readonly userMetadata = signal<UserMetadata | null>(null);
+
+  private readonly rawAllocations = signal<Allocation[]>([]);
+  private readonly rawAccountMetadata = signal<Map<AccountId, AccountMetadata>>(
+    new Map(),
+  );
 
   private readonly ynabStorage = inject(YnabStorage);
   private readonly authStorage = inject(AuthStorage);
@@ -77,6 +82,46 @@ export class FirestoreStorage {
       } else {
         this.ynabStorage.apiKey.set(metadata.lastToken.access_token);
       }
+    });
+
+    // Reactively filter allocations and cull unused ones when YNAB storage is ready.
+    effect(() => {
+      const status = this.ynabStorage.status();
+      const rawAllocs = this.rawAllocations();
+
+      if (status !== YnabStorageStatus.READY) {
+        this.allocations.set(rawAllocs);
+        return;
+      }
+
+      const {unused, used} = this.filterUnusedAllocations(rawAllocs);
+      if (unused.length > 0) {
+        void this.cullUnusedAllocations(unused);
+      }
+
+      this.allocations.set(used);
+    });
+
+    // Reactively filter accounts metadata and cull unused ones when YNAB storage is ready.
+    effect(() => {
+      const status = this.ynabStorage.status();
+      const rawMetadata = this.rawAccountMetadata();
+
+      if (status !== YnabStorageStatus.READY) {
+        this.accountMetadata.set(rawMetadata);
+        return;
+      }
+
+      const {used, unused} = this.filterUnusedAccountMetadata([
+        ...rawMetadata.values(),
+      ]);
+      if (unused.length > 0) {
+        void this.cullUnusedAccountMetadata(unused);
+      }
+
+      const output = new Map<AccountId, AccountMetadata>();
+      used.forEach(u => output.set(u.accountId, u));
+      this.accountMetadata.set(output);
     });
   }
 
@@ -226,11 +271,7 @@ export class FirestoreStorage {
           );
         });
 
-        const {unused, used} = this.filterUnusedAllocations(allocations);
-        // Don't await this method, it can happen in the background.
-        void this.cullUnusedAllocations(unused);
-
-        this.allocations.set(used);
+        this.rawAllocations.set(allocations);
       },
     );
   }
@@ -255,9 +296,7 @@ export class FirestoreStorage {
   private filterUnusedAllocations(
     allocations: Allocation[],
   ): FilteredAllocations {
-    // Treat all allocations as valid if we don't have a list of accounts. This
-    // most likely is a transient state while we fetch accounts from YNAB.
-    if (this.ynabStorage.accounts.value().length < 1) {
+    if (this.ynabStorage.status() !== YnabStorageStatus.READY) {
       return {
         used: allocations,
         unused: [],
@@ -313,9 +352,7 @@ export class FirestoreStorage {
   private filterUnusedAccountMetadata(
     metadataList: AccountMetadata[],
   ): FilteredAccountMetadata {
-    // Treat all allocations as valid if we don't have a list of accounts. This
-    // most likely is a transient state while we fetch accounts from YNAB.
-    if (this.ynabStorage.accounts.value().length < 1) {
+    if (this.ynabStorage.status() !== YnabStorageStatus.READY) {
       return {
         used: metadataList,
         unused: [],
@@ -360,15 +397,7 @@ export class FirestoreStorage {
         accounts.set(account.accountId, account);
       });
 
-      const {used, unused} = this.filterUnusedAccountMetadata([
-        ...accounts.values(),
-      ]);
-      void this.cullUnusedAccountMetadata(unused);
-
-      // TODO: Encapsulate this logic more.
-      const output = new Map<AccountId, AccountMetadata>();
-      used.forEach(u => output.set(u.accountId, u));
-      this.accountMetadata.set(output);
+      this.rawAccountMetadata.set(accounts);
     });
   }
 
