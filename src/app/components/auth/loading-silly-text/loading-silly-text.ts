@@ -1,8 +1,9 @@
-import {Component, signal} from '@angular/core';
+import {Component, signal, ChangeDetectionStrategy} from '@angular/core';
 
 @Component({
   selector: 'ya-loading-silly-text',
   templateUrl: './loading-silly-text.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './loading-silly-text.scss',
 })
 export class LoadingSillyText {
