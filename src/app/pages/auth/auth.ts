@@ -1,9 +1,4 @@
-import {
-  Component,
-  inject,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, inject, signal} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {httpsCallable} from 'firebase/functions';
 
@@ -16,7 +11,6 @@ import {functions} from '../../../lib/firebase/functions';
   selector: 'ya-auth-page',
   templateUrl: './auth.html',
   styleUrl: './auth.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [LoadingIcon, LoadingSillyText],
 })
 export class AuthPage {

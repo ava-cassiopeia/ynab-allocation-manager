@@ -1,12 +1,5 @@
 import {Account, AccountType} from 'ynab';
-import {
-  Component,
-  inject,
-  OnInit,
-  HostBinding,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, inject, OnInit, HostBinding, signal} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {
   MAT_DIALOG_DATA,
@@ -29,7 +22,6 @@ import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
   selector: 'ya-account-metadata-dialog',
   templateUrl: './account-metadata-dialog.html',
   styleUrl: './account-metadata-dialog.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     MatDialogActions,
     MatDialogContent,

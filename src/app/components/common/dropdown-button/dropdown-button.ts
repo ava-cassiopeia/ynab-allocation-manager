@@ -4,7 +4,6 @@ import {
   input,
   ViewChild,
   booleanAttribute,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import {CdkMenuTrigger, CdkMenu, CdkMenuItem} from '@angular/cdk/menu';
 import {MatIcon} from '@angular/material/icon';
@@ -13,7 +12,6 @@ import {MatIcon} from '@angular/material/icon';
   selector: 'ya-dropdown-button',
   templateUrl: './dropdown-button.html',
   styleUrl: './dropdown-button.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [CdkMenuTrigger, CdkMenu, CdkMenuItem, MatIcon],
 })
 export class DropdownButton<MenuItemType> {

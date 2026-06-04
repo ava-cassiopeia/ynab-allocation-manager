@@ -1,10 +1,5 @@
 import {AccountType} from 'ynab';
-import {
-  Component,
-  inject,
-  computed,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, inject, computed} from '@angular/core';
 
 import {
   AccountData,
@@ -18,7 +13,6 @@ import {compareAccounts} from '../../../../lib/accounts/account_lists';
   selector: 'ya-account-list',
   templateUrl: './account-list.html',
   styleUrl: './account-list.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [AccountSummary, Currency],
 })
 export class AccountList {

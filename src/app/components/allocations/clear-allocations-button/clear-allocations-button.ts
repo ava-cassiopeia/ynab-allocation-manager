@@ -1,9 +1,4 @@
-import {
-  Component,
-  inject,
-  ViewChild,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, inject, ViewChild} from '@angular/core';
 
 import {DropdownButton} from '../../common/dropdown-button/dropdown-button';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
@@ -13,7 +8,6 @@ import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
   selector: 'ya-clear-allocations-button',
   templateUrl: './clear-allocations-button.html',
   styleUrl: './clear-allocations-button.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DropdownButton],
 })
 export class ClearAllocationsButton {

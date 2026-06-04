@@ -1,16 +1,10 @@
-import {
-  Component,
-  signal,
-  ElementRef,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, signal, ElementRef} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 
 @Component({
   selector: 'ya-loading-icon',
   templateUrl: './loading-icon.html',
   styleUrl: './loading-icon.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatIcon],
 })
 export class LoadingIcon {

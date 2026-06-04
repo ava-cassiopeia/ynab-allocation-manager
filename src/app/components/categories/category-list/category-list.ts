@@ -1,4 +1,4 @@
-import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
+import {Component, inject} from '@angular/core';
 
 import {Currency} from '../../common/currency/currency';
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
@@ -9,7 +9,6 @@ import {AllocationSelector} from '../../allocations/allocation-selector/allocati
   selector: 'ya-category-list',
   templateUrl: './category-list.html',
   styleUrl: './category-list.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [Currency, AllocationSelector],
 })
 export class CategoryList {

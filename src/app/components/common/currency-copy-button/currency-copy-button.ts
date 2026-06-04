@@ -1,10 +1,4 @@
-import {
-  Component,
-  input,
-  inject,
-  signal,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, input, inject, signal} from '@angular/core';
 import {Clipboard} from '@angular/cdk/clipboard';
 import {MatIcon} from '@angular/material/icon';
 
@@ -19,7 +13,6 @@ import {Currency} from '../currency/currency';
   selector: 'ya-currency-copy-button',
   templateUrl: './currency-copy-button.html',
   styleUrl: './currency-copy-button.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [Currency, MatIcon],
 })
 export class CurrencyCopyButton {

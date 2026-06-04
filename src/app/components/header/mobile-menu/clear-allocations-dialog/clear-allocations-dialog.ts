@@ -1,4 +1,4 @@
-import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
   MatDialogActions,
   MatDialogClose,
@@ -13,7 +13,6 @@ import {FirestoreStorage} from '../../../../../lib/firestore/firestore_storage';
   selector: 'ya-clear-allocations-dialog',
   templateUrl: './clear-allocations-dialog.html',
   styleUrl: './clear-allocations-dialog.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatDialogTitle, MatDialogContent, MatDialogActions, MatDialogClose],
 })
 export class ClearAllocationsDialog {

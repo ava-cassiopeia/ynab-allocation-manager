@@ -1,10 +1,4 @@
-import {
-  Component,
-  input,
-  computed,
-  inject,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, input, computed, inject} from '@angular/core';
 
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
 import {
@@ -19,7 +13,6 @@ import {formatCurrency} from '../../../../lib/currency';
 @Component({
   selector: 'ya-currency',
   templateUrl: './currency.html',
-  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './currency.scss',
 })
 export class Currency {

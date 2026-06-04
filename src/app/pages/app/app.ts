@@ -6,7 +6,6 @@ import {
   signal,
   effect,
   computed,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 
@@ -30,7 +29,6 @@ import {YnabStorage, YnabStorageStatus} from '../../../lib/ynab/ynab_storage';
   selector: 'ya-app-page',
   templateUrl: './app.html',
   styleUrl: './app.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     AccountList,
     AccountsSummary,

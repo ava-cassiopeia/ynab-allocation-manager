@@ -1,10 +1,4 @@
-import {
-  Component,
-  inject,
-  effect,
-  computed,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, inject, effect, computed} from '@angular/core';
 import {Router} from '@angular/router';
 
 import {AuthStorage} from '../../../lib/firebase/auth_storage';
@@ -16,7 +10,6 @@ import {version} from '../../../lib/version';
   selector: 'ya-index-page',
   templateUrl: './index.html',
   styleUrl: './index.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatIcon],
 })
 export class IndexPage {

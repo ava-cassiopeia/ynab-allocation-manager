@@ -1,9 +1,4 @@
-import {
-  Component,
-  input,
-  computed,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, input, computed} from '@angular/core';
 
 import {AccountAllocation} from '../../../../lib/accounts/account_data';
 import {Currency} from '../../common/currency/currency';
@@ -13,7 +8,6 @@ import {DropdownButton} from '../../common/dropdown-button/dropdown-button';
   selector: 'ya-interest-warning-button',
   templateUrl: './interest-warning-button.html',
   styleUrl: './interest-warning-button.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DropdownButton, Currency],
 })
 export class InterestWarningButton {

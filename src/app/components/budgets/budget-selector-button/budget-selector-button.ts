@@ -7,7 +7,6 @@ import {
   Output,
   EventEmitter,
   input,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 
 import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
@@ -20,7 +19,6 @@ import {
   selector: 'ya-budget-selector-button',
   templateUrl: './budget-selector-button.html',
   styleUrl: './budget-selector-button.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DropdownButton],
 })
 export class BudgetSelectorButton {

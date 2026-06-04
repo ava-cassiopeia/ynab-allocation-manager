@@ -6,7 +6,6 @@ import {
   ViewChild,
   signal,
   effect,
-  ChangeDetectionStrategy,
 } from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {Account, Category} from 'ynab';
@@ -28,7 +27,6 @@ import {SplitSelector} from '../split-selector/split-selector';
   selector: 'ya-allocation-selector',
   templateUrl: './allocation-selector.html',
   styleUrl: './allocation-selector.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DropdownButton, MatIcon, SplitSelector],
 })
 export class AllocationSelector {

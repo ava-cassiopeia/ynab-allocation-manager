@@ -1,9 +1,4 @@
-import {
-  Component,
-  inject,
-  computed,
-  ChangeDetectionStrategy,
-} from '@angular/core';
+import {Component, inject, computed} from '@angular/core';
 import {MatDialogContent, MatDialogTitle} from '@angular/material/dialog';
 import {
   MatSlideToggle,
@@ -20,7 +15,6 @@ import {
   selector: 'ya-settings-dialog',
   templateUrl: './settings-dialog.html',
   styleUrl: './settings-dialog.scss',
-  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatDialogTitle, MatDialogContent, MatSlideToggle, Currency],
 })
 export class SettingsDialog {
