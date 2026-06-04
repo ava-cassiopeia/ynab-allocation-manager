@@ -1,10 +1,16 @@
-import {Component, input, computed} from '@angular/core';
+import {
+  Component,
+  input,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {RelativeTime} from '../relative-time/relative-time';
 
 @Component({
   selector: 'ya-reconciled-time',
   templateUrl: './reconciled-time.html',
   styleUrl: './reconciled-time.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [RelativeTime],
 })
 export class ReconciledTime {

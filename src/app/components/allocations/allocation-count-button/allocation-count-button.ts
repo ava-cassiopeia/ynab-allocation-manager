@@ -1,4 +1,9 @@
-import {Component, inject, computed} from '@angular/core';
+import {
+  Component,
+  inject,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 import {DropdownButton} from '../../common/dropdown-button/dropdown-button';
 import {FirestoreStorage} from '../../../../lib/firestore/firestore_storage';
@@ -8,6 +13,7 @@ import {YnabStorage} from '../../../../lib/ynab/ynab_storage';
   selector: 'ya-allocation-count-button',
   templateUrl: './allocation-count-button.html',
   styleUrl: './allocation-count-button.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [DropdownButton],
 })
 export class AllocationCountButton {

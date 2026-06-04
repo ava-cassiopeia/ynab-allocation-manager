@@ -1,4 +1,9 @@
-import {Component, input, computed} from '@angular/core';
+import {
+  Component,
+  input,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 
 import {Currency} from '../../common/currency/currency';
@@ -10,6 +15,7 @@ import {AccountType} from 'ynab';
   selector: 'ya-account-status-indicator',
   templateUrl: './account-status-indicator.html',
   styleUrl: './account-status-indicator.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [Currency, DropdownButton, MatIcon],
 })
 export class AccountStatusIndicator {
