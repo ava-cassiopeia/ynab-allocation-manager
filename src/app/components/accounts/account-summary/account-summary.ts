@@ -5,6 +5,7 @@ import {
   computed,
   inject,
   booleanAttribute,
+  ChangeDetectionStrategy,
 } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 
@@ -23,6 +24,7 @@ import {InterestWarningButton} from '../../interest/interest-warning-button/inte
   selector: 'ya-account-summary',
   templateUrl: './account-summary.html',
   styleUrl: './account-summary.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [
     AccountStatusIndicator,
     Currency,

@@ -1,4 +1,4 @@
-import {Component, inject} from '@angular/core';
+import {Component, inject, ChangeDetectionStrategy} from '@angular/core';
 import {MatIcon} from '@angular/material/icon';
 import {MatMenu, MatMenuTrigger, MatMenuItem} from '@angular/material/menu';
 import {MatDialog} from '@angular/material/dialog';
@@ -14,6 +14,7 @@ import {auth} from '../../../../lib/firebase/app';
   selector: 'ya-mobile-menu',
   templateUrl: './mobile-menu.html',
   styleUrl: './mobile-menu.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [MatIcon, MatMenu, MatMenuTrigger, MatMenuItem],
 })
 export class MobileMenu {

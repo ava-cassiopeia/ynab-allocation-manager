@@ -1,4 +1,11 @@
-import {Component, signal, inject, input, effect} from '@angular/core';
+import {
+  Component,
+  signal,
+  inject,
+  input,
+  effect,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 import {FormControl, ReactiveFormsModule} from '@angular/forms';
 import {MatIcon} from '@angular/material/icon';
 import {Account} from 'ynab';
@@ -14,6 +21,7 @@ import {
   selector: 'ya-split-selector',
   templateUrl: './split-selector.html',
   styleUrl: './split-selector.scss',
+  changeDetection: ChangeDetectionStrategy.Eager,
   imports: [ReactiveFormsModule, MatIcon],
 })
 export class SplitSelector {

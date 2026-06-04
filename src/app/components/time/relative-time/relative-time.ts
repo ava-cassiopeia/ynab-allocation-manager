@@ -1,8 +1,14 @@
-import {Component, input, computed} from '@angular/core';
+import {
+  Component,
+  input,
+  computed,
+  ChangeDetectionStrategy,
+} from '@angular/core';
 
 @Component({
   selector: 'ya-relative-time',
   templateUrl: './relative-time.html',
+  changeDetection: ChangeDetectionStrategy.Eager,
   styleUrl: './relative-time.scss',
 })
 export class RelativeTime {
